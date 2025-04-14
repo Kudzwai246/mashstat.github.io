@@ -2,128 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MashStat - Home</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MashStat | Zimbabwe's Official Music Charts</title>
   <style>
-    /* Optional inline styles for adjustments */
-    .hero {
-      background-image: url('assets/hero.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    }
-    .option-tile {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 2rem;
-      margin: 1rem;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #111;
+      color: #f2f2f2;
       text-align: center;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
     }
-    .option-tile:hover {
-      transform: scale(1.03);
+
+    .logo {
+      display: block;
+      margin: 40px auto 10px;
+      max-width: 180px;
+      height: auto;
     }
-    .option-tile h3 {
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 10px 0 5px;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      margin-bottom: 30px;
+      color: #4da6ff;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 300px;
+      margin: auto;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      background-color: #4da6ff;
       color: #000;
       font-weight: bold;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
     }
-    .option-tile p {
-      color: #002766;
-      font-size: 1.1rem;
+
+    .nav-buttons a:hover {
+      background-color: #1a75ff;
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: gray;
     }
   </style>
 </head>
 <body>
-  <div class="w-full flex justify-center py-6 bg-white">
-	<img src="assets/mashstat_logo.png" alt="MashStat Logo" class="h-16 object-contain" />
-  </div>
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">MashStat</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="charts.html">Charts</a></li>
-          <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
-          <li class="nav-item"><a class="nav-link" href="submit.html">Submit Music</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <header class="hero text-center">
-    <div class="container">
-      <h1 class="display-3 font-weight-bold">Welcome to MashStat</h1>
-      <p class="lead">Your hub for Zimbabwean streaming data – discover charts, news, and more.</p>
-    </div>
-  </header>
+  <!-- Centered Logo -->
+  <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
 
-  <!-- Options Section -->
-  <div class="container my-5">
-    <div class="row">
-      <!-- Option Tile: Mash 100 Chart (Songs) -->
-      <div class="col-md-6">
-        <a href="mash100.html" style="text-decoration:none;">
-          <div class="option-tile">
-            <h3>Mash 100</h3>
-            <p>Top 100 Songs by Zimbabwean streams</p>
-          </div>
-        </a>
-      </div>
-      <!-- Option Tile: MashA 50 Chart (Albums) -->
-      <div class="col-md-6">
-        <a href="masha50.html" style="text-decoration:none;">
-          <div class="option-tile">
-            <h3>MashA 50</h3>
-            <p>Top 50 Albums by Zimbabwean streams</p>
-          </div>
-        </a>
-      </div>
-    </div>
+  <!-- Titles -->
+  <h1>MashStat</h1>
+  <div class="subtitle">Zimbabwe's Official Music Charts</div>
 
-    <div class="row">
-      <!-- Option Tile: News -->
-      <div class="col-md-6">
-        <a href="news.html" style="text-decoration:none;">
-          <div class="option-tile">
-            <h3>News</h3>
-            <p>Latest updates and insights on music trends</p>
-          </div>
-        </a>
-      </div>
-      <!-- Option Tile: Submit Music -->
-      <div class="col-md-6">
-        <a href="submit.html" style="text-decoration:none;">
-          <div class="option-tile">
-            <h3>Submit Music</h3>
-            <p>Contribute your favorite tracks and albums</p>
-          </div>
-        </a>
-      </div>
-    </div>
+  <!-- Navigation Buttons (only at bottom) -->
+  <div class="nav-buttons">
+    <a href="mash100.html">Mash 100 – Top Songs</a>
+    <a href="masha50.html">MashA 50 – Top Albums</a>
+    <a href="news.html">Daily News</a>
+    <a href="submit.html">Submit Your Music</a>
+    <a href="about.html">About MashStat</a>
   </div>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center p-3">
-    <p>&copy; 2025 MashStat</p>
+  <footer>
+    &copy; 2025 MashStat. Built by Kudzwai Madyavanhu N.
   </footer>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/script.js"></script>
 </body>
 </html>
