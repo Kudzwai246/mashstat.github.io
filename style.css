@@ -1,0 +1,79 @@
+/* Custom Styles for MashStat */
+
+/* Reset styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff; /* Clean white background */
+  color: #333;
+}
+
+/* Navigation Styling */
+.navbar-brand, .nav-link {
+  font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+/* Headings: Bold and distinct */
+h1, h2, h3, h4 {
+  color: #000;
+}
+
+/* List Group Items for Charts */
+.list-group-item {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Styling for Chart Items */
+.chart-position {
+  font-weight: bold;
+  width: 2rem;
+}
+.chart-song {
+  font-weight: bold;
+  color: #000; /* Titles in black */
+}
+.chart-artist {
+  color: #002766; /* Navy blue for artist names */
+}
+
+/* Footer styling */
+footer {
+  background-color: #222;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Container adjustments for a spacious layout */
+.container,
+.container-fluid {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.my-5 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
