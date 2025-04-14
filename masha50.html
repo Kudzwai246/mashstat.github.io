@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MashStat - MashA 50</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+	<div class="w-full flex justify-center py-6 bg-white">
+	  <img src="assets/mashstat_logo.png" alt="MashStat Logo" class="h-16 object-contain" />
+	</div>
+	<!-- Navbar (reuse the same as index.html) -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <div class="container-fluid">
+		<a class="navbar-brand" href="index.html">MashStat</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarContent">
+		  <ul class="navbar-nav ml-auto">
+			<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+			<li class="nav-item"><a class="nav-link" href="mash100.html">Mash 100</a></li>
+			<li class="nav-item active"><a class="nav-link" href="masha50.html">MashA 50</a></li>
+			<li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
+			<li class="nav-item"><a class="nav-link" href="submit.html">Submit Music</a></li>
+		  </ul>
+		</div>
+	  </div>
+	</nav>
+
+	<div class="container my-5">
+	  <h2 class="text-center font-weight-bold mb-4">MashA 50 - Top 50 Albums (This Week)</h2>
+	  <ul class="list-group">
+		<!-- Placeholder items; add dynamic content later -->
+		<li class="list-group-item">
+		  <span class="chart-position">1.</span> 
+		  <span class="chart-song font-weight-bold">Album Title</span> – 
+		  <span class="chart-artist text-primary">Artist Name</span>
+		</li>
+		<li class="list-group-item">
+		  <span class="chart-position">2.</span> 
+		  <span class="chart-song font-weight-bold">Another Album</span> – 
+		  <span class="chart-artist text-primary">Artist Name</span>
+		</li>
+		<!-- Continue for up to 50 albums -->
+	  </ul>
+	</div>
+
+	<footer class="bg-dark text-white text-center p-3">
+	  <p>&copy; 2025 MashStat</p>
+	</footer>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
