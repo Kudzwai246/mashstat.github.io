@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MashStat | Zimbabwe's Official Music Charts</title>
   <style>
     body {
@@ -15,30 +15,38 @@
 
     .logo {
       display: block;
-      margin: 40px auto 10px;
-      max-width: 180px;
+      margin: 40px auto 20px;
+      max-width: 300px;
       height: auto;
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: bold;
-      margin: 10px 0 5px;
+      margin-bottom: 10px;
       color: #ffffff;
     }
 
     .subtitle {
-      font-size: 16px;
+      font-size: 18px;
       margin-bottom: 30px;
       color: #4da6ff;
+    }
+
+    .description {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #e0e0e0;
     }
 
     .nav-buttons {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
       max-width: 300px;
-      margin: auto;
+      margin: 0 auto 60px;
     }
 
     .nav-buttons a {
@@ -46,7 +54,7 @@
       background-color: #4da6ff;
       color: #000;
       font-weight: bold;
-      padding: 12px;
+      padding: 14px;
       border-radius: 8px;
       transition: background-color 0.3s, color 0.3s;
     }
@@ -65,24 +73,29 @@
 </head>
 <body>
 
-  <!-- Centered Logo -->
+  <!-- Logo Image -->
   <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
 
   <!-- Titles -->
   <h1>MashStat</h1>
   <div class="subtitle">Zimbabwe's Official Music Charts</div>
 
-  <!-- Navigation Buttons (only at bottom) -->
+  <!-- Description -->
+  <div class="description">
+    MashStat is Zimbabwe's premier platform for tracking and showcasing the nation's top music trends. We compile data from various sources to present the most accurate charts reflecting what's hot in the Zimbabwean music scene. Charts are updated every Wednesday.
+  </div>
+
+  <!-- Navigation Buttons -->
   <div class="nav-buttons">
     <a href="mash100.html">Mash 100 – Top Songs</a>
     <a href="masha50.html">MashA 50 – Top Albums</a>
-    <a href="news.html">Daily News</a>
+    <a href="news.html">News</a>
     <a href="submit.html">Submit Your Music</a>
     <a href="about.html">About MashStat</a>
   </div>
 
   <footer>
-    &copy; 2025 MashStat. Built by Kudzwai Madyavanhu N.
+    &copy; 2025 MashStat.
   </footer>
 
 </body>
