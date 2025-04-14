@@ -1,58 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MashStat - MashA 50</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-	<div class="w-full flex justify-center py-6 bg-white">
-	  <img src="assets/mashstat_logo.png" alt="MashStat Logo" class="h-16 object-contain" />
-	</div>
-	<!-- Navbar (reuse the same as index.html) -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	  <div class="container-fluid">
-		<a class="navbar-brand" href="index.html">MashStat</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-		  <span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarContent">
-		  <ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-			<li class="nav-item"><a class="nav-link" href="mash100.html">Mash 100</a></li>
-			<li class="nav-item active"><a class="nav-link" href="masha50.html">MashA 50</a></li>
-			<li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
-			<li class="nav-item"><a class="nav-link" href="submit.html">Submit Music</a></li>
-		  </ul>
-		</div>
-	  </div>
-	</nav>
-
-	<div class="container my-5">
-	  <h2 class="text-center font-weight-bold mb-4">MashA 50 - Top 50 Albums (This Week)</h2>
-	  <ul class="list-group">
-		<!-- Placeholder items; add dynamic content later -->
-		<li class="list-group-item">
-		  <span class="chart-position">1.</span> 
-		  <span class="chart-song font-weight-bold">Album Title</span> – 
-		  <span class="chart-artist text-primary">Artist Name</span>
-		</li>
-		<li class="list-group-item">
-		  <span class="chart-position">2.</span> 
-		  <span class="chart-song font-weight-bold">Another Album</span> – 
-		  <span class="chart-artist text-primary">Artist Name</span>
-		</li>
-		<!-- Continue for up to 50 albums -->
-	  </ul>
-	</div>
-
-	<footer class="bg-dark text-white text-center p-3">
-	  <p>&copy; 2025 MashStat</p>
-	</footer>
-
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-  </body>
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MashA 50 – Top Albums</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      width: 150px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .description {
+      text-align: center;
+      font-size: 1em;
+      margin-bottom: 30px;
+      color: #cccccc;
+    }
+    .chart-item {
+      background-color: #1e1e1e;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .album-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #ffffff;
+    }
+    .artist-name {
+      color: navy;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
+  <h1>MashA 50 – Top Albums</h1>
+  <p class="description">This chart ranks the top 50 most streamed albums in Zimbabwe across YouTube, Spotify, and Apple Music. Updated every Wednesday.</p>  <div class="chart-item">
+    <span class="album-title">1. The Book of Malachi</span><br>
+    <span class="artist-name">Holy Ten</span>
+  </div>
+  <div class="chart-item">
+    <span class="album-title">2. Zviri Eva Beautiful</span><br>
+    <span class="artist-name">Feli Nandi</span>
+  </div>
+  <div class="chart-item">
+    <span class="album-title">3. Nhoroondo Yedu</span><br>
+    <span class="artist-name">Voltz JT</span>
+  </div>
+  <div class="chart-item">
+    <span class="album-title">4. Energy</span><br>
+    <span class="artist-name">Nutty O</span>
+  </div>
+  <div class="chart-item">
+    <span class="album-title">5. Kuvhunduka Kwemiso</span><br>
+    <span class="artist-name">Kae Chaps</span>
+  </div>
+</body>
 </html>
