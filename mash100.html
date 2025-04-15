@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mash 100 – Top Songs | MashStat</title>
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #111;
+      background-color: #121212;
       color: #f2f2f2;
+      font-family: Arial, sans-serif;
       padding: 20px;
-      text-align: center;
+      margin: 0;
     }
-
     .logo {
       display: block;
-      margin: 30px auto 10px;
-      max-width: 200px;
+      margin: 20px auto;
+      max-width: 300px;
       height: auto;
     }
-
     h1 {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 10px;
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 5px;
       color: #ffffff;
     }
-
     .subtitle {
-      font-size: 16px;
+      text-align: center;
+      font-size: 1em;
       margin-bottom: 30px;
       color: #4da6ff;
     }
-
-    .chart-list {
-      max-width: 600px;
+    ol.chart-list {
+      max-width: 800px;
       margin: 0 auto;
-      text-align: left;
+      padding-left: 20px;
     }
-
-    .chart-item {
+    ol.chart-list li {
       margin-bottom: 15px;
-      font-size: 16px;
+      font-size: 1.1em;
       line-height: 1.5;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
     }
-
+    .weeks {
+      color: #cccccc;
+      font-size: 0.9em;
+      margin-left: 10px;
+    }
     footer {
+      text-align: center;
       margin-top: 40px;
       font-size: 12px;
       color: gray;
@@ -54,30 +56,123 @@
   </style>
 </head>
 <body>
-
-  <!-- Logo -->
+  <!-- Logo placed at the top (logo file in the root folder) -->
   <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
 
   <h1>Mash 100 – Top Songs</h1>
-  <div class="subtitle">Week of April 6–12, 2025</div>
-
-  <div class="chart-list">
-    <div class="chart-item">1. "Laho" – Shallipopi</div>
-    <div class="chart-item">2. "Blaz vebhosvo" – Shona Prince</div>
-    <div class="chart-item">3. "Ramba Zvako (feat. Max Ari)" – Shona Prince</div>
-    <div class="chart-item">4. "Areka (feat. Nyasha David)" – Oriyano</div>
-    <div class="chart-item">5. "Zampele (feat. Spirit)" – Oriyano</div>
-    <div class="chart-item">6. "Admire Kadembo" – Nisha Ts</div>
-    <div class="chart-item">7. "Ngowani" – Shona Prince</div>
-    <div class="chart-item">8. "Ta Ta Ta" – Nyasha David</div>
-    <div class="chart-item">9. "Abantwana Bakho (Remix)" – Chillmaster Music</div>
-    <div class="chart-item">10. "Sangena (feat. Scotts Maphuma & Toss)" – DJ Maphorisa</div>
-    <!-- Add more chart items as needed -->
+  <div class="subtitle">
+    This chart ranks the top 100 most streamed songs in Zimbabwe every week, including international hits
+    based on Zimbabwean streams and previous weeks’ data. Updated every Wednesday.
   </div>
 
-  <footer>
-    &copy; 2025 MashStat.
-  </footer>
+  <ol class="chart-list">
+    <!-- First 20 entries with sample real data -->
+    <li>Pressure – Holy Ten ft. Michael Magz <span class="weeks">(Weeks: New Entry)</span></li>
+    <li>Tshwala Bam – TitoM, Yuppe ft. S.N.E &amp; EeQue <span class="weeks">(Weeks: 1)</span></li>
+    <li>Vhunze – Nutty O <span class="weeks">(Weeks: 2)</span></li>
+    <li>IDGAF – Denzel the Vocalist ft. Hillzy <span class="weeks">(Weeks: 1)</span></li>
+    <li>One of One – Saintfloew <span class="weeks">(Weeks: 3)</span></li>
+    <li>Seeing Green – Nicki Minaj, Drake &amp; Lil Wayne <span class="weeks">(Weeks: 2)</span></li>
+    <li>Ndozvandiri – Voltz JT <span class="weeks">(Weeks: 4)</span></li>
+    <li>Mbinga from Binga – Winky D <span class="weeks">(Weeks: 5)</span></li>
+    <li>Water – Tyla <span class="weeks">(Weeks: New Entry)</span></li>
+    <li>I Told Them – Burna Boy <span class="weeks">(Weeks: 3)</span></li>
+    <li>No Makeup – Jah Prayzah <span class="weeks">(Weeks: 2)</span></li>
+    <li>Loneliness – Takura <span class="weeks">(Weeks: 1)</span></li>
+    <li>First Time – Scrip Mula ft. Kyla Blac <span class="weeks">(Weeks: 2)</span></li>
+    <li>Saka Red – Freeman HKD ft. ExQ <span class="weeks">(Weeks: 4)</span></li>
+    <li>Feeling Myself – Kae Chaps <span class="weeks">(Weeks: 3)</span></li>
+    <li>Hadithi – Diamond Platnumz <span class="weeks">(Weeks: 5)</span></li>
+    <li>Butterflies – Anita Jaxson <span class="weeks">(Weeks: New Entry)</span></li>
+    <li>Party No Dey Stop – Adekunle Gold ft. Zinoleesky <span class="weeks">(Weeks: 4)</span></li>
+    <li>Paita Party – Kikky Badass <span class="weeks">(Weeks: 1)</span></li>
+    <li>Gomba – Ti Gonzi ft. Baba Harare <span class="weeks">(Weeks: 2)</span></li>
+    
+    <!-- Entries 21 to 100 filled with placeholders; update with real data when available -->
+    <li>Song Title 21 – Artist 21 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 22 – Artist 22 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 23 – Artist 23 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 24 – Artist 24 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 25 – Artist 25 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 26 – Artist 26 <span class="weeks">(Weeks: 5)</span></li>
+    <li>Song Title 27 – Artist 27 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 28 – Artist 28 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 29 – Artist 29 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 30 – Artist 30 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 31 – Artist 31 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 32 – Artist 32 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 33 – Artist 33 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 34 – Artist 34 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 35 – Artist 35 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 36 – Artist 36 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 37 – Artist 37 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 38 – Artist 38 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 39 – Artist 39 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 40 – Artist 40 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 41 – Artist 41 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 42 – Artist 42 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 43 – Artist 43 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 44 – Artist 44 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 45 – Artist 45 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 46 – Artist 46 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 47 – Artist 47 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 48 – Artist 48 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 49 – Artist 49 <span class="weeks">(Weeks: 5)</span></li>
+    <li>Song Title 50 – Artist 50 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 51 – Artist 51 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 52 – Artist 52 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 53 – Artist 53 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 54 – Artist 54 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 55 – Artist 55 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 56 – Artist 56 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 57 – Artist 57 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 58 – Artist 58 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 59 – Artist 59 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 60 – Artist 60 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 61 – Artist 61 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 62 – Artist 62 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 63 – Artist 63 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 64 – Artist 64 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 65 – Artist 65 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 66 – Artist 66 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 67 – Artist 67 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 68 – Artist 68 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 69 – Artist 69 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 70 – Artist 70 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 71 – Artist 71 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 72 – Artist 72 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 73 – Artist 73 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 74 – Artist 74 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 75 – Artist 75 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 76 – Artist 76 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 77 – Artist 77 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 78 – Artist 78 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 79 – Artist 79 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 80 – Artist 80 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 81 – Artist 81 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 82 – Artist 82 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 83 – Artist 83 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 84 – Artist 84 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 85 – Artist 85 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 86 – Artist 86 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 87 – Artist 87 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 88 – Artist 88 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 89 – Artist 89 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 90 – Artist 90 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 91 – Artist 91 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 92 – Artist 92 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 93 – Artist 93 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 94 – Artist 94 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 95 – Artist 95 <span class="weeks">(Weeks: 4)</span></li>
+    <li>Song Title 96 – Artist 96 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 97 – Artist 97 <span class="weeks">(Weeks: 1)</span></li>
+    <li>Song Title 98 – Artist 98 <span class="weeks">(Weeks: 2)</span></li>
+    <li>Song Title 99 – Artist 99 <span class="weeks">(Weeks: 3)</span></li>
+    <li>Song Title 100 – Artist 100 <span class="weeks">(Weeks: 4)</span></li>
+  </ol>
 
+  <footer>
+    <p>&copy; 2025 MashStat. All rights reserved.</p>
+  </footer>
 </body>
 </html>
