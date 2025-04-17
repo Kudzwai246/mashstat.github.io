@@ -1,76 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MashStat News</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0f0f0f;
-      color: #f0f0f0;
-    }
-
-    header {
-      background-color: #ff3c78;
-      padding: 15px 25px;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
-    header a {
-      color: white;
-      text-decoration: none;
-    }
-
-    h1 {
-      text-align: center;
-      margin: 30px 0 10px;
-      color: #fff;
-    }
-
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 25px;
       padding: 20px;
     }
 
-    .news-card {
-      background-color: #1b1b1b;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 12px rgba(255, 60, 120, 0.15);
-      transition: transform 0.3s ease;
+    .news-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    .news-card:hover {
-      transform: scale(1.02);
+    .news-card {
+      background-color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
     }
 
     .news-video iframe {
       width: 100%;
-      height: 200px;
-      display: block;
+      height: 315px;
       border: none;
     }
 
     .news-content {
-      padding: 15px;
+      padding: 20px;
     }
 
     .news-title {
-      font-size: 1.1rem;
+      font-size: 1.3em;
       font-weight: bold;
       margin-bottom: 10px;
     }
 
     .news-link {
-      color: #4da6ff;
+      display: inline-block;
+      margin-top: 10px;
+      color: #007bff;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-weight: bold;
     }
 
     .news-link:hover {
@@ -80,14 +58,21 @@
 </head>
 <body>
 
-  <!-- MashStat Header -->
-  <header>
-    <a href="index.html">MashStat</a>
-  </header>
+  <h1>MashStat News</h1>
+  <div class="news-container">
 
-  <h1>Latest Music News</h1>
-
-  <div class="news-grid">
+    <!-- It's Not Zim Hip-Hop Article -->
+    <div class="news-card">
+      <div class="news-video">
+        <iframe src="https://www.youtube.com/embed/T-91YlvcHQk" allowfullscreen></iframe>
+      </div>
+      <div class="news-content">
+        <div class="news-title">
+          Stop Calling It “Zim Hip-Hop”—It’s Just Hip-Hop
+        </div>
+        <a class="news-link" href="articles/just-hip-hop.html">Read Full Article</a>
+      </div>
+    </div>
 
     <!-- Feli Nandi Article -->
     <div class="news-card">
@@ -105,7 +90,7 @@
     <!-- Runna Rulez Article -->
     <div class="news-card">
       <div class="news-video">
-        <iframe src="https://www.youtube.com/embed/dyozvbvwN-8" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/azHJdkVnTLI" allowfullscreen></iframe>
       </div>
       <div class="news-content">
         <div class="news-title">
