@@ -1,63 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MashStat News</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
-      background-color: #111;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f0f0f;
+      color: #f0f0f0;
     }
-    h1 {
+
+    header {
+      background-color: #ff3c78;
+      padding: 15px 25px;
       text-align: center;
-      color: #ff3c78;
+      font-size: 1.5rem;
+      font-weight: bold;
     }
-    .article-preview {
-      background: #1c1c1c;
-      margin: 20px auto;
-      padding: 20px;
-      border-left: 4px solid #ff3c78;
-      border-radius: 8px;
-      max-width: 700px;
-    }
-    .article-preview h2 {
-      margin-top: 0;
-      color: #4da6ff;
-    }
-    .article-preview p {
-      line-height: 1.5;
-      color: #ccc;
-    }
-    .article-preview a {
-      color: #ff3c78;
+
+    header a {
+      color: white;
       text-decoration: none;
     }
-    .article-preview a:hover {
+
+    h1 {
+      text-align: center;
+      margin: 30px 0 10px;
+      color: #fff;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      padding: 20px;
+    }
+
+    .news-card {
+      background-color: #1b1b1b;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 12px rgba(255, 60, 120, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .news-card:hover {
+      transform: scale(1.02);
+    }
+
+    .news-video iframe {
+      width: 100%;
+      height: 200px;
+      display: block;
+      border: none;
+    }
+
+    .news-content {
+      padding: 15px;
+    }
+
+    .news-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .news-link {
+      color: #4da6ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .news-link:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-<h1>MashStat News</h1>
+  <!-- MashStat Header -->
+  <header>
+    <a href="index.html">MashStat</a>
+  </header>
 
-<div class="article-preview">
-  <h2>Feli Nandi’s *Ndisiyei* Climbs to #2 on MashA50</h2>
-  <p><strong>Date:</strong> April 17, 2025</p>
-  <p>Feli Nandi’s emotionally rich album *Ndisiyei* rises to #2 on the MashA50 chart, showcasing her steady rise in Zimbabwe’s Afro-fusion scene...</p>
-  <p><a href="articles/feli-ndisiyi.html">Read Full Article</a></p>
-</div>
+  <h1>Latest Music News</h1>
 
-<div class="article-preview">
-  <h2>Runna Rulez Is No Longer Upcoming – He’s Already That Guy</h2>
-  <p><strong>Date:</strong> April 17, 2025</p>
-  <p>After dropping the 2024 anthem *Murume*, Runna Rulez proves he’s not just an upcoming artist — he’s a future chart-topper and a present force...</p>
-  <p><a href="articles/runna-rulez.html">Read Full Article</a></p>
-</div>
+  <div class="news-grid">
+
+    <!-- Feli Nandi Article -->
+    <div class="news-card">
+      <div class="news-video">
+        <iframe src="https://www.youtube.com/embed/yDTni3WFNOE" allowfullscreen></iframe>
+      </div>
+      <div class="news-content">
+        <div class="news-title">
+          Feli Nandi’s *Ndisiyei* Soars to #2 on MashA50
+        </div>
+        <a class="news-link" href="feli-ndisiyei.html">Read Full Article</a>
+      </div>
+    </div>
+
+    <!-- Runna Rulez Article -->
+    <div class="news-card">
+      <div class="news-video">
+        <iframe src="https://www.youtube.com/embed/dyozvbvwN-8" allowfullscreen></iframe>
+      </div>
+      <div class="news-content">
+        <div class="news-title">
+          Bling4 & Runna Rulez Break Out with “Murume”
+        </div>
+        <a class="news-link" href="runna-rulez.html">Read Full Article</a>
+      </div>
+    </div>
+
+  </div>
 
 </body>
 </html>
