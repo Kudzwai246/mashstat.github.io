@@ -1,95 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>MaRankings</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MaRankings – Zimbabwe Music Charts</title>
   <style>
-    /* Dark theme */
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
-      background: #121212;
-      color: #ddd;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      background: #0d0d0d;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
     }
     header {
-      background: #000;
-      padding: 15px;
       text-align: center;
+      margin-bottom: 20px;
     }
-    header a {
-      color: #1DB954;
-      font-size: 1.5rem;
-      text-decoration: none;
+    header a.main {
+      color: #ff3c78;
+      font-size: 2.5rem;
       font-weight: bold;
+      text-decoration: none;
     }
-    main {
-      padding: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
+    header h2.sub {
+      color: #bbbbbb;
+      margin-top: 8px;
+      font-size: 1.5rem;
     }
     #searchBar {
       width: 100%;
-      padding: 8px;
+      padding: 12px;
+      margin: 20px 0;
       font-size: 1rem;
-      margin-bottom: 20px;
-      border: 1px solid #333;
-      border-radius: 4px;
-      background: #1e1e1e;
-      color: #ddd;
+      border: none;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: #e0e0e0;
     }
-    #searchBar::placeholder {
-      color: #777;
+    .section {
+      margin-top: 30px;
     }
-    .section-title {
-      margin: 30px 0 10px;
-      font-size: 1.2rem;
-      border-bottom: 1px solid #333;
+    .section h3 {
+      color: #1DB954;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #1DB954;
+      display: inline-block;
       padding-bottom: 4px;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+      gap: 20px;
     }
-    .card {
-      background: #1e1e1e;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-      text-align: center;
-      padding: 10px;
+    .artist-card {
+      background: #181818;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
     }
-    .card img {
+    .artist-card:hover { transform: scale(1.02); }
+    .artist-img {
       width: 100%;
-      height: 100px;
+      height: 180px;
       object-fit: cover;
-      border-radius: 4px;
       background: #333;
     }
-    .card h3 {
-      margin: 10px 0 4px;
-      font-size: 1rem;
+    .artist-details {
+      padding: 1rem;
+    }
+    .artist-name {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
       color: #fff;
     }
-    .card p {
-      font-size: 0.85rem;
-      margin: 4px 0;
-      color: #bbb;
+    .meta-block {
+      margin-bottom: 12px;
     }
-    .card a {
+    .meta-block h4 {
+      margin-bottom: 6px;
+      font-size: 1rem;
+      color: #ff3c78;
+    }
+    .meta-block p {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin: 2px 0;
+    }
+    .artist-links a {
       display: inline-block;
-      margin: 4px;
-      font-size: 0.75rem;
+      margin: 4px 6px 0 0;
+      font-size: 0.8rem;
       text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      color: #fff;
     }
-    .card a.spotify { color: #1DB954; }
-    .card a.apple   { color: #fa2a55; }
-    .card a.youtube { color: #ff0000; }
+    .artist-links a.spotify { background: #1DB954; }
+    .artist-links a.youtube { background: #ff0000; }
+    .artist-links a.itunes  { background: #fa2a55; }
     footer {
       text-align: center;
-      padding: 20px;
-      font-size: 0.75rem;
+      margin-top: 40px;
+      font-size: 0.8rem;
       color: #777;
     }
   </style>
@@ -97,113 +112,175 @@
 <body>
 
   <header>
-    <a href="index.html">MashStat</a>
+    <a href="index.html" class="main">MashStat</a>
+    <h2 class="sub">MaRankings</h2>
   </header>
 
-  <main>
-    <input type="text" id="searchBar" placeholder="Search or add an artist…" />
+  <!-- Search Bar -->
+  <input id="searchBar" placeholder="Search for any artist (Zimbabwean or international) and hit Enter…" />
 
-    <div class="section-title">🔥 Top Rising Zim Artist (This Month)</div>
-    <div id="rising" class="grid"></div>
+  <!-- Fast Rising Artist Section -->
+  <div class="section">
+    <h3>🏆 Fast Rising Artist (This Month)</h3>
+    <div class="grid" id="risingGrid"></div>
+  </div>
 
-    <div class="section-title">🎵 All Tracked Artists</div>
-    <div id="artistGrid" class="grid"></div>
-  </main>
+  <!-- All Artists Section -->
+  <div class="section">
+    <h3>🎵 Tracked Artists</h3>
+    <div class="grid" id="artistContainer"></div>
+  </div>
 
   <footer>
     Data sources: Spotify Web API · YouTube Data API · iTunes Search API<br>
-    © 2025 MashStat / MaRankings
+    © 2025 MashStat / MaRankings
   </footer>
 
   <script>
-    const spotifyBase = "https://v1.nocodeapi.com/mashstat/spotify/lFEeJoYyOLlLMrDy";
-    const youTubeBase  = "https://v1.nocodeapi.com/mashstat/youtube/YOUR_YOUTUBE_KEY";
-
-    const risingName = "SaintFloew";
-    const tracked    = [
-      "SaintFloew","Holy Ten","Winky D","Jah Prayzah","Feli Nandi",
-      "Young Gemini","Runna Rulez","Bling4","Alick Macheso","Oliver Mtukudzi",
-      "Bagga","Confused","Chillmaster Music","Ayenda China","Kikky Badass",
-      "Tamy Moyo","Takura","Shona Prince","Enzo Ishall","Blot",
-      "Master H","Baba Harare",
-      "Drake","Beyoncé","Kendrick Lamar","Cardi B","Travis Scott"
+    const zimArtists = [
+      "Feli Nandi","Nutty O","Holy Ten","Hillzy","Winky D",
+      "Enzo Ishall","Voltz JT","Takura","Leo Magozz","Kikky Badass",
+      "Gemma Griffiths","Saintfloew","Poptain","Tanto Wavie","Fyah B",
+      "King 98","R Peels","Shashl","Tocky Vibes","Rockford Josphats"
     ];
+    const intlArtists = ["Drake","Beyoncé","Kendrick Lamar","Cardi B","Travis Scott"];
+    let tracked = [...zimArtists, ...intlArtists];
+    const CACHE_DURATION = 2 * 60 * 60 * 1000; // 2h
 
-    const risingContainer = document.getElementById("rising");
-    const grid            = document.getElementById("artistGrid");
-    const searchBar       = document.getElementById("searchBar");
+    const SPOTIFY_ID     = "9fd373ec645a486d9238ce907ef6662e";
+    const SPOTIFY_SECRET = "89e25846b543443ab39fa80504d91fc5";
+    const YOU_TUBE_BASE  = "https://v1.nocodeapi.com/mashstat/yt/MBrEvvjxBSOYomVY";
 
-    function buildCard(data) {
-      const c = document.createElement("div");
-      c.className = "card";
-      if (data.error) {
-        c.innerHTML = `<h3>${data.name}</h3><p>Data unavailable</p>`;
-      } else {
-        c.innerHTML = `
-          <img src="${data.image||''}" alt="${data.name}">
-          <h3>${data.name}</h3>
-          <p>Followers: ${data.followers.toLocaleString()}</p>
-          <p>Popularity: ${data.popularity}/100</p>
-          <p>Subs (YT): ${data.youtubeSubs?.toLocaleString()||'–'}</p>
-          <a class="spotify" href="${data.spotifyUrl}" target="_blank">Spotify</a>
-          <a class="apple" href="https://music.apple.com/zw/search?term=${encodeURIComponent(data.name)}" target="_blank">Apple Music</a>
-          <a class="youtube" href="https://www.youtube.com/results?search_query=${encodeURIComponent(data.name)}" target="_blank">YouTube</a>
-        `;
-      }
-      return c;
+    async function getSpotifyToken(){
+      const res = await fetch("https://accounts.spotify.com/api/token", {
+        method:"POST",
+        headers:{
+          "Authorization":"Basic "+btoa(SPOTIFY_ID+":"+SPOTIFY_SECRET),
+          "Content-Type":"application/x-www-form-urlencoded"
+        },
+        body:"grant_type=client_credentials"
+      });
+      return (await res.json()).access_token;
     }
 
-    async function fetchStats(name) {
-      let result = { name, error: true };
-      // 1) Spotify
-      try {
-        const s = await fetch(`${spotifyBase}/search?q=${encodeURIComponent(name)}&type=artist&limit=1`);
-        const sd = await s.json();
-        const art = sd.artists?.items?.[0];
-        if (!art) throw 0;
-        result.name       = art.name;
-        result.image      = art.images[0]?.url;
-        result.followers  = art.followers.total;
-        result.popularity = art.popularity;
-        result.spotifyUrl = art.external_urls.spotify;
-        result.error      = false;
-      } catch(_) {
-        return result;            // bail if Spotify fails
+    async function fetchArtistData(name, token){
+      const key = "artist_"+name.toLowerCase();
+      const now = Date.now();
+      const c = localStorage.getItem(key);
+      if(c){
+        const p = JSON.parse(c);
+        if(now - p.ts < CACHE_DURATION) return p.data;
       }
-      // 2) YouTube (best‑effort)
+      let data = {
+        name, image:"", followers:null, popularity:null,
+        spotifyUrl:null, youtubeSubs:null, youtubeUrl:null, iTunesUrl:null
+      };
+      // Spotify
       try {
-        const y1 = await fetch(`${youTubeBase}/search?part=snippet&type=channel&q=${encodeURIComponent(name)}`);
-        const y1d = await y1.json();
-        const ch  = y1d.items?.[0]?.id?.channelId;
-        if (ch) {
-          const y2  = await fetch(`${youTubeBase}/channels?part=statistics&id=${ch}`);
-          const y2d = await y2.json();
-          result.youtubeSubs = Number(y2d.items?.[0]?.statistics?.subscriberCount) || null;
+        const r = await fetch(
+          `https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,
+          { headers:{ "Authorization":"Bearer "+token } }
+        );
+        const j = await r.json();
+        const a = j.artists.items[0];
+        if(a){
+          data.name       = a.name;
+          data.image      = a.images[0]?.url||"";
+          data.followers  = a.followers.total;
+          data.popularity = a.popularity;
+          data.spotifyUrl = a.external_urls.spotify;
         }
-      } catch(_) {
-        result.youtubeSubs = null;
-      }
-      return result;
+      } catch {}
+
+      // YouTube
+      try {
+        const y1 = await fetch(`${YOU_TUBE_BASE}/search?part=snippet&type=channel&q=${encodeURIComponent(name)}`);
+        const y1j = await y1.json();
+        const ch = y1j.items?.[0]?.id?.channelId;
+        if(ch){
+          data.youtubeUrl  = "https://www.youtube.com/channel/"+ch;
+          const y2 = await fetch(`${YOU_TUBE_BASE}/channels?part=statistics&id=${ch}`);
+          const y2j = await y2.json();
+          data.youtubeSubs = Number(y2j.items[0].statistics.subscriberCount);
+        }
+      } catch {}
+
+      // iTunes
+      try {
+        const it = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(name)}&entity=musicArtist&limit=1`);
+        const itj = await it.json();
+        const ai = itj.results[0];
+        if(ai) data.iTunesUrl = ai.artistLinkUrl;
+      } catch {}
+
+      localStorage.setItem(key, JSON.stringify({ ts:now, data }));
+      return data;
     }
 
-    // Render rising artist
-    fetchStats(risingName).then(data => risingContainer.appendChild(buildCard(data)));
-    // Render tracked artists
-    tracked.forEach(name => {
-      fetchStats(name).then(data => grid.appendChild(buildCard(data)));
-    });
+    function buildCard(d){
+      const div = document.createElement("div");
+      div.className = "artist-card";
+      div.innerHTML = `
+        <img class="artist-img" src="${d.image||'https://via.placeholder.com/300x150?text='+encodeURIComponent(d.name)}" alt="${d.name}">
+        <div class="artist-details">
+          <h3 class="artist-name">${d.name}</h3>
+          <div class="meta-block">
+            <h4>Spotify</h4>
+            ${d.followers!==null?`<p>Followers: ${d.followers.toLocaleString()}</p>`:""}
+            ${d.popularity!==null?`<p>Popularity: ${d.popularity}/100</p>`:""}
+          </div>
+          <div class="meta-block">
+            <h4>YouTube</h4>
+            ${d.youtubeSubs!==null?`<p>Subscribers: ${d.youtubeSubs.toLocaleString()}</p>`:""}
+          </div>
+          <div class="artist-links">
+            ${d.spotifyUrl?`<a class="spotify" href="${d.spotifyUrl}" target="_blank">Spotify</a>`:""}
+            ${d.youtubeUrl?`<a class="youtube" href="${d.youtubeUrl}" target="_blank">YouTube</a>`:""}
+            ${d.iTunesUrl?`<a class="itunes" href="${d.iTunesUrl}" target="_blank">iTunes</a>`:""}
+          </div>
+        </div>`;
+      return div;
+    }
 
-    // Search / add
-    searchBar.addEventListener("keydown", async e => {
-      if (e.key === "Enter") {
-        const name = searchBar.value.trim();
-        if (!name) return;
-        const data = await fetchStats(name);
-        grid.insertBefore(buildCard(data), grid.firstChild);
-        searchBar.value = "";
+    async function renderAll(){
+      const risingGrid = document.getElementById("risingGrid");
+      const allGrid    = document.getElementById("artistContainer");
+      const token      = await getSpotifyToken();
+      let artists = [];
+
+      // load all defaults
+      for(let name of tracked){
+        const d = await fetchArtistData(name, token);
+        artists.push(d);
+      }
+
+      // compute rising by simple score
+      artists.forEach(a=>{
+        a.score = (a.popularity||0) + ((a.youtubeSubs||0)/10000);
+      });
+      artists.sort((a,b)=>b.score - a.score);
+
+      // render top rising
+      risingGrid.appendChild(buildCard(artists[0]));
+      // render the rest
+      artists.slice(1).forEach(a=>allGrid.appendChild(buildCard(a)));
+    }
+
+    // search handler
+    document.getElementById("searchBar").addEventListener("keydown", async e=>{
+      if(e.key==="Enter"){
+        const name = e.target.value.trim();
+        if(!name) return;
+        // add to tracked if new
+        if(!tracked.includes(name)) tracked.push(name);
+        const token = await getSpotifyToken();
+        const d = await fetchArtistData(name, token);
+        document.getElementById("artistContainer").prepend(buildCard(d));
+        e.target.value = "";
       }
     });
-  </script>
 
+    renderAll();
+  </script>
 </body>
 </html>
