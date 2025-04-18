@@ -101,7 +101,61 @@
       <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE" allowfullscreen></iframe>
       <div class="video-caption">Song Reference: <strong>Bipolar</strong> by <strong>Saintflow</strong> – A voice of new-wave Zimbabwean hip-hop.</div>
     </div>
+<!-- put this at the end of <body> -->
+<style>
+  #shareMashStat {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1DB954;
+    color: #fff;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: background 0.2s;
+  }
+  #shareMashStat:hover { background: #17a74a; }
+</style>
 
+<button id="shareMashStat">📣 Share MashStat</button>
+
+<script>
+  const shareBtn = document.getElementById('shareMashStat');
+  const shareData = {
+    title: 'MashStat – Zimbabwe’s Official Music Charts',
+    text: 'Check out MashStat for the latest top songs, albums & artist rankings in Zimbabwe! 🎶',
+    url: 'https://mashstat.yourdomain'  // your live URL
+  };
+
+  shareBtn.addEventListener('click', async () => {
+    // 1) Try native Web Share API (mobile & some desktops)
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err) {
+        console.warn('Web Share failed, falling back…');
+      }
+    }
+
+    // 2) Fallback: open individual share‑intent windows
+    const u = encodeURIComponent(shareData.url);
+    const t = encodeURIComponent(shareData.text);
+    const shareUrls = [
+      `https://twitter.com/intent/tweet?text=${t}&url=${u}`,
+      `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+      `https://api.whatsapp.com/send?text=${t}%20${u}`,
+      `https://www.linkedin.com/sharing/share-offsite/?url=${u}`
+    ];
+
+    // Open each in a small popup (popup blockers may block multiples—feel free to pick just 1 or 2)
+    shareUrls.forEach(link => window.open(link, '_blank', 'width=600,height=400'));
+  });
+</script>
   </div>
+  
 </body>
 </html>
