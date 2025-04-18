@@ -1,81 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-8BMMTDWP3G');
-</script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MashStat | Zimbabwe's Official Music Charts</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MashStat - Zimbabwe's Official Music Charts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #111;
-      color: #f2f2f2;
+      padding: 0;
+      background-color: #0e0e0e;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
+      min-height: 100vh;
     }
 
     .logo {
-      display: block;
-      margin: 40px auto 20px;
-      max-width: 300px;
-      height: auto;
+      width: 100px;
+      margin-top: 30px;
+      filter: drop-shadow(0 0 5px #1a75ff);
     }
 
     h1 {
-      font-size: 32px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #ffffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      margin: 15px 0 5px;
+      color: #00ccff;
+      text-shadow: 0 0 5px #00ccff;
     }
 
     .subtitle {
       font-size: 18px;
-      margin-bottom: 30px;
-      color: #4da6ff;
+      color: #bbbbbb;
+      margin-bottom: 20px;
     }
 
     .description {
-      max-width: 600px;
-      margin: 0 auto 40px;
+      max-width: 800px;
       font-size: 16px;
+      color: #cccccc;
+      margin-bottom: 40px;
+      padding: 0 20px;
       line-height: 1.6;
-      color: #e0e0e0;
     }
 
     .nav-buttons {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-      max-width: 300px;
-      margin: 0 auto 60px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 50px;
     }
 
     .nav-buttons a {
       text-decoration: none;
-      background-color: #4da6ff;
-      color: #000;
+      background: linear-gradient(135deg, #1a75ff, #00ccff);
+      color: #fff;
       font-weight: bold;
-      padding: 14px;
-      border-radius: 8px;
-      transition: background-color 0.3s, color 0.3s;
+      padding: 16px 24px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
+      transition: all 0.3s ease-in-out;
+      font-size: 15px;
     }
 
     .nav-buttons a:hover {
-      background-color: #1a75ff;
-      color: #fff;
+      background: linear-gradient(135deg, #00ccff, #1a75ff);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 204, 255, 0.6);
     }
 
     footer {
-      margin-top: 40px;
+      margin-top: auto;
       font-size: 12px;
-      color: gray;
+      color: #777;
+      padding: 20px 0;
     }
   </style>
 </head>
@@ -90,20 +93,21 @@
 
   <!-- Description -->
   <div class="description">
-    MashStat is Zimbabwe's premier platform for tracking and showcasing the nation's top music trends. We compile data from various sources to present the most accurate charts reflecting what's hot in the Zimbabwean music scene. Charts are updated every Wednesday.
+    MashStat is Zimbabwe's premier platform for tracking and showcasing the nation's top music trends. We compile data from streams, radio, and social media to bring you the most accurate charts. Updated every Wednesday, our platform reflects what’s hot across the country. Whether you're a fan, artist, or label — this is where Zimbabwe watches music rise.
   </div>
 
   <!-- Navigation Buttons -->
   <div class="nav-buttons">
     <a href="mash100.html">Mash 100 – Top Songs</a>
     <a href="masha50.html">MashA 50 – Top Albums</a>
+    <a href="marankings.html">MaRankings – Artists</a>
     <a href="news.html">News</a>
     <a href="submit.html">Submit Your Music</a>
     <a href="about.html">About MashStat</a>
   </div>
 
   <footer>
-    &copy; 2025 MashStat.
+    &copy; 2025 MashStat. All rights reserved.
   </footer>
 
 </body>
