@@ -18,10 +18,11 @@
     #searchBar { width:100%; padding:12px; margin:20px 0; font-size:1rem; border:none; border-radius:8px; background:#1a1a1a; color:#e0e0e0; }
     .section { margin-top:30px; }
     .section h3 { color:#4da6ff; font-size:1.5rem; font-weight:700; margin-bottom:15px; border-bottom:2px solid #4da6ff; display:inline-block; padding-bottom:4px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
+    #risingGrid { display: block; margin: 0 auto; max-width: 600px; }
+    #artistContainer { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
     .artist-card { background:#181818; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.4); transition:transform 0.2s; }
     .artist-card:hover { transform:scale(1.02); }
-    .artist-img { width:100%; height:180px; object-fit:cover; background:#333; }
+    .artist-img { display:block; width:100%; height:180px; object-fit:cover; background:#333; }
     .artist-details { padding:1rem; }
     .artist-name { font-size:1.3rem; margin-bottom:0.5rem; color:#fff; font-weight:600; }
     .meta-block { margin-bottom:12px; }
@@ -37,99 +38,111 @@
 <body>  <header>
     <a href="index.html" class="main">MashStat</a>
     <h2 class="sub">MaRankings</h2>
-  </header>  <input id="searchBar" placeholder="Search for any artist (Zimbabwean or international) and hit Enter…" />  <!-- Fast Rising Artist (monthly fixed) -->  <div class="section">
-    <h3>🏆 Fast Rising Artist (This Month)</h3>
-    <div class="grid" id="risingGrid"></div>
-  </div>  <!-- All Artists (refreshed daily) -->  <div class="section">
+  </header>  <!-- Search Bar -->  <input id="searchBar" placeholder="Search for any artist (Zimbabwean or international) and hit Enter…" />  <!-- Hard On The Rise (Monthly) -->  <div class="section">
+    <h3>🏆 Hard On The Rise (This Month)</h3>
+    <div id="risingGrid"></div>
+  </div>  <!-- Tracked Artists (2 columns) -->  <div class="section">
     <h3>🎵 Tracked Artists</h3>
-    <div class="grid" id="artistContainer"></div>
+    <div id="artistContainer"></div>
   </div>  <footer>
     Data sources: Spotify Web API · YouTube Data API · iTunes Search API<br>
     © 2025 MashStat / MaRankings
   </footer>  <script>
     const zimArtists = ["Feli Nandi","Nutty O","Holy Ten","Hillzy","Winky D","Enzo Ishall","Voltz JT","Takura","Leo Magozz","Kikky Badass","Gemma Griffiths","Saintfloew","Poptain","Tanto Wavie","Fyah B","King 98","R Peels","Shashl","Tocky Vibes","Rockford Josphats"];
     const intlArtists = ["Drake","Beyoncé","Kendrick Lamar","Cardi B","Travis Scott"];
-    let tracked = [...zimArtists, ...intlArtists];
-
-    const DAILY_CACHE = 24*60*60*1000;
+    const tracked = [...zimArtists, ...intlArtists];
+    const CACHE_DAY = 24*60*60*1000;
     const SPOTIFY_ID     = "9fd373ec645a486d9238ce907ef6662e";
     const SPOTIFY_SECRET = "89e25846b543443ab39fa80504d91fc5";
-    const YOUTUBE_BASE   = "https://v1.nocodeapi.com/mashstat/yt/MBrEvvjxBSOYomVY";
+    const YT_BASE        = "https://v1.nocodeapi.com/mashstat/yt/MBrEvvjxBSOYomVY";
 
     async function getSpotifyToken(){
-      const res = await fetch("https://accounts.spotify.com/api/token",{method:"POST",headers:{"Authorization":"Basic "+btoa(SPOTIFY_ID+":"+SPOTIFY_SECRET),"Content-Type":"application/x-www-form-urlencoded"},body:"grant_type=client_credentials"});
+      const res = await fetch("https://accounts.spotify.com/api/token",{
+        method:"POST",
+        headers:{
+          "Authorization":"Basic "+btoa(SPOTIFY_ID+":"+SPOTIFY_SECRET),
+          "Content-Type":"application/x-www-form-urlencoded"
+        },
+        body:"grant_type=client_credentials"
+      });
       return (await res.json()).access_token;
     }
 
-    async function fetchArtistData(name, token, force=false){
+    async function fetchArtist(name, token, force=false){
       const key = "artist_"+name.toLowerCase();
       const now = Date.now();
       if(!force){
-        const cache = JSON.parse(localStorage.getItem(key)||"null");
-        if(cache && now - cache.ts < DAILY_CACHE) return cache.data;
+        const cached = JSON.parse(localStorage.getItem(key) || "null");
+        if(cached && now - cached.ts < CACHE_DAY) return cached.data;
       }
-      let data = {name,image:"",followers:null,popularity:null,spotifyUrl:null,youtubeSubs:null,youtubeUrl:null,iTunesUrl:null};
-      try{
-        const r = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,{headers:{"Authorization":"Bearer "+token}});
-        const j = await r.json(); const a=j.artists.items[0];
-        if(a) Object.assign(data,{name:a.name,image:a.images[0]?.url||"",followers:a.followers.total,popularity:a.popularity,spotifyUrl:a.external_urls.spotify});
-      }catch(e){console.warn(name,"Spotify error",e.message);}
-      try{
-        const y1 = await fetch(`${YOUTUBE_BASE}/search?part=snippet&type=channel&q=${encodeURIComponent(name)}`);
+      let data = { name, image:"", followers:null, popularity:null, spotifyUrl:null, youtubeSubs:null, youtubeUrl:null, iTunesUrl:null };
+      // Spotify
+      try {
+        const resp = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,{ headers:{ "Authorization":"Bearer "+token }});
+        const j = await resp.json(); const a = j.artists.items[0];
+        if(a) Object.assign(data, { name:a.name, image:a.images[0]?.url||"", followers:a.followers.total, popularity:a.popularity, spotifyUrl:a.external_urls.spotify });
+      } catch{}
+      // YouTube
+      try {
+        const y1 = await fetch(`${YT_BASE}/search?part=snippet&type=channel&q=${encodeURIComponent(name)}`);
         const y1j = await y1.json(); const ch = y1j.items?.[0]?.id?.channelId;
-        if(ch){ data.youtubeUrl="https://www.youtube.com/channel/"+ch; const y2=await fetch(`${YOUTUBE_BASE}/channels?part=statistics&id=${ch}`); const y2j=await y2.json(); data.youtubeSubs=Number(y2j.items[0].statistics.subscriberCount); }
-      }catch(e){console.warn(name,"YouTube error",e.message);}
-      try{
+        if(ch){ data.youtubeUrl = "https://www.youtube.com/channel/"+ch; const y2 = await fetch(`${YT_BASE}/channels?part=statistics&id=${ch}`); const y2j = await y2.json(); data.youtubeSubs = Number(y2j.items[0].statistics.subscriberCount); }
+      } catch{}
+      // iTunes
+      try {
         const it = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(name)}&entity=musicArtist&limit=1`);
-        const itj = await it.json(); const ai = itj.results[0]; if(ai) data.iTunesUrl=ai.artistLinkUrl;
-      }catch(e){console.warn(name,"iTunes error",e.message);}
-      localStorage.setItem(key,JSON.stringify({ts:now,data}));
+        const itj = await it.json(); const ai = itj.results[0]; if(ai) data.iTunesUrl = ai.artistLinkUrl;
+      } catch{}
+      localStorage.setItem(key, JSON.stringify({ ts:now, data }));
       return data;
     }
 
     function buildCard(d){
-      const div=document.createElement("div"); div.className="artist-card";
-      div.innerHTML=`<img class="artist-img" src="${d.image||'https://via.placeholder.com/300x150?text='+encodeURIComponent(d.name)}" alt="${d.name}"><div class="artist-details"><h3 class="artist-name">${d.name}</h3><div class="meta-block"><h4>Spotify</h4>${d.followers!==null?`<p>Followers: ${d.followers.toLocaleString()}</p>`:""}${d.popularity!==null?`<p>Popularity: ${d.popularity}/100</p>`:""}</div><div class="meta-block"><h4>YouTube</h4>${d.youtubeSubs!==null?`<p>Subscribers: ${d.youtubeSubs.toLocaleString()}</p>`:""}</div><div class="artist-links">${d.spotifyUrl?`<a class="spotify" href="${d.spotifyUrl}" target="_blank">Spotify</a>`:""}${d.youtubeUrl?`<a class="youtube" href="${d.youtubeUrl}" target="_blank">YouTube</a>`:""}${d.iTunesUrl?`<a class="itunes" href="${d.iTunesUrl}" target="_blank">iTunes</a>`:""}</div></div>`;
+      const div = document.createElement("div");
+      div.className = "artist-card";
+      div.innerHTML = `
+        <img class="artist-img" src="${d.image||'https://via.placeholder.com/300x150?text='+encodeURIComponent(d.name)}" alt="${d.name}">
+        <div class="artist-details">
+          <h3 class="artist-name">${d.name}</h3>
+          <div class="meta-block"><h4>Spotify</h4>${d.followers!==null?`<p>Followers: ${d.followers.toLocaleString()}</p>`:""}${d.popularity!==null?`<p>Popularity: ${d.popularity}/100</p>`:""}</div>
+          <div class="meta-block"><h4>YouTube</h4>${d.youtubeSubs!==null?`<p>Subscribers: ${d.youtubeSubs.toLocaleString()}</p>`:""}</div>
+          <div class="artist-links">
+            ${d.spotifyUrl?`<a class="spotify" href="${d.spotifyUrl}" target="_blank">Spotify</a>`:""}
+            ${d.youtubeUrl?`<a class="youtube" href="${d.youtubeUrl}" target="_blank">YouTube</a>`:""}
+            ${d.iTunesUrl?`<a class="itunes" href="${d.iTunesUrl}" target="_blank">iTunes</a>`:""}
+          </div>
+        </div>`;
       return div;
     }
 
-    async function renderAll(){
-      const risingGrid=document.getElementById("risingGrid"), allGrid=document.getElementById("artistContainer");
-      const token=await getSpotifyToken();
-
-      // Fetch rising artist from static JSON (same for all users)
-      let rising=null;
-      try{
-        rising = await fetch('/assets/rising.json').then(r=>r.json());
-      }catch(e){ console.warn('Failed load rising.json, computing fallback'); }
-
-      // If static fetch fails, fallback to local compute and warn
-      if(!rising){
-        let list=[];
-        for(let n of tracked){ const d=await fetchArtistData(n,token); list.push(d); }
-        list.forEach(a=>a.score=(a.popularity||0)+((a.youtubeSubs||0)/10000));
-        list.sort((a,b)=>b.score-a.score);
-        rising=list[0];
+    async function render(){
+      const risingGrid = document.getElementById("risingGrid");
+      const allGrid    = document.getElementById("artistContainer");
+      const token = await getSpotifyToken();
+      let artists = [];
+      for(let name of tracked) {
+        const d = await fetchArtist(name, token);
+        artists.push(d);
       }
+      // determine Hard On The Rise among Zimbabwean
+      const zom = artists.filter(a=> zimArtists.includes(a.name));
+      const rising = zom.reduce((a,b)=> (b.followers||0) > (a.followers||0) ? b : a, zom[0]);
       risingGrid.appendChild(buildCard(rising));
-
-      // Now load all artists normally (exclude rising)
-      let allList=[];
-      for(let n of tracked){ const d=await fetchArtistData(n,token); allList.push(d); }
-      allList.forEach(a=>a.score=(a.popularity||0)+((a.youtubeSubs||0)/10000));
-      allList.sort((a,b)=>b.score-a.score);
-      allList.filter(a=>a.name!==rising.name).forEach(a=>allGrid.appendChild(buildCard(a)));
+      // render all except rising
+      artists.filter(a=> a.name !== rising.name).forEach(a=> allGrid.appendChild(buildCard(a)));
     }
 
-    document.getElementById("searchBar").addEventListener("keydown",async e=>{
-      if(e.key==="Enter"){ const name=e.target.value.trim(); if(!name) return;
+    document.getElementById("searchBar").addEventListener("keydown", async e => {
+      if(e.key === "Enter"){
+        const name = e.target.value.trim(); if(!name) return;
         if(!tracked.includes(name)) tracked.push(name);
-        const token=await getSpotifyToken();
-        const d=await fetchArtistData(name,token,true);
-        document.getElementById("artistContainer").prepend(buildCard(d)); e.target.value="";
+        const token = await getSpotifyToken();
+        const d = await fetchArtist(name, token, true);
+        document.getElementById("artistContainer").prepend(buildCard(d));
+        e.target.value = "";
       }
     });
 
-    renderAll();
+    render();
   </script></body>
 </html>
