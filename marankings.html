@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MaRankings</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style>
+    /* Dark theme */
+    body {
+      background: #121212;
+      color: #ddd;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #000;
+      padding: 15px;
+      text-align: center;
+    }
+    header a {
+      color: #1DB954;
+      font-size: 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    #searchBar {
+      width: 100%;
+      padding: 8px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #1e1e1e;
+      color: #ddd;
+    }
+    #searchBar::placeholder {
+      color: #777;
+    }
+    .section-title {
+      margin: 30px 0 10px;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+      gap: 16px;
+    }
+    .card {
+      background: #1e1e1e;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      text-align: center;
+      padding: 10px;
+    }
+    .card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #333;
+    }
+    .card h3 {
+      margin: 10px 0 4px;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .card p {
+      font-size: 0.85rem;
+      margin: 4px 0;
+      color: #bbb;
+    }
+    .card a {
+      display: inline-block;
+      margin: 4px;
+      font-size: 0.75rem;
+      text-decoration: none;
+    }
+    .card a.spotify { color: #1DB954; }
+    .card a.apple   { color: #fa2a55; }
+    .card a.youtube { color: #ff0000; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html">MashStat</a>
+  </header>
+
+  <main>
+    <input type="text" id="searchBar" placeholder="Search or add an artist…" />
+
+    <div class="section-title">🔥 Top Rising Zim Artist (This Month)</div>
+    <div id="rising" class="grid"></div>
+
+    <div class="section-title">🎵 All Tracked Artists</div>
+    <div id="artistGrid" class="grid"></div>
+  </main>
+
+  <footer>
+    Data sources: Spotify Web API · YouTube Data API · iTunes Search API<br>
+    © 2025 MashStat / MaRankings
+  </footer>
+
+  <script>
+    const spotifyBase = "https://v1.nocodeapi.com/mashstat/spotify/lFEeJoYyOLlLMrDy";
+    const youTubeBase  = "https://v1.nocodeapi.com/mashstat/youtube/YOUR_YOUTUBE_KEY";
+
+    const risingName = "SaintFloew";
+    const tracked    = [
+      "SaintFloew","Holy Ten","Winky D","Jah Prayzah","Feli Nandi",
+      "Young Gemini","Runna Rulez","Bling4","Alick Macheso","Oliver Mtukudzi",
+      "Bagga","Confused","Chillmaster Music","Ayenda China","Kikky Badass",
+      "Tamy Moyo","Takura","Shona Prince","Enzo Ishall","Blot",
+      "Master H","Baba Harare",
+      "Drake","Beyoncé","Kendrick Lamar","Cardi B","Travis Scott"
+    ];
+
+    const risingContainer = document.getElementById("rising");
+    const grid            = document.getElementById("artistGrid");
+    const searchBar       = document.getElementById("searchBar");
+
+    function buildCard(data) {
+      const c = document.createElement("div");
+      c.className = "card";
+      if (data.error) {
+        c.innerHTML = `<h3>${data.name}</h3><p>Data unavailable</p>`;
+      } else {
+        c.innerHTML = `
+          <img src="${data.image||''}" alt="${data.name}">
+          <h3>${data.name}</h3>
+          <p>Followers: ${data.followers.toLocaleString()}</p>
+          <p>Popularity: ${data.popularity}/100</p>
+          <p>Subs (YT): ${data.youtubeSubs?.toLocaleString()||'–'}</p>
+          <a class="spotify" href="${data.spotifyUrl}" target="_blank">Spotify</a>
+          <a class="apple" href="https://music.apple.com/zw/search?term=${encodeURIComponent(data.name)}" target="_blank">Apple Music</a>
+          <a class="youtube" href="https://www.youtube.com/results?search_query=${encodeURIComponent(data.name)}" target="_blank">YouTube</a>
+        `;
+      }
+      return c;
+    }
+
+    async function fetchStats(name) {
+      let result = { name, error: true };
+      // 1) Spotify
+      try {
+        const s = await fetch(`${spotifyBase}/search?q=${encodeURIComponent(name)}&type=artist&limit=1`);
+        const sd = await s.json();
+        const art = sd.artists?.items?.[0];
+        if (!art) throw 0;
+        result.name       = art.name;
+        result.image      = art.images[0]?.url;
+        result.followers  = art.followers.total;
+        result.popularity = art.popularity;
+        result.spotifyUrl = art.external_urls.spotify;
+        result.error      = false;
+      } catch(_) {
+        return result;            // bail if Spotify fails
+      }
+      // 2) YouTube (best‑effort)
+      try {
+        const y1 = await fetch(`${youTubeBase}/search?part=snippet&type=channel&q=${encodeURIComponent(name)}`);
+        const y1d = await y1.json();
+        const ch  = y1d.items?.[0]?.id?.channelId;
+        if (ch) {
+          const y2  = await fetch(`${youTubeBase}/channels?part=statistics&id=${ch}`);
+          const y2d = await y2.json();
+          result.youtubeSubs = Number(y2d.items?.[0]?.statistics?.subscriberCount) || null;
+        }
+      } catch(_) {
+        result.youtubeSubs = null;
+      }
+      return result;
+    }
+
+    // Render rising artist
+    fetchStats(risingName).then(data => risingContainer.appendChild(buildCard(data)));
+    // Render tracked artists
+    tracked.forEach(name => {
+      fetchStats(name).then(data => grid.appendChild(buildCard(data)));
+    });
+
+    // Search / add
+    searchBar.addEventListener("keydown", async e => {
+      if (e.key === "Enter") {
+        const name = searchBar.value.trim();
+        if (!name) return;
+        const data = await fetchStats(name);
+        grid.insertBefore(buildCard(data), grid.firstChild);
+        searchBar.value = "";
+      }
+    });
+  </script>
+
+</body>
+</html>
