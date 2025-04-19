@@ -21,109 +21,124 @@
 
   <style>
     /* Reset & Base */
-    * { box-sizing:border-box; margin:0; padding:0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Montserrat', sans-serif;
       background: #fafafa;
       color: #111;
-      line-height:1.5;
+      line-height: 1.5;
     }
-    a { text-decoration:none; }
+    a { text-decoration: none; }
 
     /* Header / Nav */
     header {
       background: #000;
       padding: 10px 20px;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    header img.logo { height:50px; }
+    header img.logo { height: 50px; }
     nav a {
-      color:#fff; margin-left:20px;
-      font-weight:600; font-size:0.9rem;
+      color: #fff;
+      margin-left: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
     }
-    nav a:hover { text-decoration:underline; }
+    nav a:hover { text-decoration: underline; }
 
     /* Main Container */
     main {
-      max-width:900px;
-      margin:40px auto;
-      padding:0 20px;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
     /* Section Titles */
     .section-title {
       font-family: 'Playfair Display', serif;
       color: #ff0055;
-      font-size:2rem;
-      margin-bottom:20px;
-      border-bottom:2px solid #ff0055;
-      display:inline-block;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ff0055;
+      display: inline-block;
     }
 
     /* MashStat Exclusives */
-    .news-container { display:flex; flex-direction:column; gap:30px; }
+    .news-container { display: flex; flex-direction: column; gap: 30px; }
     .news-card {
-      background:#fff;
-      border-radius:8px;
-      overflow:hidden;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .news-video iframe {
-      width:100%; height:315px; border:none;
+      width: 100%;
+      height: 315px;
+      border: none;
     }
     .news-content {
-      padding:20px;
+      padding: 20px;
     }
     .news-title {
-      font-size:1.3rem; font-weight:700; color:#333;
-      margin-bottom:10px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
     }
     .news-link {
-      color:#ff0055; font-weight:600;
+      color: #ff0055;
+      font-weight: 600;
     }
-    .news-link:hover { text-decoration:underline; }
+    .news-link:hover { text-decoration: underline; }
 
     /* External News Hint */
     .external-hint {
-      margin:50px 0 10px;
-      text-align:center;
-      font-style:italic;
-      color:#777;
-      font-size:0.9rem;
+      margin: 50px 0 10px;
+      text-align: center;
+      font-style: italic;
+      color: #777;
+      font-size: 0.9rem;
     }
 
     /* Auto‑News Cards */
     .auto-news-item {
-      background:#fff;
-      border-radius:8px;
-      overflow:hidden;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .auto-news-item img {
-      width:100%; height:200px; object-fit:cover;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
     }
     .auto-news-content {
-      padding:15px;
+      padding: 15px;
     }
-    .auto-news-title {
-      font-size:1.2rem; font-weight:600; color:#4da6ff;
-      margin-bottom:8px;
+    .auto-news-title a {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #4da6ff;
     }
     .auto-news-desc {
-      font-size:0.95rem; color:#555;
-      margin-bottom:8px;
+      font-size: 0.95rem;
+      color: #555;
+      margin: 8px 0;
     }
     .auto-news-source {
-      font-size:0.8rem; color:#999; text-align:right;
+      font-size: 0.8rem;
+      color: #999;
+      text-align: right;
     }
 
     /* Footer */
     footer {
-      text-align:center;
-      padding:20px;
-      font-size:0.8rem;
-      color:#555;
-      margin-top:60px;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 60px;
     }
   </style>
 </head>
@@ -147,8 +162,6 @@
     <!-- MashStat Exclusives -->
     <div class="section-title">MashStat Exclusives</div>
     <div class="news-container">
-
-      <!-- It's Not Zim Hip-Hop -->
       <div class="news-card">
         <div class="news-video">
           <iframe src="https://www.youtube.com/embed/T-91YlvcHQk" allowfullscreen></iframe>
@@ -159,7 +172,6 @@
         </div>
       </div>
 
-      <!-- Feli Nandi -->
       <div class="news-card">
         <div class="news-video">
           <iframe src="https://www.youtube.com/embed/yDTni3WFNOE" allowfullscreen></iframe>
@@ -170,7 +182,6 @@
         </div>
       </div>
 
-      <!-- Runna Rulez -->
       <div class="news-card">
         <div class="news-video">
           <iframe src="https://www.youtube.com/embed/azHJdkVnTLI" allowfullscreen></iframe>
@@ -197,52 +208,71 @@
   <script>
   (async()=>{
     const feeds = [
-      { name:'Billboard', url:'https://www.billboard.com/feed/' },
-      { name:'Rolling Stone', url:'https://www.rollingstone.com/music/music-news/feed/' }
+      { name:'Billboard',      url:'https://www.billboard.com/feed/' },
+      { name:'Rolling Stone',  url:'https://www.rollingstone.com/music/music-news/feed/' }
     ];
+    const proxy     = 'https://api.allorigins.win/raw?url=';
     const container = document.getElementById('externalNews');
-    const proxy = 'https://api.allorigins.win/raw?url=';
+    container.innerHTML = '';
 
-    for(let feed of feeds){
+    // Determine how many headlines: 20 + 5 per hour, capped at 100
+    const now       = new Date();
+    const hours     = now.getHours();
+    const totalMax  = Math.min(20 + hours * 5, 100);
+
+    let allItems = [];
+    for (let feed of feeds) {
       try {
-        const txt = await fetch(proxy + encodeURIComponent(feed.url)).then(r=>r.text());
-        const doc = new DOMParser().parseFromString(txt,'application/xml');
-        Array.from(doc.querySelectorAll('item')).slice(0,3).forEach(item=>{
+        const xmlText = await fetch(proxy + encodeURIComponent(feed.url)).then(r=>r.text());
+        const doc     = new DOMParser().parseFromString(xmlText,'application/xml');
+        const items   = Array.from(doc.querySelectorAll('item'));
+
+        items.forEach(item => {
           const title   = item.querySelector('title')?.textContent || '';
-          const link    = item.querySelector('link')?.textContent || '';
+          const link    = item.querySelector('link')?.textContent  || '';
           const pubDate = item.querySelector('pubDate')?.textContent || '';
           let desc      = item.querySelector('description')?.textContent || '';
-          desc = desc.replace(/<[^>]+>/g,'').slice(0,120)+'…';
+          desc = desc.replace(/<[^>]+>/g,'').slice(0,120) + '…';
 
-          // try to get an image
-          let img = '';
-          const mc = item.getElementsByTagName('media:content')[0]
-                  || item.getElementsByTagName('enclosure')[0];
-          if(mc) img = mc.getAttribute('url');
+          let imgUrl = '';
+          const m = item.getElementsByTagName('media:content')[0]
+                 || item.getElementsByTagName('enclosure')[0];
+          if (m && m.getAttribute('url')) imgUrl = m.getAttribute('url');
 
-          // build card
-          const div = document.createElement('div');
-          div.className = 'auto-news-item';
-          div.innerHTML = `
-            ${ img 
-              ? `<img src="${img}" alt="">` 
-              : '' }
-            <div class="auto-news-content">
-              <div class="auto-news-title">
-                <a href="${link}" target="_blank">${title}</a>
-              </div>
-              <div class="auto-news-desc">${desc}</div>
-              <div class="auto-news-source">
-                Source: ${feed.name} • ${new Date(pubDate).toLocaleDateString()}
-              </div>
-            </div>`;
-          container.appendChild(div);
+          allItems.push({
+            title,
+            link,
+            pubDate: new Date(pubDate),
+            desc,
+            source: feed.name,
+            imgUrl
+          });
         });
-      } catch(e){
-        console.warn('Failed feed', feed.name, e);
+      } catch(e) {
+        console.warn('Failed to load', feed.name, e);
       }
     }
+
+    // Sort by newest first and render up to totalMax
+    allItems.sort((a,b)=> b.pubDate - a.pubDate);
+    allItems.slice(0, totalMax).forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'auto-news-item';
+      div.innerHTML = `
+        <img src="${item.imgUrl || '/assets/news-placeholder.jpg'}" alt="">
+        <div class="auto-news-content">
+          <div class="auto-news-title">
+            <a href="${item.link}" target="_blank">${item.title}</a>
+          </div>
+          <div class="auto-news-desc">${item.desc}</div>
+          <div class="auto-news-source">
+            Source: ${item.source} • ${item.pubDate.toLocaleDateString()}
+          </div>
+        </div>`;
+      container.appendChild(div);
+    });
   })();
   </script>
+
 </body>
 </html>
