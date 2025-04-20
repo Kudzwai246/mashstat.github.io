@@ -1,13 +1,6 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-8BMMTDWP3G');
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Submit to MashStat</title>
@@ -16,17 +9,17 @@
       background-color: #121212;
       color: white;
       font-family: Arial, sans-serif;
-      padding: 20px;
+      padding: 40px 20px;
     }
     .logo {
       display: block;
       margin: 0 auto 20px;
-      width: 150px;
+      max-width: 200px;
     }
     h1 {
       text-align: center;
+      color: #ffffff;
       font-size: 2em;
-      margin-bottom: 10px;
     }
     .description {
       text-align: center;
@@ -79,19 +72,22 @@
     (YouTube, Spotify, Apple Music, etc.) and accurate information to help us properly track and
     represent your music based on Zimbabwean streaming data. All submissions are reviewed weekly.
   </p>
-  <form>
+  <form action="https://formspree.io/f/xqaprvqr" method="POST">
     <label for="name">Your Name or Stage Name:</label>
-    <input type="text" id="name" name="name" required><label for="email">Email Address:</label>
-<input type="email" id="email" name="email" required>
+    <input type="text" id="name" name="name" required>
 
-<label for="title">Song or Album Title:</label>
-<input type="text" id="title" name="title" required>
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required>
 
-<label for="platforms">Streaming Links (YouTube, Spotify, Apple Music, etc):</label>
-<textarea id="platforms" name="platforms" rows="4" required></textarea>
+    <label for="title">Song or Album Title:</label>
+    <input type="text" id="title" name="title" required>
 
-<button type="submit">Submit</button>
+    <label for="platforms">Streaming Links (YouTube, Spotify, Apple Music, etc):</label>
+    <textarea id="platforms" name="platforms" rows="4" required></textarea>
 
+    <input type="hidden" name="_redirect" value="thank-you.html">
+
+    <button type="submit">Submit</button>
   </form>
 </body>
 </html>
