@@ -1,57 +1,64 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-8BMMTDWP3G');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8BMMTDWP3G');
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MashStat - Zimbabwe's Official Music Charts</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
   <style>
     /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }/* NavBar */
-header { background: #000; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
-header .logo { height: 50px; }
-nav a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: 600; font-size: 0.9rem; }
-nav a:hover { text-decoration: underline; }
+    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }
+    /* NavBar */
+    header { background: #000; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
+    header .logo { height: 50px; }
+    nav a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: 600; font-size: 0.9rem; }
+    nav a:hover { text-decoration: underline; }
 
-/* Hero */
-.hero { background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #fff; text-align: center; padding: 100px 20px; }
-.hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
-.hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.85; }
-.hero .hero-buttons a { display: inline-block; margin: 0 10px; padding: 12px 24px; background: #ff0055; color: #fff; font-weight: 600; border-radius: 4px; transition: background 0.3s; text-decoration: none; }
-.hero .hero-buttons a:hover { background: #e6004a; }
+    /* Hero */
+    .hero { background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #fff; text-align: center; padding: 100px 20px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
+    .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.85; }
+    .hero .hero-buttons a { display: inline-block; margin: 0 10px; padding: 12px 24px; background: #ff0055; color: #fff; font-weight: 600; border-radius: 4px; transition: background 0.3s; text-decoration: none; }
+    .hero .hero-buttons a:hover { background: #e6004a; }
 
-/* Features */
-.features { display: flex; flex-wrap: wrap; justify-content: center; padding: 60px 20px; }
-.feature { width: 280px; margin: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
-.feature img { width: 100%; height: 160px; object-fit: cover; }
-.feature-content { padding: 20px; }
-.feature-content h3 { font-size: 1.2rem; margin-bottom: 10px; color: #000; }
-.feature-content p { font-size: 0.9rem; color: #555; }
+    /* Features */
+    .features { display: flex; flex-wrap: wrap; justify-content: center; padding: 60px 20px; }
+    .feature { width: 280px; margin: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
+    .feature img { width: 100%; height: 160px; object-fit: cover; }
+    .feature-content { padding: 20px; }
+    .feature-content h3 { font-size: 1.2rem; margin-bottom: 10px; color: #000; }
+    .feature-content p { font-size: 0.9rem; color: #555; }
 
-/* Footer */
-footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-size: 0.8rem; }
-<!-- Open Graph & Twitter Meta Tags -->
-<meta property="og:title" content="MashStat – Zimbabwe’s Official Music Charts">
-<meta property="og:description" content="Discover Zimbabwe’s top songs, albums & artists. Updated weekly.">
-<meta property="og:image" content="https://www.mashstat.fwh.is/asserts/mashstat_logo.png">
-<meta property="og:url" content="https://www.mashstat.fwh.is/">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MashStat – Zimbabwe’s Official Music Charts">
-<meta name="twitter:description" content="Discover Zimbabwe’s top songs, albums & artists. Updated weekly.">
-<meta name="twitter:image" content="https://www.mashstat.fwh.is/asserts/mashstat_logo.png">
+    /* Footer */
+    footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-size: 0.8rem; }
   </style>
+
+  <!-- Open Graph & Twitter Meta Tags -->
+  <meta property="og:title" content="MashStat – Zimbabwe’s Official Music Charts">
+  <meta property="og:description" content="Discover Zimbabwe’s top songs, albums & artists. Updated weekly.">
+  <meta property="og:image" content="https://www.mashstat.fwh.is/asserts/mashstat_logo.png">
+  <meta property="og:url" content="https://www.mashstat.fwh.is/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MashStat – Zimbabwe’s Official Music Charts">
+  <meta name="twitter:description" content="Discover Zimbabwe’s top songs, albums & artists. Updated weekly.">
+  <meta name="twitter:image" content="https://www.mashstat.fwh.is/asserts/mashstat_logo.png">
 </head>
+
 <body>
   <!-- Navbar -->
   <header>
@@ -62,16 +69,24 @@ footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-
       <a href="marankings.html">MaRankings</a>
       <a href="news.html">News</a>
       <a href="submit.html">Submit</a>
+      <a href="vote.html">Vote</a> <!-- Added Vote link -->
       <a href="about.html">About</a>
     </nav>
-  </header>  <!-- Hero Section -->  <section class="hero">
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
     <h1>Zimbabwe's Official Music Charts</h1>
     <p>Track the hottest songs, albums, and artists in Zimbabwe—all based on real streaming data, updated weekly.</p>
     <div class="hero-buttons">
       <a href="mash100.html">View Mash 100</a>
       <a href="masha50.html">View MashA 50</a>
+      <a href="vote.html">Vote Now</a> <!-- New Vote Now button -->
     </div>
-  </section>  <!-- Feature Previews -->  <section class="features">
+  </section>
+
+  <!-- Feature Previews -->
+  <section class="features">
     <div class="feature">
       <img src="asserts/atenda-chinx-lockdown.webp?text=Top+Songs" alt="Top Songs">
       <div class="feature-content">
@@ -79,6 +94,7 @@ footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-
         <p>Discover Zimbabwe’s 100 most streamed tracks this week across all major platforms.</p>
       </div>
     </div>
+
     <div class="feature">
       <img src="asserts/winky-d-pabho-ft-bling4.jpeg?text=Top+Albums" alt="Top Albums">
       <div class="feature-content">
@@ -86,6 +102,7 @@ footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-
         <p>Explore the top 50 albums captivating listeners in Zimbabwe each week.</p>
       </div>
     </div>
+
     <div class="feature">
       <img src="asserts/hq720.jpg?text=Artists+Rankings" alt="Artist Rankings">
       <div class="feature-content">
@@ -93,68 +110,70 @@ footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-
         <p>See who's on the rise with our in-depth artist performance tracker.</p>
       </div>
     </div>
+
     <div class="feature">
       <img src="asserts/zimbabwe_s_chiwoniso_big_12725.jpg?text=News" alt="News">
       <div class="feature-content">
         <h3>News</h3>
         <p>Stay updated with the latest headlines and stories from Zimbabwe’s music scene.</p>
       </div>
-      <!-- put this at the end of <body> -->
-<style>
-  #shareMashStat {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: #1DB954;
-    color: #fff;
-    border: none;
-    padding: 14px 18px;
-    border-radius: 50px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    transition: background 0.2s;
-  }
-  #shareMashStat:hover { background: #17a74a; }
-</style>
-
-<button id="shareMashStat">📣 Share MashStat</button>
-
-<script>
-  const shareBtn = document.getElementById('shareMashStat');
-  const shareData = {
-    title: 'MashStat – Zimbabwe’s Official Music Charts',
-    text: 'Check out MashStat for the latest top songs, albums & artist rankings in Zimbabwe! 🎶',
-    url: 'https://www.mashstat.fwh.is/'// your live URL
-  };
-
-  shareBtn.addEventListener('click', async () => {
-    // 1) Try native Web Share API (mobile & some desktops)
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-        return;
-      } catch (err) {
-        console.warn('Web Share failed, falling back…');
-      }
-    }
-
-    // 2) Fallback: open individual share‑intent windows
-    const u = encodeURIComponent(shareData.url);
-    const t = encodeURIComponent(shareData.text);
-    const shareUrls = [
-      `https://twitter.com/intent/tweet?text=${t}&url=${u}`,
-      `https://www.facebook.com/sharer/sharer.php?u=${u}`,
-      `https://api.whatsapp.com/send?text=${t}%20${u}`,
-      `https://www.linkedin.com/sharing/share-offsite/?url=${u}`
-    ];
-
-    // Open each in a small popup (popup blockers may block multiples—feel free to pick just 1 or 2)
-    shareUrls.forEach(link => window.open(link, '_blank', 'width=600,height=400'));
-  });
-</script>
     </div>
-  </section>  <!-- Footer -->  <footer>
+  </section>
+
+  <!-- Share Button -->
+  <style>
+    #shareMashStat {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1DB954;
+      color: #fff;
+      border: none;
+      padding: 14px 18px;
+      border-radius: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: background 0.2s;
+    }
+    #shareMashStat:hover { background: #17a74a; }
+  </style>
+
+  <button id="shareMashStat">📣 Share MashStat</button>
+
+  <script>
+    const shareBtn = document.getElementById('shareMashStat');
+    const shareData = {
+      title: 'MashStat – Zimbabwe’s Official Music Charts',
+      text: 'Check out MashStat for the latest top songs, albums & artist rankings in Zimbabwe! 🎶',
+      url: 'https://www.mashstat.fwh.is/'
+    };
+
+    shareBtn.addEventListener('click', async () => {
+      // 1) Try native Web Share API
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (err) {
+          console.warn('Web Share failed, falling back…');
+        }
+      }
+      // 2) Fallback share links
+      const u = encodeURIComponent(shareData.url);
+      const t = encodeURIComponent(shareData.text);
+      const shareUrls = [
+        `https://twitter.com/intent/tweet?text=${t}&url=${u}`,
+        `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+        `https://api.whatsapp.com/send?text=${t}%20${u}`,
+        `https://www.linkedin.com/sharing/share-offsite/?url=${u}`
+      ];
+      shareUrls.forEach(link => window.open(link, '_blank', 'width=600,height=400'));
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer>
     &copy; 2025 MashStat. All rights reserved.
   </footer>
 </body>
