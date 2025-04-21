@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vote on MashStat</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 40px 20px;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 200px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      font-size: 2em;
+    }
+    .description {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 1em;
+      color: #cccccc;
+    }
+    form {
+      background-color: #1e1e1e;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: navy;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+      color: white;
+    }
+    button {
+      background-color: navy;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+  </style>
+  <!-- reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>
+</head>
+<body>
+  <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
+  <h1>Vote on MashStat</h1>
+  <p class="description">
+    Cast your daily vote for your favorite artist (song or album). Only one vote per category per day is allowed. Thank you for keeping it fair!
+  </p>
+
+  <form id="voteForm">
+    <input type="hidden" id="fanId" value="artist123">
+
+    <label for="city">City/Town:</label>
+    <input type="text" id="city" name="city" placeholder="e.g. Harare" required>
+
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
+      <option value="">-- Select --</option>
+      <option value="song">Song</option>
+      <option value="album">Album</option>
+    </select>
+
+    <button type="submit" id="voteBtn">Vote</button>
+  </form>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js";
+    import { getAuth }        from "https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-functions.js";
+
+    // ——— Firebase init ———
+    const firebaseConfig = { /* your config */ };
+    const app       = initializeApp(firebaseConfig);
+    const auth      = getAuth(app);
+    const voteFan   = httpsCallable(getFunctions(app), 'voteFan');
+
+    const form      = document.getElementById('voteForm');
+    const btn       = document.getElementById('voteBtn');
+    const fanId     = document.getElementById('fanId').value;
+
+    // ——— Cookie helpers 5 6
+    function getCookie(name) {
+      return document.cookie.split('; ').find(row => row.startsWith(name+'='))?.split('=')[1];
+    }
+    function setCookie(name, value, maxAgeSec) {
+      document.cookie = `${name}=${value}; max-age=${maxAgeSec}; path=/; Secure; SameSite=Strict`;
+    }
+
+    // ——— Ensure persistent voterId 7
+    if (!getCookie('voterId')) {
+      setCookie('voterId', crypto.randomUUID(), 365*24*60*60);
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      // 1) Sign-in check
+      if (!auth.currentUser) {
+        return alert('Please sign in to vote.');
+      }
+
+      // 2) One‑vote‑per‑category‑per‑day 8
+      const category = form.category.value;
+      const voteKey  = `voted_${fanId}_${category}`;
+      if (getCookie(voteKey)) {
+        btn.disabled = true;
+        return alert('You’ve already voted in this category today.');
+      }
+
+      // 3) reCAPTCHA token
+      grecaptcha.ready(async () => {
+        const token = await grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ', {action: 'vote'});
+
+        // 4) Call Cloud Function
+        try {
+          await voteFan({
+            fanId,
+            city: form.city.value,
+            category,
+            recaptchaToken: token
+          });
+          // 5) Mark as voted for 24 hrs
+          setCookie(voteKey, 'true', 24*60*60);
+          alert('Thanks for voting!');
+          btn.disabled = true;
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
