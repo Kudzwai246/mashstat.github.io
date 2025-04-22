@@ -11,8 +11,8 @@
     form { max-width: 500px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     label { display: block; margin-bottom: 8px; font-weight: bold; }
     input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
-    button { background: #1DB954; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 1em; width: 100%; cursor: pointer; }
-    button:hover { background: #17a74a; }
+    button { background: #ff0055; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 1em; width: 100%; cursor: pointer; }
+    button:hover { background: #e6004a; }
     #message { text-align: center; margin-top: 15px; font-weight: 600; }
   </style></head>
 <body><header>
@@ -55,16 +55,14 @@
     const albumArtist = form.albumArtist.value.trim();
     const albumTitle = form.albumTitle.value.trim();
 
-    // Device info
     const device = navigator.userAgent;
-
-    // Vote keys for user and device
     const dateKey = new Date().toISOString().split('T')[0];
     const userKey = `voted_user_${email}_${dateKey}`;
     const deviceKey = `voted_device_${btoa(device)}_${dateKey}`;
 
     if (localStorage.getItem(userKey) || localStorage.getItem(deviceKey)) {
-      msg.textContent = 'You have already voted today from this account or device.';
+      alert('You have already voted today from this account or device.');
+      msg.textContent = 'Vote blocked: already voted today.';
       msg.style.color = 'red';
       return;
     }
@@ -74,7 +72,6 @@
         .then((token) => {
           document.getElementById('recaptchaToken').value = token;
 
-          // Call the cloud function
           voteFan({
             voterId: email,
             city,
@@ -85,18 +82,20 @@
           })
           .then(res => {
             if (res.data.success) {
-              // Store both keys
               localStorage.setItem(userKey, 'true');
               localStorage.setItem(deviceKey, 'true');
+              alert('Your vote has been submitted successfully!');
               msg.textContent = 'Vote submitted successfully!';
               msg.style.color = 'green';
               form.reset();
             } else {
+              alert(res.data.error || 'Vote failed.');
               msg.textContent = res.data.error || 'Vote failed.';
               msg.style.color = 'red';
             }
           })
           .catch(err => {
+            alert('Submission error: ' + err.message);
             msg.textContent = err.message;
             msg.style.color = 'red';
           });
