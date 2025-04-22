@@ -1,142 +1,107 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-8BMMTDWP3G');
-  </script>  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MashStat Voting</title>  <!-- reCAPTCHA v3 -->  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">  <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MashStat Vote</title>  <!-- reCAPTCHA -->  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>  <!-- Firebase SDKs -->  <script src="/__/firebase/9.23.0/firebase-app-compat.js"></script>  <script src="/__/firebase/9.23.0/firebase-auth-compat.js"></script>  <script src="/__/firebase/9.23.0/firebase-functions-compat.js"></script>  <script src="/__/firebase/init.js"></script>  <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }
-    header { background: #000; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
-    header .logo { height: 50px; }
-    nav a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: 600; font-size: 0.9rem; }
-    nav a:hover { text-decoration: underline; }
-
-    .hero { background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #fff; text-align: center; padding: 60px 20px; }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    .hero p { font-size: 1rem; opacity: 0.8; }
-
-    #voteSection { max-width: 600px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    #voteSection h2 { text-align: center; margin-bottom: 20px; font-size: 1.8rem; }
-    #voteForm label { display: block; margin-bottom: 10px; font-weight: 600; }
-    #voteForm input, #voteForm button { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
-    #voteForm button { background: #ff0055; color: #fff; border: none; cursor: pointer; transition: background 0.3s; }
-    #voteForm button:hover { background: #e6004a; }
-
-    footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-size: 0.8rem; margin-top: 40px; }
+    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; padding: 20px; }
+    header { display: flex; align-items: center; background: #000; padding: 10px 20px; }
+    .logo { height: 50px; }
+    h2 { text-align: center; font-family: 'Playfair Display', serif; margin: 20px 0; }
+    form { max-width: 500px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    label { display: block; margin-bottom: 8px; font-weight: bold; }
+    input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #1DB954; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 1em; width: 100%; cursor: pointer; }
+    button:hover { background: #17a74a; }
+    #message { text-align: center; margin-top: 15px; font-weight: 600; }
   </style></head>
-<body>
-  <!-- Navbar -->
-  <header>
-    <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
-    <nav>
-      <a href="mash100.html">Mash 100</a>
-      <a href="masha50.html">MashA 50</a>
-      <a href="marankings.html">MaRankings</a>
-      <a href="news.html">News</a>
-      <a href="submit.html">Submit</a>
-      <a href="vote.html">Vote</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>  <!-- Hero -->  <section class="hero">
-    <h1>Cast Your Daily Vote</h1>
-    <p>Choose your favorite song and album to influence Zimbabwe’s official music charts.</p>
-  </section>  <!-- Vote Section -->  <section id="voteSection">
-    <form id="voteForm">
-      <label for="email">Email:</label>
-      <input type="email" name="email" id="email" required placeholder="you@example.com" /><label for="city">City/Town:</label>
-  <input type="text" name="city" id="city" required placeholder="e.g. Norton" />
+<body><header>
+  <img src="mashstat_logo.png" alt="MashStat Logo" class="logo" />
+</header><h2>Cast Your Vote</h2><form id="voteForm">
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required placeholder="you@example.com" /><label for="city">City/Town:</label> <input type="text" id="city" name="city" required placeholder="e.g. Norton" />
 
   <h3>Vote for Song</h3>
   <label for="songArtist">Song Artist:</label>
-  <input type="text" name="songArtist" id="songArtist" required placeholder="e.g. Feli Nandi" />
-
-  <label for="songTitle">Song Title:</label>
-  <input type="text" name="songTitle" id="songTitle" required placeholder="e.g. Dzoka Kumba" />
+  <input type="text" id="songArtist" name="songArtist" required placeholder="e.g. Feli Nandi" /><label for="songTitle">Song Title:</label> <input type="text" id="songTitle" name="songTitle" required placeholder="e.g. Dzoka Kumba" />
 
   <h3>Vote for Album</h3>
   <label for="albumArtist">Album Artist:</label>
-  <input type="text" name="albumArtist" id="albumArtist" required placeholder="e.g. Jah Prayzah" />
-
-  <label for="albumTitle">Album Title:</label>
-  <input type="text" name="albumTitle" id="albumTitle" required placeholder="e.g. Chapter One" />
+  <input type="text" id="albumArtist" name="albumArtist" required placeholder="e.g. Jah Prayzah" /><label for="albumTitle">Album Title:</label> <input type="text" id="albumTitle" name="albumTitle" required placeholder="e.g. Chapter One" />
 
   <input type="hidden" id="recaptchaToken" name="recaptchaToken">
   <button type="submit">Submit Vote</button>
-</form>
+</form><div id="message"></div><script>
+  const auth = firebase.auth();
+  const voteFan = firebase.functions().httpsCallable('voteFan');
 
-  </section>  <!-- Firebase & Voting Script -->  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+  // Ensure user is authenticated
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    }
+  });
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
-      authDomain: "mashstat-vote.firebaseapp.com",
-      projectId: "mashstat-vote",
-      storageBucket: "mashstat-vote.firebasestorage.app",
-      messagingSenderId: "623901795277",
-      appId: "1:623901795277:web:26fb2334f252b65eed1a84"
-    };
+  const form = document.getElementById('voteForm');
+  const msg = document.getElementById('message');
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("voteForm");
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        grecaptcha.ready(() => {
-          grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ',{action:'vote'})
-            .then(async (token) => {
-              document.getElementById('recaptchaToken').value = token;
+    const email = form.email.value.trim();
+    const city = form.city.value.trim();
+    const songArtist = form.songArtist.value.trim();
+    const songTitle = form.songTitle.value.trim();
+    const albumArtist = form.albumArtist.value.trim();
+    const albumTitle = form.albumTitle.value.trim();
 
-              const email = form.email.value.trim();
-              const city = form.city.value.trim();
-              const device = navigator.userAgent;
-              const songArtist = form.songArtist.value.trim();
-              const songTitle = form.songTitle.value.trim();
-              const albumArtist = form.albumArtist.value.trim();
-              const albumTitle = form.albumTitle.value.trim();
+    // Device info
+    const device = navigator.userAgent;
 
-              const today = new Date().toISOString().split("T")[0];
-              const voteKey = `voted_${email}_${today}`;
+    // Vote keys for user and device
+    const dateKey = new Date().toISOString().split('T')[0];
+    const userKey = `voted_user_${email}_${dateKey}`;
+    const deviceKey = `voted_device_${btoa(device)}_${dateKey}`;
 
-              if (localStorage.getItem(voteKey)) {
-                alert("You can only vote once per day.");
-                return;
-              }
+    if (localStorage.getItem(userKey) || localStorage.getItem(deviceKey)) {
+      msg.textContent = 'You have already voted today from this account or device.';
+      msg.style.color = 'red';
+      return;
+    }
 
-              try {
-                await addDoc(collection(db, "songVotes"), {
-                  email, city, device, artist: songArtist, title: songTitle,
-                  recaptchaToken: token, timestamp: new Date()
-                });
+    grecaptcha.ready(() => {
+      grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ', { action: 'vote' })
+        .then((token) => {
+          document.getElementById('recaptchaToken').value = token;
 
-                await addDoc(collection(db, "albumVotes"), {
-                  email, city, device, artist: albumArtist, title: albumTitle,
-                  recaptchaToken: token, timestamp: new Date()
-                });
-
-                localStorage.setItem(voteKey, "true");
-                alert("Your vote has been submitted successfully!");
-                form.reset();
-              } catch (error) {
-                console.error("Error saving vote:", error);
-                alert("Error submitting your vote. Please try again.");
-              }
-            });
+          // Call the cloud function
+          voteFan({
+            voterId: email,
+            city,
+            device,
+            recaptchaToken: token,
+            song: { title: songTitle, artist: songArtist },
+            album: { title: albumTitle, artist: albumArtist }
+          })
+          .then(res => {
+            if (res.data.success) {
+              // Store both keys
+              localStorage.setItem(userKey, 'true');
+              localStorage.setItem(deviceKey, 'true');
+              msg.textContent = 'Vote submitted successfully!';
+              msg.style.color = 'green';
+              form.reset();
+            } else {
+              msg.textContent = res.data.error || 'Vote failed.';
+              msg.style.color = 'red';
+            }
+          })
+          .catch(err => {
+            msg.textContent = err.message;
+            msg.style.color = 'red';
+          });
         });
-      });
     });
-  </script>  <footer>
-    &copy; 2025 MashStat. All rights reserved.
-  </footer>
-</body>
+  });
+</script></body>
 </html>
