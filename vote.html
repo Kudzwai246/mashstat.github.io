@@ -2,11 +2,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MashStat Vote</title>  <!-- reCAPTCHA -->  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>  <!-- Firebase SDKs -->  <script src="/__/firebase/9.23.0/firebase-app-compat.js"></script>  <script src="/__/firebase/9.23.0/firebase-auth-compat.js"></script>  <script src="/__/firebase/9.23.0/firebase-functions-compat.js"></script>  <script src="/__/firebase/init.js"></script>  <style>
+  <title>MashStat Vote</title>  <!-- Google Analytics -->  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());
+    gtag('config', 'G-8BMMTDWP3G');
+  </script>  <!-- reCAPTCHA v3 -->  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>  <!-- Firebase SDKs -->  <script src="/__/firebase/9.23.0/firebase-app-compat.js"></script>  <script src="/__/firebase/9.23.0/firebase-auth-compat.js"></script>  <script src="/__/firebase/9.23.0/firebase-functions-compat.js"></script>  <script src="/__/firebase/init.js"></script>  <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; padding: 20px; }
-    header { display: flex; align-items: center; background: #000; padding: 10px 20px; }
-    .logo { height: 50px; }
+    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }
+    header { background: #000; padding: 10px 20px; display: flex; align-items: center; }
+    header .logo { height: 50px; }
     h2 { text-align: center; font-family: 'Playfair Display', serif; margin: 20px 0; }
     form { max-width: 500px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     label { display: block; margin-bottom: 8px; font-weight: bold; }
@@ -16,7 +21,7 @@
     #message { text-align: center; margin-top: 15px; font-weight: 600; }
   </style></head>
 <body><header>
-  <img src="mashstat_logo.png" alt="MashStat Logo" class="logo" />
+  <a href="index.html"><img src="mashstat_logo.png" alt="MashStat Logo" class="logo" /></a>
 </header><h2>Cast Your Vote</h2><form id="voteForm">
   <label for="email">Email:</label>
   <input type="email" id="email" name="email" required placeholder="you@example.com" /><label for="city">City/Town:</label> <input type="text" id="city" name="city" required placeholder="e.g. Norton" />
@@ -35,7 +40,6 @@
   const auth = firebase.auth();
   const voteFan = firebase.functions().httpsCallable('voteFan');
 
-  // Ensure user is authenticated
   auth.onAuthStateChanged(user => {
     if (!user) {
       auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
@@ -56,9 +60,9 @@
     const albumTitle = form.albumTitle.value.trim();
 
     const device = navigator.userAgent;
-    const dateKey = new Date().toISOString().split('T')[0];
-    const userKey = `voted_user_${email}_${dateKey}`;
-    const deviceKey = `voted_device_${btoa(device)}_${dateKey}`;
+    const today = new Date().toISOString().split('T')[0];
+    const userKey = `voted_user_${email}_${today}`;
+    const deviceKey = `voted_device_${btoa(device)}_${today}`;
 
     if (localStorage.getItem(userKey) || localStorage.getItem(deviceKey)) {
       alert('You have already voted today from this account or device.');
@@ -69,7 +73,7 @@
 
     grecaptcha.ready(() => {
       grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ', { action: 'vote' })
-        .then((token) => {
+        .then(token => {
           document.getElementById('recaptchaToken').value = token;
 
           voteFan({
