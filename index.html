@@ -7,11 +7,21 @@
     function gtag(){dataLayer.push(arguments);}  
     gtag('js', new Date());
     gtag('config', 'G-8BMMTDWP3G');
-  </script>  <meta charset="UTF-8">
+  </script>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MashStat - Zimbabwe's Official Music Charts</title>  <!-- reCAPTCHA v3 -->  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>  <!-- Firebase SDKs -->  <script src="/__/firebase/9.23.0/firebase-app-compat.js"></script>  <script src="/__/firebase/9.23.0/firebase-auth-compat.js"></script>  <script src="/__/firebase/9.23.0/firebase-functions-compat.js"></script>  <script src="/__/firebase/init.js"></script>  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>MashStat - Zimbabwe's Official Music Charts</title>
+  <!-- reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>
+  <!-- Firebase SDKs -->
+  <script src="/__/firebase/9.23.0/firebase-app-compat.js"></script>
+  <script src="/__/firebase/9.23.0/firebase-auth-compat.js"></script>
+  <script src="/__/firebase/9.23.0/firebase-functions-compat.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
     /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }
@@ -19,40 +29,30 @@
     header { background: #000; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
     header .logo { height: 50px; }
     nav a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: 600; font-size: 0.9rem; }
-    nav a:hover { text-decoration: underline; }
+    nav a:hover { text-decoration: underline; }/* Hero */
+.hero { background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #fff; text-align: center; padding: 100px 20px; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
+.hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.85; }
+.hero .hero-buttons a { display: inline-block; margin: 0 10px; padding: 12px 24px; background: #ff0055; color: #fff; font-weight: 600; border-radius: 4px; transition: background 0.3s; text-decoration: none; }
+.hero .hero-buttons a:hover { background: #e6004a; }
 
-    /* Hero */
-    .hero { background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #fff; text-align: center; padding: 100px 20px; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
-    .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.85; }
-    .hero .hero-buttons a { display: inline-block; margin: 0 10px; padding: 12px 24px; background: #ff0055; color: #fff; font-weight: 600; border-radius: 4px; transition: background 0.3s; text-decoration: none; }
-    .hero .hero-buttons a:hover { background: #e6004a; }
+/* Features */
+.features { display: flex; flex-wrap: wrap; justify-content: center; padding: 60px 20px; }
+.feature { width: 280px; margin: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
+.feature img { width: 100%; height: 160px; object-fit: cover; }
+.feature-content { padding: 20px; }
+.feature-content h3 { font-size: 1.2rem; margin-bottom: 10px; color: #000; }
+.feature-content p { font-size: 0.9rem; color: #555; }
 
-    /* Vote Section */
-    #vote { background: #1e1e1e; padding: 40px 20px; color: white; }
-    #vote h2 { text-align: center; margin-bottom: 20px; font-size: 1.8rem; }
-    #voterInfo { text-align: center; color: #aaa; margin-bottom: 20px; font-size: 0.9rem; }
-    #voteForm { max-width: 500px; margin: auto; background: #121212; padding: 25px; border-radius: 10px; }
-    #voteForm label { display: block; margin-bottom: 6px; }
-    #voteForm input, #voteForm select { width: 100%; padding: 10px; margin-bottom: 15px; border: none; border-radius: 5px; background: #2a2a2a; color: white; }
-    #voteForm button { background: navy; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; }
-    #message { text-align: center; margin-top: 15px; font-size: 1em; color: lightgreen; }
+/* Share Button */
+#shareMashStat { position: fixed; bottom: 24px; right: 24px; background: #1DB954; color: #fff; border: none; padding: 14px 18px; border-radius: 50px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background 0.2s; }
+#shareMashStat:hover { background: #17a74a; }
 
-    /* Features */
-    .features { display: flex; flex-wrap: wrap; justify-content: center; padding: 60px 20px; }
-    .feature { width: 280px; margin: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
-    .feature img { width: 100%; height: 160px; object-fit: cover; }
-    .feature-content { padding: 20px; }
-    .feature-content h3 { font-size: 1.2rem; margin-bottom: 10px; color: #000; }
-    .feature-content p { font-size: 0.9rem; color: #555; }
+/* Footer */
+footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-size: 0.8rem; }
 
-    /* Share Button */
-    #shareMashStat { position: fixed; bottom: 24px; right: 24px; background: #1DB954; color: #fff; border: none; padding: 14px 18px; border-radius: 50px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background 0.2s; }
-    #shareMashStat:hover { background: #17a74a; }
-
-    /* Footer */
-    footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-size: 0.8rem; }
-  </style></head>
+  </style>
+</head>
 <body>
   <!-- Navbar -->
   <header>
@@ -63,7 +63,7 @@
       <a href="marankings.html">MaRankings</a>
       <a href="news.html">News</a>
       <a href="submit.html">Submit</a>
-      <a href="#vote">Vote</a>
+      <a href="vote.html">Vote</a>
       <a href="about.html">About</a>
     </nav>
   </header>  <!-- Hero Section -->  <section class="hero">
@@ -72,40 +72,17 @@
     <div class="hero-buttons">
       <a href="mash100.html">View Mash 100</a>
       <a href="masha50.html">View MashA 50</a>
-      <a href="#vote">Vote Now</a>
+      <a href="vote.html">Vote Now</a>
     </div>
-  </section>  <!-- Vote Section -->  <section id="vote">
-    <h2>Cast Your Daily Vote</h2>
-    <div id="voterInfo">Detecting your voter ID…</div>
-    <form id="voteForm">
-      <label for="city">Your City/Town:</label>
-      <input type="text" id="city" name="city" required placeholder="e.g. Norton"><label for="category">Category:</label>
-  <select id="category" name="category" required>
-    <option value="">-- Select --</option>
-    <option value="song">Song</option>
-    <option value="album">Album</option>
-  </select>
-
-  <label for="title">Title of Song/Album:</label>
-  <input type="text" id="title" name="title" required placeholder="e.g. Dzoka Kumba">
-
-  <label for="artist">Artist Name (Optional):</label>
-  <input type="text" id="artist" name="artist" placeholder="e.g. Feli Nandi">
-
-  <input type="hidden" id="recaptchaToken" name="recaptchaToken">
-  <button type="submit" id="voteBtn">Submit Vote</button>
-</form>
-<div id="message"></div>
-
   </section>  <!-- Feature Previews -->  <section class="features">
     <div class="feature">
-      <img src="asserts/atenda-chinx-lockdown.webp?text=Top+Songs" alt="Top Songs">
+      <img src="assets/atenda-chinx-lockdown.webp" alt="Top Songs">
       <div class="feature-content">
         <h3>Mash 100 – Top Songs</h3>
         <p>Discover Zimbabwe’s 100 most streamed tracks this week across all major platforms.</p>
       </div>
     </div><div class="feature">
-  <img src="asserts/winky-d-pabho-ft-bling4.jpeg?text=Top+Albums" alt="Top Albums">
+  <img src="assets/winky-d-pabho-ft-bling4.jpeg" alt="Top Albums">
   <div class="feature-content">
     <h3>MashA 50 – Top Albums</h3>
     <p>Explore the top 50 albums captivating listeners in Zimbabwe each week.</p>
@@ -113,7 +90,7 @@
 </div>
 
 <div class="feature">
-  <img src="asserts/hq720.jpg?text=Artists+Rankings" alt="Artist Rankings">
+  <img src="assets/hq720.jpg" alt="Artist Rankings">
   <div class="feature-content">
     <h3>MaRankings – Artists</h3>
     <p>See who's on the rise with our in-depth artist performance tracker.</p>
@@ -121,10 +98,19 @@
 </div>
 
 <div class="feature">
-  <img src="asserts/zimbabwe_s_chiwoniso_big_12725.jpg?text=News" alt="News">
+  <img src="assets/zimbabwe_s_chiwoniso_big_12725.jpg" alt="News">
   <div class="feature-content">
     <h3>News</h3>
     <p>Stay updated with the latest headlines and stories from Zimbabwe’s music scene.</p>
+  </div>
+</div>
+
+<div class="feature">
+  <!-- Placeholder image for voting; replace with your own later -->
+  <img src="assets/vote-placeholder.jpg" alt="Vote">
+  <div class="feature-content">
+    <h3>Vote</h3>
+    <p>Cast your daily vote for your favorite song or album to help shape Zimbabwe’s music charts.</p>
   </div>
 </div>
 
@@ -147,43 +133,9 @@
         `https://twitter.com/intent/tweet?text=${t}&url=${u}`,
         `https://www.facebook.com/sharer/sharer.php?u=${u}`,
         `https://api.whatsapp.com/send?text=${t}%20${u}`,
-        `https://www.linkedin.com/sharing/share-offsite/?url=${u}`
+        `https://www.linkedin.com/sharing/sharesite/?url=${u}`
       ].forEach(link => window.open(link, '_blank', 'width=600,height=400'));
-  });
-  </script>  <!-- Voting Script -->  <script>
-    function getCookie(n){return document.cookie.split('; ').find(r=>r.startsWith(n+'='))?.split('=')[1]}
-    function setCookie(n,v,a){document.cookie=`${n}=${v};max-age=${a};path=/;Secure;SameSite=Strict`}
-    if(!getCookie('voterId')) setCookie('voterId', crypto.randomUUID(), 365*24*60*60);
-    const voterId = getCookie('voterId');
-    document.getElementById('voterInfo').textContent = `Voter ID: ${voterId}`;
-
-    const auth = firebase.auth();
-    const voteFan = firebase.functions().httpsCallable('voteFan');
-    auth.onAuthStateChanged(user=>{ if(!user) auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); });
-
-    document.getElementById('voteForm').addEventListener('submit', e=>{
-      e.preventDefault();
-      const city = e.target.city.value.trim();
-      const category = e.target.category.value;
-      const title = e.target.title.value.trim();
-      const artist = e.target.artist.value.trim();
-      const voteKey = `voted_${category}_${voterId}`;
-      if(getCookie(voteKey)) return alert('You already voted for this category today.');
-      grecaptcha.ready(()=>{
-        grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ',{action:'vote'})
-          .then(token=>{
-            document.getElementById('recaptchaToken').value = token;
-            voteFan({ voterId, city, category, title, artist, recaptchaToken: token })
-              .then(res=>{
-                if(res.data.success){
-                  setCookie(voteKey,'true',24*60*60);
-                  document.getElementById('message').textContent = 'Vote submitted successfully!';
-                  e.target.reset();
-                } else throw new Error(res.data.error||'Vote failed');
-              })
-              .catch(err=>alert(err.message));
-      });});
-  });
+    });
   </script>  <!-- Footer -->  <footer>
     &copy; 2025 MashStat. All rights reserved.
   </footer>
