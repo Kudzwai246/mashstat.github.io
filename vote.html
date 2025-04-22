@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MashStat Vote</title>  <!-- Google Analytics -->  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>  <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}  
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-8BMMTDWP3G');
   </script>  <!-- reCAPTCHA v3 -->  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>  <!-- Firebase Compat SDKs -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>  <style>
@@ -13,32 +13,43 @@
     header { background: #000; padding: 10px 20px; display: flex; align-items: center; }
     header a { display: inline-block; }
     header .logo { height: 50px; }
-    h2 { text-align: center; font-family: 'Playfair Display', serif; margin: 24px 0; }
-    form { max-width: 480px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    main { padding: 20px; max-width: 480px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    h2 { font-family: 'Playfair Display', serif; text-align: center; margin-bottom: 20px; }
     label { display: block; margin-bottom: 8px; font-weight: 600; }
     input { width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; }
-    button { width: 100%; padding: 12px; background: #ff0055; color: #fff; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
-    button:hover { background: #e6004a; }
-    #message { text-align: center; margin-top: 12px; font-weight: 600; }
+    button { width: 100%; padding: 12px; background: #ff0055; color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    button:hover:not(:disabled) { background: #e6004a; }
+    #message { text-align: center; margin-top: 16px; font-weight: 600; }
   </style></head>
 <body><header>
-  <a href="index.html"><img src="mashstat_logo.png" alt="MashStat Logo" class="logo" /></a>
-</header><h2>Cast Your Daily Vote</h2><form id="voteForm">
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" placeholder="you@example.com" required /><label for="city">City/Town:</label> <input type="text" id="city" name="city" placeholder="e.g. Norton" required />
+  <a href="index.html"><img src="mashstat_logo.png" alt="MashStat Logo" class="logo"></a>
+</header><main>
+  <h2>Cast Your Daily Vote</h2>
+  <form id="voteForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required><label for="city">City/Town:</label>
+<input type="text" id="city" name="city" placeholder="e.g. Norton" required>
 
-  <h3>Vote for Song</h3>
-  <label for="songArtist">Song Artist:</label>
-  <input type="text" id="songArtist" name="songArtist" placeholder="e.g. Feli Nandi" required /><label for="songTitle">Song Title:</label> <input type="text" id="songTitle" name="songTitle" placeholder="e.g. Dzoka Kumba" required />
+<h3>Vote for Song</h3>
+<label for="songArtist">Song Artist:</label>
+<input type="text" id="songArtist" name="songArtist" placeholder="e.g. Feli Nandi" required>
+<label for="songTitle">Song Title:</label>
+<input type="text" id="songTitle" name="songTitle" placeholder="e.g. Dzoka Kumba" required>
 
-  <h3>Vote for Album</h3>
-  <label for="albumArtist">Album Artist:</label>
-  <input type="text" id="albumArtist" name="albumArtist" placeholder="e.g. Jah Prayzah" required /><label for="albumTitle">Album Title:</label> <input type="text" id="albumTitle" name="albumTitle" placeholder="e.g. Chapter One" required />
+<h3>Vote for Album</h3>
+<label for="albumArtist">Album Artist:</label>
+<input type="text" id="albumArtist" name="albumArtist" placeholder="e.g. Jah Prayzah" required>
+<label for="albumTitle">Album Title:</label>
+<input type="text" id="albumTitle" name="albumTitle" placeholder="e.g. Chapter One" required>
 
-  <input type="hidden" id="recaptchaToken" name="recaptchaToken" />
-  <button type="submit">Submit Vote</button>
-</form><div id="message"></div><script>
-  // Initialize Firebase
+<input type="hidden" id="recaptchaToken" name="recaptchaToken">
+<button type="submit" id="submitBtn">Submit Vote</button>
+
+  </form>
+  <div id="message"></div>
+</main><script>
+  // Firebase config & init
   const firebaseConfig = {
     apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
     authDomain: "mashstat-vote.firebaseapp.com",
@@ -51,18 +62,22 @@
 
   const auth = firebase.auth();
   const voteFan = firebase.functions().httpsCallable('voteFan');
+  const form = document.getElementById('voteForm');
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('message');
 
+  // Ensure user is signed in
   auth.onAuthStateChanged(user => {
     if (!user) {
       auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     }
   });
 
-  const form = document.getElementById('voteForm');
-  const msg = document.getElementById('message');
-
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
+    btn.disabled = true;
+    msg.textContent = 'Submitting vote...';
+    msg.style.color = '#555';
 
     const email = form.email.value.trim();
     const city = form.city.value.trim();
@@ -71,7 +86,6 @@
     const albumArtist = form.albumArtist.value.trim();
     const albumTitle = form.albumTitle.value.trim();
     const device = navigator.userAgent;
-
     const today = new Date().toISOString().split('T')[0];
     const userKey = `voted_user_${email}_${today}`;
     const deviceKey = `voted_device_${btoa(device)}_${today}`;
@@ -79,40 +93,42 @@
     if (localStorage.getItem(userKey) || localStorage.getItem(deviceKey)) {
       msg.textContent = 'You have already voted today with this account or device.';
       msg.style.color = 'red';
+      btn.disabled = false;
       return;
     }
 
-    grecaptcha.ready(() => {
-      grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ', { action: 'vote' })
-        .then(token => {
-          document.getElementById('recaptchaToken').value = token;
+    try {
+      // Get reCAPTCHA token
+      const token = await grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ', { action: 'vote' });
+      document.getElementById('recaptchaToken').value = token;
 
-          voteFan({
-            voterId: email,
-            city,
-            device,
-            recaptchaToken: token,
-            song: { artist: songArtist, title: songTitle },
-            album: { artist: albumArtist, title: albumTitle }
-          })
-          .then(res => {
-            if (res.data.success) {
-              localStorage.setItem(userKey, 'true');
-              localStorage.setItem(deviceKey, 'true');
-              msg.textContent = 'Vote submitted successfully!';
-              msg.style.color = 'green';
-              form.reset();
-            } else {
-              msg.textContent = res.data.error || 'Vote failed. Please try again.';
-              msg.style.color = 'red';
-            }
-          })
-          .catch(err => {
-            msg.textContent = 'Error: ' + err.message;
-            msg.style.color = 'red';
-          });
-        });
-    });
+      // Call Cloud Function
+      const res = await voteFan({
+        voterId: email,
+        city,
+        device,
+        recaptchaToken: token,
+        song: { artist: songArtist, title: songTitle },
+        album: { artist: albumArtist, title: albumTitle }
+      });
+
+      if (res.data.success) {
+        localStorage.setItem(userKey, 'true');
+        localStorage.setItem(deviceKey, 'true');
+        msg.textContent = 'Vote submitted successfully!';
+        msg.style.color = 'green';
+        form.reset();
+      } else {
+        msg.textContent = res.data.error || 'Vote failed. Please try again.';
+        msg.style.color = 'red';
+      }
+    } catch (err) {
+      console.error('Vote error:', err);
+      msg.textContent = `Error (${err.code || 'internal'}): ${err.message}`;
+      msg.style.color = 'red';
+    }
+
+    btn.disabled = false;
   });
 </script></body>
 </html>
