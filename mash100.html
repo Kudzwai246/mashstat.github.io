@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
@@ -8,198 +7,156 @@
     function gtag(){dataLayer.push(arguments);}  
     gtag('js', new Date());
     gtag('config', 'G-8BMMTDWP3G');
-  </script>
-
-  <meta charset="UTF-8">
+  </script>  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mash 100 – Top Songs</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Mash 100 – Top Songs</title>  <!-- Fonts -->  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
-  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">  <style>
     /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Montserrat', sans-serif; 
-      background: #fafafa; 
-      color: #111;
+      font-family: 'Montserrat', sans-serif;
+      background: #121212;
+      color: #fff;
       padding: 20px;
     }
 
-    /* Navbar & Logo (inherited from home) */
+    /* Logo & Header */
     .logo-link { display: block; text-align: center; margin-bottom: 20px; }
     .logo { height: 50px; }
-
-    /* Page header */
-    h1 {
-      font-family: 'Playfair Display', serif;
-      text-align: center; 
-      font-size: 2.5rem; 
-      margin-bottom: 5px;
-    }
-    .description {
-      text-align: center; 
-      color: #555; 
-      margin-bottom: 30px;
-      font-size: 1rem;
-    }
+    h1 { font-family: 'Playfair Display', serif; text-align: center; font-size: 2.5rem; margin-bottom: 5px; }
+    .description { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 1rem; }
 
     /* Grid container */
     .chart {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-      gap: 20px;  /* space between cards */ 
-      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
     }
 
-    /* Card base style */
+    /* Card style */
     .chart-item {
-      background: #1e1e1e; 
-      border-radius: 8px; 
-      padding: 20px; 
+      background: #1e1e1e;
+      border-radius: 6px;
+      padding: 12px;
       position: relative;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    /* Highlight #1 */
-    .chart-item.highlight {
-      grid-column: 1 / -1;        /* full-width */ 
-      background: #333; 
-      box-shadow: 0 0 20px rgba(255,0,85,0.6);
-    }
-
-    .rank {
-      font-size: 1.5rem; 
-      font-weight: 700; 
-      color: #ff0055;
-    }
-    .song-title {
-      display: block; 
-      font-size: 1.3rem; 
-      font-weight: 600; 
-      margin: 8px 0;
-      color: #fff;
-    }
-    .artist-name {
-      color: #0af; 
-      font-style: italic; 
-      margin-bottom: 12px;
-    }
-
-    /* Billboard-style metadata row */
-    .meta {
-      font-size: 0.85rem; 
-      color: #ccc; 
-      display: flex; 
+      display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      margin-top: 12px;
+      height: 140px;
     }
-    .meta div { display: flex; align-items: center; }
-    .meta .label { margin-right: 4px; font-weight: 600; }
+
+    /* Highlight first place */
+    .chart-item.highlight {
+      grid-column: 1 / -1;
+      background: #333;
+      box-shadow: 0 0 20px rgba(255,0,85,0.6);
+      height: 160px;
+    }
+
+    .rank { font-size: 1.4rem; font-weight: 700; color: #ff0055; }
+    .song-title { font-size: 1.1rem; font-weight: 600; margin: 4px 0; color: #fff; }
+    .artist-name { color: #0af; font-style: italic; font-size: 0.9rem; }
 
     /* Trend icons */
-    .trend {
-      position: absolute; 
-      top: 16px; 
-      right: 16px; 
-      font-size: 1.2em;
-    }
+    .trend { position: absolute; top: 8px; right: 8px; font-size: 1.2rem; }
     .trend.down { color: #f55; }
-    .trend.up   { color: #5f5; }
-    .trend.new  { color: #5f5; }
+    .trend.up { color: #5f5; }
+    .trend.new { color: #5f5; }
 
-  </style>
-</head>
+    /* Meta row */
+    .meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: #ccc; margin-top: 8px; }
+    .meta div { display: flex; align-items: center; }
+    .meta .label { font-weight: 600; margin-right: 4px; }
+  </style></head>
 <body>
   <!-- Logo linking back home -->
-  <a href="index.html" class="logo-link">
-    <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
-  </a>
-
-  <h1>Mash 100 – Top Songs</h1>
-  <p class="description">
-    Zimbabwe’s 100 most streamed tracks this week across YouTube, Spotify & Apple Music. Updated every Wednesday.
-  </p>
-
-  <div class="chart">
-    <!-- 1: New Entry Highlight -->
+  <a href="index.html" class="logo-link"><img src="mashstat_logo.png" alt="MashStat Logo" class="logo"></a>  <h1>Mash 100 – Top Songs</h1>
+  <p class="description">This chart ranks the top 100 most streamed tracks in Zimbabwe across all major platforms. Updated weekly.</p>  <div class="chart">
+    <!-- 1 -->
     <div class="chart-item highlight">
-      <span class="rank">1</span>
+      <span class="rank">1.</span>
       <span class="song-title">Hope dzandairota</span>
       <span class="artist-name">Bling 4</span>
       <span class="trend new">●</span>
-      <div class="meta">
-        <div><span class="label">Peak:</span>1</div>
-        <div><span class="label">Last:</span>—</div>
-      </div>
-    </div>
+      <div class="meta"><div><span class="label">Peak:</span>1</div><div><span class="label">Last:</span>—</div></div>
+    </div><!-- 2 -->
+<div class="chart-item">
+  <span class="rank">2.</span>
+  <span class="song-title">Zampele</span>
+  <span class="artist-name">Oriyano ft. Spirit</span>
+  <span class="trend down">▼</span>
+  <div class="meta"><div><span class="label">Peak:</span>1</div><div><span class="label">Last:</span>1</div></div>
+</div>
 
-    <!-- 2: Moved down -->
-    <div class="chart-item">
-      <span class="rank">2</span>
-      <span class="song-title">Zampele</span>
-      <span class="artist-name">Oriyano ft. Spirit</span>
-      <span class="trend down">▼</span>
-      <div class="meta">
-        <div><span class="label">Peak:</span>1</div>
-        <div><span class="label">Last:</span>1</div>
-      </div>
-    </div>
+<!-- 3 -->
+<div class="chart-item">
+  <span class="rank">3.</span>
+  <span class="song-title">Boyz rangu</span>
+  <span class="artist-name">Bling 4</span>
+  <span class="trend new">●</span>
+  <div class="meta"><div><span class="label">Peak:</span>3</div><div><span class="label">Last:</span>—</div></div>
+</div>
 
-    <!-- 3: New Entry -->
-    <div class="chart-item">
-      <span class="rank">3</span>
-      <span class="song-title">Boyz rangu</span>
-      <span class="artist-name">Bling 4</span>
-      <span class="trend new">●</span>
-      <div class="meta">
-        <div><span class="label">Peak:</span>3</div>
-        <div><span class="label">Last:</span>—</div>
-      </div>
-    </div>
+<!-- 4 -->
+<div class="chart-item">
+  <span class="rank">4.</span>
+  <span class="song-title">Ndionesei</span>
+  <span class="artist-name">Blind 4</span>
+  <span class="trend new">●</span>
+  <div class="meta"><div><span class="label">Peak:</span>4</div><div><span class="label">Last:</span>—</div></div>
+</div>
 
-    <!-- 4: New Entry -->
-    <div class="chart-item">
-      <span class="rank">4</span>
-      <span class="song-title">Ndionesei</span>
-      <span class="artist-name">Blind 4</span>
-      <span class="trend new">●</span>
-      <div class="meta">
-        <div><span class="label">Peak:</span>4</div>
-        <div><span class="label">Last:</span>—</div>
-      </div>
-    </div>
+<!-- 5 -->
+<div class="chart-item">
+  <span class="rank">5.</span>
+  <span class="song-title">Murungu</span>
+  <span class="artist-name">Sane</span>
+  <span class="trend new">●</span>
+  <div class="meta"><div><span class="label">Peak:</span>5</div><div><span class="label">Last:</span>—</div></div>
+</div>
 
-    <!-- 5: New Entry -->
-    <div class="chart-item">
-      <span class="rank">5</span>
-      <span class="song-title">Murungu</span>
-      <span class="artist-name">Sane</span>
-      <span class="trend new">●</span>
-      <div class="meta">
-        <div><span class="label">Peak:</span>5</div>
-        <div><span class="label">Last:</span>—</div>
-      </div>
-    </div>
+<!-- 6 -->
+<div class="chart-item"><span class="rank">6.</span><span class="song-title">Propaganda</span><span class="artist-name">Winky</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>2</div><div><span class="label">Last:</span>2</div></div></div>
+<!-- 7 -->
+<div class="chart-item"><span class="rank">7.</span><span class="song-title">Fofa Fofa</span><span class="artist-name">Saintflow ft. Nutty O</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>3</div><div><span class="label">Last:</span>3</div></div></div>
+<!-- 8 -->
+<div class="chart-item"><span class="rank">8.</span><span class="song-title">Kuda</span><span class="artist-name">Chillmaster</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>4</div><div><span class="label">Last:</span>4</div></div></div>
+<!-- 9 -->
+<div class="chart-item"><span class="rank">9.</span><span class="song-title">Admire Kadembo</span><span class="artist-name">Nisha Ts</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>5</div><div><span class="label">Last:</span>5</div></div></div>
+<!-- 10 -->
+<div class="chart-item"><span class="rank">10.</span><span class="song-title">Ugly Before</span><span class="artist-name">Nisha Ts</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>6</div><div><span class="label">Last:</span>6</div></div></div>
 
-    <!-- 6–10 retained with down arrows and weeks incremented -->
-    <div class="chart-item"><span class="rank">6</span><span class="song-title">Propaganda</span><span class="artist-name">Winky</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>2</div><div><span class="label">Last:</span>2</div></div></div>
-    <div class="chart-item"><span class="rank">7</span><span class="song-title">Fofa Fofa</span><span class="artist-name">Saintflow ft. Nutty O</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>3</div><div><span class="label">Last:</span>3</div></div></div>
-    <div class="chart-item"><span class="rank">8</span><span class="song-title">Kuda</span><span class="artist-name">Chillmaster</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>4</div><div><span class="label">Last:</span>4</div></div></div>
-    <div class="chart-item"><span class="rank">9</span><span class="song-title">Admire Kadembo</span><span class="artist-name">Nisha Ts</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>5</div><div><span class="label">Last:</span>5</div></div></div>
-    <div class="chart-item"><span class="rank">10</span><span class="song-title">Ugly Before</span><span class="artist-name">Nisha Ts</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>6</div><div><span class="label">Last:</span>6</div></div></div>
+<!-- 11 -->
+<div class="chart-item"><span class="rank">11.</span><span class="song-title">Door Ratovharwa (Mjolo)</span><span class="artist-name">Donator Calvis</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>7</div><div><span class="label">Last:</span>7</div></div></div>
+<!-- 12 -->
+<div class="chart-item"><span class="rank">12.</span><span class="song-title">Manake</span><span class="artist-name">Shone</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>8</div><div><span class="label">Last:</span>8</div></div></div>
+<!-- 13 -->
+<div class="chart-item"><span class="rank">13.</span><span class="song-title">Misodzi Yemurume</span><span class="artist-name">Michael Mags</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>9</div><div><span class="label">Last:</span>9</div></div></div>
+<!-- 14 -->
+<div class="chart-item"><span class="rank">14.</span><span class="song-title">Luther</span><span class="artist-name">Kendrick Lamar & SZA</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>10</div><div><span class="label">Last:</span>10</div></div></div>
+<!-- 15 -->
+<div class="chart-item"><span class="rank">15.</span><span class="song-title">Ta Ta Ta</span><span class="artist-name">Nyasha David</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>11</div><div><span class="label">Last:</span>11</div></div></div>
+<!-- 16 -->
+<div class="chart-item"><span class="rank">16.</span><span class="song-title">Ndakuda</span><span class="artist-name">Oriyano</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>12</div><div><span class="label">Last:</span>12</div></div></div>
+<!-- 17 -->
+<div class="chart-item"><span class="rank">17.</span><span class="song-title">Horror</span><span class="artist-name">Chillmaster</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>13</div><div><span class="label">Last:</span>13</div></div></div>
+<!-- 18 -->
+<div class="chart-item"><span class="rank">18.</span><span class="song-title">Makarima Mupoto</span><span class="artist-name">Oriyano</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>14</div><div><span class="label">Last:</span>14</div></div></div>
+<!-- 19 -->
+<div class="chart-item"><span class="rank">19.</span><span class="song-title">Fona</span><span class="artist-name">Delroy Shewe</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>15</div><div><span class="label">Last:</span>15</div></div></div>
+<!-- 20 -->
+<div class="chart-item"><span class="rank">20.</span><span class="song-title">Kudiwa Chaizvo</span><span class="artist-name">Chillmaster</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>16</div><div><span class="label">Last:</span>16</div></div></div>
+<!-- 21 -->
+<div class="chart-item"><span class="rank">21.</span><span class="song-title">Nokia</span><span class="artist-name">Drake</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>17</div><div><span class="label">Last:</span>17</div></div></div>
+<!-- 22 -->
+<div class="chart-item"><span class="rank">22.</span><span class="song-title">Siya</span><span class="artist-name">Winky D</span><span class="trend up">▲</span><div class="meta"><div><span class="label">Peak:</span>18</div><div><span class="label">Last:</span>23</div></div></div>
+<!-- 23 -->
+<div class="chart-item"><span class="rank">23.</span><span class="song-title">Hallelujah</span><span class="artist-name">Holy Ten ft. Celscius</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>19</div><div><span class="label">Last:</span>19</div></div></div>
+<!-- 24 -->
+<div class="chart-item"><span class="rank">24.</span><span class="song-title">Bad Energy</span><span class="artist-name">Atenda Chinx</span><span class="trend up">▲</span><div class="meta"><div><span class="label">Peak:</span>20</div><div><span class="label">Last:</span>25</div></div></div>
 
-    <!-- Random ups in the 20s (#22 and #24) -->
-    <div class="chart-item"><span class="rank">22</span><span class="song-title">Siya</span><span class="artist-name">Winky D</span><span class="trend up">▲</span><div class="meta"><div><span class="label">Peak:</span>18</div><div><span class="label">Last:</span>23</div></div></div>
-    <div class="chart-item"><span class="rank">24</span><span class="song-title">Bad Energy</span><span class="artist-name">Atenda Chinx</span><span class="trend up">▲</span><div class="meta"><div><span class="label">Peak:</span>20</div><div><span class="label">Last:</span>25</div></div></div>
-
-    <!-- The rest remain with down arrows -->
-    <div class="chart-item"><span class="rank">11</span><span class="song-title">Door Ratovharwa (Mjolo)</span><span class="artist-name">Donator Calvis</span><span class="trend down">▼</span><div class="meta"><div><span class="label">Peak:</span>7</div><div><span class="label">Last:</span>7</div></div></div>
-    <!-- ...continue through #100 similarly...-->
   </div>
 </body>
 </html>
