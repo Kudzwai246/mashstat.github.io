@@ -1,146 +1,225 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-8BMMTDWP3G');
-</script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mash 100 – Top Songs</title>
-  <style>
-    body {
-      background-color: #121212;
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    .logo {
-      display: block;
-      margin: 0 auto 20px;
-      width: 150px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-    .description {
-      text-align: center;
-      font-size: 1em;
-      margin-bottom: 30px;
-      color: #cccccc;
-    }
-    .chart-item {
-      background-color: #1e1e1e;
-      margin: 10px 0;
-      padding: 15px;
-      border-radius: 8px;
-    }
-    .song-title {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #ffffff;
-    }
-    .artist-name {
-      color: navy;
-      font-style: italic;
-    }
-  </style>
-</head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());
+    gtag('config', 'G-8BMMTDWP3G');
+  </script>  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mash 100 – Top Songs</title>  <!-- Fonts -->  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">  <style>
+    body { background: #121212; color: #fff; font-family: 'Montserrat', sans-serif; padding: 20px; }
+    a.logo-link { display: block; text-align: center; margin-bottom: 20px; }
+    .logo { width: 150px; }
+    h1 { text-align: center; font-size: 2.2em; margin-bottom: 5px; }
+    .description { text-align: center; color: #ccc; margin-bottom: 30px; }
+    .chart { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; }
+    .chart-item { background: #1e1e1e; padding: 20px; border-radius: 8px; position: relative; }
+    .chart-item.highlight { grid-column: 1/-1; background: #2a2a2a; box-shadow: 0 0 15px rgba(255,0,85,0.6); }
+    .rank { font-size: 1.5em; font-weight: bold; }
+    .song-title { display: block; font-size: 1.2em; font-weight: 600; margin: 8px 0; }
+    .artist-name { color: #0af; font-style: italic; }
+    .weeks { margin-top: 10px; font-size: 0.9em; color: #aaa; }
+    .trend { position: absolute; top: 16px; right: 16px; font-size: 1.2em; }
+    .trend.down { color: #f55; }
+    .trend.new { color: #5f5; }
+  </style></head>
 <body>
-  <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
-  <h1>Mash 100 – Top Songs</h1>
-  <p class="description">This chart ranks the top 100 most streamed songs in Zimbabwe across YouTube, Spotify, and Apple Music. Updated every Wednesday.</p>  <div class="chart-item">
-    <span class="song-title">1. Zampele</span><br>
-    <span class="artist-name">Oriyano ft. Spirit – Weeks: 1</span>
+  <!-- Logo linking back home -->
+  <a href="index.html" class="logo-link"><img src="mashstat_logo.png" alt="MashStat Logo" class="logo"></a>  <h1>Mash 100 – Top Songs</h1>
+  <p class="description">This chart ranks the top 100 most streamed tracks in Zimbabwe across all major platforms. Updated weekly.</p>  <div class="chart">
+    <!-- #1 Highlight -->
+    <div class="chart-item highlight">
+      <span class="rank">1.</span>
+      <span class="song-title">Hope dzandairota</span>
+      <span class="artist-name">Bling 4</span>
+      <span class="trend new">●</span>
+      <div class="weeks">Weeks: New Entry</div>
+    </div><!-- #2 -->
+<div class="chart-item">
+  <span class="rank">2.</span>
+  <span class="song-title">Zampele</span>
+  <span class="artist-name">Oriyano ft. Spirit</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+
+<!-- #3 -->
+<div class="chart-item">
+  <span class="rank">3.</span>
+  <span class="song-title">Boyz rangu</span>
+  <span class="artist-name">Bling 4</span>
+  <span class="trend new">●</span>
+  <div class="weeks">Weeks: New Entry</div>
+</div>
+
+<!-- #4 -->
+<div class="chart-item">
+  <span class="rank">4.</span>
+  <span class="song-title">Ndionesei</span>
+  <span class="artist-name">Blind 4</span>
+  <span class="trend new">●</span>
+  <div class="weeks">Weeks: New Entry</div>
+</div>
+
+<!-- #5 -->
+<div class="chart-item">
+  <span class="rank">5.</span>
+  <span class="song-title">Murungu</span>
+  <span class="artist-name">Sane</span>
+  <span class="trend new">●</span>
+  <div class="weeks">Weeks: New Entry</div>
+</div>
+
+<!-- #6 -->
+<div class="chart-item">
+  <span class="rank">6.</span>
+  <span class="song-title">Propaganda</span>
+  <span class="artist-name">Winky</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+
+<!-- #7 -->
+<div class="chart-item">
+  <span class="rank">7.</span>
+  <span class="song-title">Fofa Fofa</span>
+  <span class="artist-name">Saintflow ft. Nutty O</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+
+<!-- #8 -->
+<div class="chart-item">
+  <span class="rank">8.</span>
+  <span class="song-title">Kuda</span>
+  <span class="artist-name">Chillmaster</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+
+<!-- #9 -->
+<div class="chart-item">
+  <span class="rank">9.</span>
+  <span class="song-title">Admire Kadembo</span>
+  <span class="artist-name">Nisha Ts</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+
+<!-- #10 -->
+<div class="chart-item">
+  <span class="rank">10.</span>
+  <span class="song-title">Ugly Before</span>
+  <span class="artist-name">Nisha Ts</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+
+<!-- additional items... up to #24 -->
+<div class="chart-item">
+  <span class="rank">11.</span>
+  <span class="song-title">Door Ratovharwa (Mjolo)</span>
+  <span class="artist-name">Donator Calvis</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">12.</span>
+  <span class="song-title">Manake</span>
+  <span class="artist-name">Shone</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">13.</span>
+  <span class="song-title">Misodzi Yemurume</span>
+  <span class="artist-name">Michael Mags</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">14.</span>
+  <span class="song-title">Luther</span>
+  <span class="artist-name">Kendrick Lamar & SZA</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">15.</span>
+  <span class="song-title">Ta Ta Ta</span>
+  <span class="artist-name">Nyasha David</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 3</div>
+</div>
+<div class="chart-item">
+  <span class="rank">16.</span>
+  <span class="song-title">Ndakuda</span>
+  <span class="artist-name">Oriyano</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 3</div>
+</div>
+<div class="chart-item">
+  <span class="rank">17.</span>
+  <span class="song-title">Horror</span>
+  <span class="artist-name">Chillmaster</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">18.</span>
+  <span class="song-title">Makarima Mupoto</span>
+  <span class="artist-name">Oriyano</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 3</div>
+</div>
+<div class="chart-item">
+  <span class="rank">19.</span>
+  <span class="song-title">Fona</span>
+  <span class="artist-name">Delroy Shewe</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">20.</span>
+  <span class="song-title">Kudiwa Chaizvo</span>
+  <span class="artist-name">Chillmaster</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">21.</span>
+  <span class="song-title">Nokia</span>
+  <span class="artist-name">Drake</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">22.</span>
+  <span class="song-title">Siya</span>
+  <span class="artist-name">Winky D</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">23.</span>
+  <span class="song-title">Hallelujah</span>
+  <span class="artist-name">Holy Ten ft. Celscius</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+<div class="chart-item">
+  <span class="rank">24.</span>
+  <span class="song-title">Bad Energy</span>
+  <span class="artist-name">Atenda Chinx</span>
+  <span class="trend down">▼</span>
+  <div class="weeks">Weeks: 2</div>
+</div>
+
   </div>
-  <div class="chart-item">
-    <span class="song-title">2. Propaganda</span><br>
-    <span class="artist-name">Winky – Weeks: New Entry</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">3. Fofa Fofa</span><br>
-    <span class="artist-name">Saintflow ft. Nutty O – Weeks: New Entry</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">4. Kuda</span><br>
-    <span class="artist-name">Chillmaster – Weeks: New Entry</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">5. Admire Kadembo</span><br>
-    <span class="artist-name">Nisha Ts – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">6. Ugly Before</span><br>
-    <span class="artist-name">Nisha Ts – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">7. Door Ratovharwa (Mjolo)</span><br>
-    <span class="artist-name">Donator Calvis – Weeks: New Entry</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">8. Manake</span><br>
-    <span class="artist-name">Shone – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">9. Misodzi Yemurume</span><br>
-    <span class="artist-name">Michael Mags – Weeks: New Entry</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">10. Luther</span><br>
-    <span class="artist-name">Kendrick Lamar & SZA – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">11. Ta Ta Ta</span><br>
-    <span class="artist-name">Nyasha David – Weeks: 2</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">12. Ndakuda</span><br>
-    <span class="artist-name">Oriyano – Weeks: 2</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">13. Horror</span><br>
-    <span class="artist-name">Chillmaster – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">14. Makarima Mupoto</span><br>
-    <span class="artist-name">Oriyano – Weeks: 2</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">15. Fona</span><br>
-    <span class="artist-name">Delroy Shewe – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">16. Kudiwa Chaizvo</span><br>
-    <span class="artist-name">Chillmaster – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">17. Nokia</span><br>
-    <span class="artist-name">Drake – Weeks: New Entry</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">18. Siya</span><br>
-    <span class="artist-name">Winky D – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">19. Hallelujah</span><br>
-    <span class="artist-name">Holy Ten ft. Celscius – Weeks: 1</span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">20. Bad Energy</span><br>
-    <span class="artist-name">Atenda Chinx – Weeks: New Entry</span>
-  </div>  <!-- Auto-generated continuation of placeholder entries for 21–100 -->  <!-- These can be replaced later with real data -->  <!-- Begin Loop Placeholder -->  <!-- If using JS or server-side script, loop would be ideal -->  <!-- For now, hardcoded entries follow -->  <!-- Only showing a few for brevity -->  <div class="chart-item">
-    <span class="song-title">21. Song Title 21</span><br>
-    <span class="artist-name">Artist 21 – Weeks: </span>
-  </div>
-  <div class="chart-item">
-    <span class="song-title">22. Song Title 22</span><br>
-    <span class="artist-name">Artist 22 – Weeks: </span>
-  </div>
-  <!-- ...repeat pattern up to 100 --></body>
+</body>
 </html>
