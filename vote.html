@@ -13,7 +13,7 @@
   <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>
   <style>
     * { box-sizing: border-box; margin:0; padding:0; }
-    body { background: #121212; color: #eee; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    body { background: #121212; color: #eee; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
     .screen { width: 100%; max-width: 400px; background: #1e1e1e; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
     .hidden { display: none; }
     h1, h2 { font-family: 'Playfair Display', serif; color: #ff0055; text-align: center; margin-bottom: 20px; }
@@ -33,30 +33,26 @@
     <h2>Cast Your Daily Vote</h2>
     <form id="voteForm">
       <div class="input-group">
-        <label>Email</label>
-        <input type="email" id="userEmail" disabled />
-      </div>
-      <div class="input-group">
-        <label>City/Town</label>
-        <input type="text" id="city" required />
+        <label for="city">City/Town</label>
+        <input type="text" id="city" required placeholder="e.g. Norton" />
       </div>
       <h3 style="color:#ff0055;margin-bottom:10px;">Vote for Song</h3>
       <div class="input-group">
-        <label>Song Artist</label>
-        <input type="text" id="songArtist" required />
+        <label for="songArtist">Song Artist</label>
+        <input type="text" id="songArtist" required placeholder="e.g. Feli Nandi" />
       </div>
       <div class="input-group">
-        <label>Song Title</label>
-        <input type="text" id="songTitle" required />
+        <label for="songTitle">Song Title</label>
+        <input type="text" id="songTitle" required placeholder="e.g. Dzoka Kumba" />
       </div>
       <h3 style="color:#ff0055;margin-bottom:10px;">Vote for Album</h3>
       <div class="input-group">
-        <label>Album Artist</label>
-        <input type="text" id="albumArtist" required />
+        <label for="albumArtist">Album Artist</label>
+        <input type="text" id="albumArtist" required placeholder="e.g. Jah Prayzah" />
       </div>
       <div class="input-group">
-        <label>Album Title</label>
-        <input type="text" id="albumTitle" required />
+        <label for="albumTitle">Album Title</label>
+        <input type="text" id="albumTitle" required placeholder="e.g. Chapter One" />
       </div>
       <button type="submit" id="submitBtn">Submit Vote</button>
       <div id="message"></div>
@@ -73,30 +69,39 @@
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const voteFan = firebase.app().functions('us-central1').httpsCallable('voteFan');
+    const voteFan = firebase.functions().httpsCallable('voteFan');
 
     const signInScreen = document.getElementById('signInScreen');
     const voteScreen = document.getElementById('voteScreen');
-    const googleSignInBtn = document.getElementById('googleSignInBtn');
-    const signInMessage = document.getElementById('signInMessage');
+    const googleBtn = document.getElementById('googleSignInBtn');
+    const signInMsg = document.getElementById('signInMessage');
     const form = document.getElementById('voteForm');
     const messageDiv = document.getElementById('message');
     const submitBtn = document.getElementById('submitBtn');
 
-    // Show vote screen after login
+    // Handle auth state
     auth.onAuthStateChanged(user => {
       if (user) {
+        // Hide sign-in, show vote
         signInScreen.classList.add('hidden');
         voteScreen.classList.remove('hidden');
-        document.getElementById('userEmail').value = user.email;
+      } else {
+        // Show sign-in
+        signInScreen.classList.remove('hidden');
+        voteScreen.classList.add('hidden');
       }
     });
 
-    // Sign in handler
-    googleSignInBtn.addEventListener('click', () => {
+    // Sign in button
+    googleBtn.addEventListener('click', () => {
+      signInMsg.textContent = '';
       auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+        .then(result => {
+          // optionally show a confirmation
+          console.log('Signed in as', result.user.email);
+        })
         .catch(err => {
-          signInMessage.textContent = 'Sign-in error: ' + err.message;
+          signInMsg.textContent = 'Error: ' + err.message;
         });
     });
 
@@ -108,6 +113,13 @@
       messageDiv.textContent = 'Submitting…';
 
       const user = auth.currentUser;
+      if (!user) {
+        messageDiv.style.color = 'red';
+        messageDiv.textContent = 'Not signed in.';
+        submitBtn.disabled = false;
+        return;
+      }
+
       const email = user.email;
       const city = document.getElementById('city').value.trim();
       const songArtist = document.getElementById('songArtist').value.trim();
@@ -116,10 +128,9 @@
       const albumTitle = document.getElementById('albumTitle').value.trim();
       const device = navigator.userAgent;
       const today = new Date().toISOString().slice(0,10);
-
-      // One vote per day per user & device
       const userKey = `voted_email_${email}_${today}`;
       const deviceKey = `voted_device_${btoa(device)}_${today}`;
+
       if (localStorage.getItem(userKey) || localStorage.getItem(deviceKey)) {
         messageDiv.style.color = 'red';
         messageDiv.textContent = 'You already voted today.';
@@ -127,19 +138,19 @@
         return;
       }
 
-      // reCAPTCHA v3
+      // reCAPTCHA
       let token;
       try {
         await grecaptcha.ready();
         token = await grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ',{action:'vote'});
-      } catch (err) {
+      } catch {
         messageDiv.style.color = 'red';
-        messageDiv.textContent = 'reCAPTCHA error, try again.';
+        messageDiv.textContent = 'reCAPTCHA failed.';
         submitBtn.disabled = false;
         return;
       }
 
-      // Call Cloud Function
+      // call Cloud Function
       voteFan({ voterId: email, city, device, recaptchaToken: token,
                 song: { artist: songArtist, title: songTitle },
                 album: { artist: albumArtist, title: albumTitle } })
@@ -148,18 +159,17 @@
             localStorage.setItem(userKey,'true');
             localStorage.setItem(deviceKey,'true');
             messageDiv.style.color = 'lightgreen';
-            messageDiv.textContent = 'Vote submitted!';
+            messageDiv.textContent = 'Vote submitted successfully!';
             form.reset();
           } else {
-            throw new Error(res.data.error||'Vote failed');
+            throw new Error(res.data.error || 'Vote failed.');
           }
         })
         .catch(err => {
-          console.error(err);
           messageDiv.style.color = 'red';
-          messageDiv.textContent = err.message || 'Error submitting vote.';
+          messageDiv.textContent = err.message;
         })
-        .finally(()=> submitBtn.disabled = false);
+        .finally(() => submitBtn.disabled = false);
     });
   </script></body>
 </html>
