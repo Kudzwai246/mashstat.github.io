@@ -1,134 +1,239 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MashStat Vote</title>  <!-- Google Analytics -->  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>  <script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Vote on MashStat</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-8BMMTDWP3G');
-  </script>  <!-- reCAPTCHA v3 -->  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>  <!-- Firebase Compat SDKs -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>  <style>
+  </script>
+
+  <!-- reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>
+
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
+
+  <style>
+    /* Basic reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }
-    header { background: #000; padding: 10px 20px; display: flex; align-items: center; }
-    header a { display: inline-block; }
-    header .logo { height: 50px; }
-    main { padding: 20px; max-width: 480px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    h2 { font-family: 'Playfair Display', serif; text-align: center; margin-bottom: 20px; }
-    label { display: block; margin-bottom: 8px; font-weight: 600; }
-    input { width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; }
-    button { width: 100%; padding: 12px; background: #ff0055; color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    button:hover:not(:disabled) { background: #e6004a; }
-    #message { text-align: center; margin-top: 16px; font-weight: 600; }
-  </style></head>
-<body><header>
-  <a href="index.html"><img src="mashstat_logo.png" alt="MashStat Logo" class="logo"></a>
-</header><main>
-  <h2>Cast Your Daily Vote</h2>
-  <form id="voteForm">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" placeholder="you@example.com" required><label for="city">City/Town:</label>
-<input type="text" id="city" name="city" placeholder="e.g. Norton" required>
 
-<h3>Vote for Song</h3>
-<label for="songArtist">Song Artist:</label>
-<input type="text" id="songArtist" name="songArtist" placeholder="e.g. Feli Nandi" required>
-<label for="songTitle">Song Title:</label>
-<input type="text" id="songTitle" name="songTitle" placeholder="e.g. Dzoka Kumba" required>
-
-<h3>Vote for Album</h3>
-<label for="albumArtist">Album Artist:</label>
-<input type="text" id="albumArtist" name="albumArtist" placeholder="e.g. Jah Prayzah" required>
-<label for="albumTitle">Album Title:</label>
-<input type="text" id="albumTitle" name="albumTitle" placeholder="e.g. Chapter One" required>
-
-<input type="hidden" id="recaptchaToken" name="recaptchaToken">
-<button type="submit" id="submitBtn">Submit Vote</button>
-
-  </form>
-  <div id="message"></div>
-</main><script>
-  // Firebase config & init
-  const firebaseConfig = {
-    apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
-    authDomain: "mashstat-vote.firebaseapp.com",
-    projectId: "mashstat-vote",
-    storageBucket: "mashstat-vote.firebasestorage.app",
-    messagingSenderId: "623901795277",
-    appId: "1:623901795277:web:26fb2334f252b65eed1a84"
-  };
-  firebase.initializeApp(firebaseConfig);
-
-  const auth = firebase.auth();
-  const voteFan = firebase.functions().httpsCallable('voteFan');
-  const form = document.getElementById('voteForm');
-  const btn = document.getElementById('submitBtn');
-  const msg = document.getElementById('message');
-
-  // Ensure user is signed in
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    body {
+      background: #121212;
+      color: #eee;
+      font-family: 'Montserrat', sans-serif;
+      padding: 20px;
     }
-  });
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    btn.disabled = true;
-    msg.textContent = 'Submitting vote...';
-    msg.style.color = '#555';
-
-    const email = form.email.value.trim();
-    const city = form.city.value.trim();
-    const songArtist = form.songArtist.value.trim();
-    const songTitle = form.songTitle.value.trim();
-    const albumArtist = form.albumArtist.value.trim();
-    const albumTitle = form.albumTitle.value.trim();
-    const device = navigator.userAgent;
-    const today = new Date().toISOString().split('T')[0];
-    const userKey = `voted_user_${email}_${today}`;
-    const deviceKey = `voted_device_${btoa(device)}_${today}`;
-
-    if (localStorage.getItem(userKey) || localStorage.getItem(deviceKey)) {
-      msg.textContent = 'You have already voted today with this account or device.';
-      msg.style.color = 'red';
-      btn.disabled = false;
-      return;
+    header {
+      display: flex;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+    header a.logo {
+      display: block;
+      margin: 0 auto;
+    }
+    header img {
+      height: 50px;
     }
 
-    try {
-      // Get reCAPTCHA token
-      const token = await grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ', { action: 'vote' });
-      document.getElementById('recaptchaToken').value = token;
+    main {
+      background: #1e1e1e;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff0055;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #ccc;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: none;
+      border-radius: 5px;
+      background: #2a2a2a;
+      color: #fff;
+    }
+    h3 {
+      margin-top: 20px;
+      color: #ff0055;
+      font-size: 1.1rem;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #ff0055;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    #message {
+      text-align: center;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
 
-      // Call Cloud Function
-      const res = await voteFan({
+  <header>
+    <a href="index.html" class="logo">
+      <img src="mashstat_logo.png" alt="MashStat Logo">
+    </a>
+  </header>
+
+  <main>
+    <h2>Cast Your Daily Vote</h2>
+    <form id="voteForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+      <label for="city">City/Town:</label>
+      <input type="text" id="city" name="city" placeholder="e.g. Norton" required>
+
+      <h3>Vote for Song</h3>
+      <label for="songArtist">Song Artist:</label>
+      <input type="text" id="songArtist" name="songArtist" placeholder="e.g. Feli Nandi" required>
+      <label for="songTitle">Song Title:</label>
+      <input type="text" id="songTitle" name="songTitle" placeholder="e.g. Dzoka Kumba" required>
+
+      <h3>Vote for Album</h3>
+      <label for="albumArtist">Album Artist:</label>
+      <input type="text" id="albumArtist" name="albumArtist" placeholder="e.g. Jah Prayzah" required>
+      <label for="albumTitle">Album Title:</label>
+      <input type="text" id="albumTitle" name="albumTitle" placeholder="e.g. Chapter One" required>
+
+      <input type="hidden" id="recaptchaToken" name="recaptchaToken">
+      <button type="submit" id="submitBtn">Submit Vote</button>
+    </form>
+    <div id="message"></div>
+  </main>
+
+  <script>
+    // --- Firebase config & init ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
+      authDomain: "mashstat-vote.firebaseapp.com",
+      projectId: "mashstat-vote",
+      storageBucket: "mashstat-vote.firebasestorage.app",
+      messagingSenderId: "623901795277",
+      appId: "1:623901795277:web:26fb2334f252b65eed1a84"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const functions = firebase.app().functions('us-central1');
+    const voteFan = functions.httpsCallable('voteFan');
+
+    // auto–sign-in
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+      }
+    });
+
+    // recaptcha helper
+    async function getRecaptchaToken() {
+      await grecaptcha.ready();
+      return grecaptcha.execute('6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ', { action: 'vote' });
+    }
+
+    document.getElementById('voteForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const msg = document.getElementById('message');
+      btn.disabled = true;
+      msg.style.color = '#aaa';
+      msg.textContent = 'Submitting vote…';
+
+      // gather inputs
+      const email       = e.target.email.value.trim();
+      const city        = e.target.city.value.trim();
+      const songArtist  = e.target.songArtist.value.trim();
+      const songTitle   = e.target.songTitle.value.trim();
+      const albumArtist = e.target.albumArtist.value.trim();
+      const albumTitle  = e.target.albumTitle.value.trim();
+      const device      = navigator.userAgent;
+      const today       = new Date().toISOString().slice(0,10);
+
+      // enforce one-vote/day by email & device
+      const userKey   = `voted_email_${email}_${today}`;
+      const deviceKey = `voted_device_${btoa(device)}_${today}`;
+      if (localStorage.getItem(userKey) || localStorage.getItem(deviceKey)) {
+        msg.style.color = 'red';
+        msg.textContent = 'You already voted today with this account or device.';
+        btn.disabled = false;
+        return;
+      }
+
+      // get reCAPTCHA token
+      let token;
+      try {
+        token = await getRecaptchaToken();
+      } catch (err) {
+        console.error('reCAPTCHA error', err);
+        msg.style.color = 'red';
+        msg.textContent = 'reCAPTCHA failed—please try again.';
+        btn.disabled = false;
+        return;
+      }
+
+      // call Cloud Function
+      voteFan({
         voterId: email,
         city,
         device,
         recaptchaToken: token,
-        song: { artist: songArtist, title: songTitle },
+        song:  { artist: songArtist,  title: songTitle  },
         album: { artist: albumArtist, title: albumTitle }
-      });
-
-      if (res.data.success) {
-        localStorage.setItem(userKey, 'true');
-        localStorage.setItem(deviceKey, 'true');
-        msg.textContent = 'Vote submitted successfully!';
-        msg.style.color = 'green';
-        form.reset();
-      } else {
-        msg.textContent = res.data.error || 'Vote failed. Please try again.';
+      })
+      .then(res => {
+        console.log('voteFan response:', res);
+        if (res.data.success) {
+          localStorage.setItem(userKey, 'true');
+          localStorage.setItem(deviceKey, 'true');
+          msg.style.color = 'lightgreen';
+          msg.textContent = 'Vote submitted successfully!';
+          e.target.reset();
+        } else {
+          msg.style.color = 'red';
+          msg.textContent = res.data.error || 'Vote failed.';
+        }
+      })
+      .catch(err => {
+        console.error('Function error:', err);
         msg.style.color = 'red';
-      }
-    } catch (err) {
-      console.error('Vote error:', err);
-      msg.textContent = `Error (${err.code || 'internal'}): ${err.message}`;
-      msg.style.color = 'red';
-    }
-
-    btn.disabled = false;
-  });
-</script></body>
+        msg.textContent = `Error [${err.code}]: ${err.message}`;
+      })
+      .finally(() => btn.disabled = false);
+    });
+  </script>
+</body>
 </html>
