@@ -139,7 +139,11 @@
       };
 
       try {
-        await docRef.create(payload);
+        // Check existing
+        const snap = await docRef.get();
+        if (snap.exists) throw { code: 'already-exists', message: 'You have already voted today.' };
+        // Write data
+        await docRef.set(payload);
         localStorage.setItem(docId, 'true');
         showMessage('Vote submitted successfully!', 'lightgreen');
         form.reset();
