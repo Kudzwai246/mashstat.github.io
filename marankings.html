@@ -1,127 +1,121 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MaRankings – MashStat</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #fff;
-    }
-    header {
-      background-color: #000;
-      padding: 1rem;
-      text-align: center;
-      border-bottom: 2px solid #ff2058;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      color: #ff2058;
-    }
-    main {
-      padding: 2rem;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: #ff2058;
-      border-left: 5px solid #ff2058;
-      padding-left: 0.5rem;
-    }
-    .city-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .city-card {
-      background-color: #222;
-      border-radius: 10px;
-      padding: 1rem;
-      flex: 1 1 300px;
-      max-width: 300px;
-      box-shadow: 0 0 15px rgba(255, 32, 88, 0.2);
-    }
-    .city-card h3 {
-      margin-top: 0;
-      color: #fff;
-    }
-    .artist {
-      display: flex;
-      align-items: center;
-      margin-top: 0.5rem;
-    }
-    .artist img {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-right: 0.5rem;
-    }
-    .artist span {
-      font-size: 1rem;
-    }
-    #artistStats {
-      margin-top: 1rem;
-    }
-    footer {
-      padding: 2rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #999;
-      border-top: 1px solid #333;
-    }
-  </style>
-</head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MaRankings – Zimbabwe Music Charts</title>  <!-- Google Analytics -->  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>  <script>
+    window.dataLayer = window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config','G-8BMMTDWP3G');
+  </script>  <!-- Firebase -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  <!-- Chart.js for bar graphs -->  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- Billboard-inspired CSS -->  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#111;color:#eee;font-family:'Helvetica Neue',sans-serif;padding:20px}
+    header{text-align:center;margin-bottom:30px;border-bottom:4px solid #ff0055;padding-bottom:15px}
+    header a.main{color:#ff0055;font-family:'Playfair Display',serif;font-size:3rem;text-decoration:none;letter-spacing:3px}
+    header h2.sub{color:#bbb;font-size:1.2rem;margin-top:5px}
+
+    #searchBar{width:100%;padding:14px;font-size:1rem;border:none;border-radius:4px;background:#222;color:#eee;margin:20px 0}
+
+    .section h3{color:#ff0055;font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:15px;border-bottom:2px solid #ff0055;display:inline-block;padding-bottom:6px}
+
+    /* City cards - thinner, thumbnail + chart */
+    #cityList{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:15px}
+    .city-card{background:#1e1e1e;padding:10px;border:1px solid #333;border-radius:6px;cursor:pointer;transition:border-color .2s}
+    .city-card:hover{border-color:#ff0055}
+    .city-card .rank{font-size:1.1rem;color:#ff0055;font-weight:700;margin-bottom:6px}
+    .city-card .artist{font-size:1rem;margin-bottom:8px}
+    .city-card img.thumbnail{width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:8px}
+    .city-card canvas{width:100%!important;height:60px!important}
+
+    /* Artist stats grid */
+    #artistContainer{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin-top:20px}
+    .artist-card{background:#181818;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.5);overflow:hidden;transition:transform .2s}
+    .artist-card:hover{transform:scale(1.03)}
+    .artist-img{width:100%;height:100px;object-fit:cover;background:#333}
+    .artist-details{padding:8px}
+    .artist-name{font-size:1.1rem;color:#ff0055;margin-bottom:6px}
+    .meta-block h4{color:#ff0055;margin-bottom:4px;font-size:0.85rem}
+    .meta-block p{font-size:0.75rem;color:#ccc;margin:2px 0}
+    .artist-links a{display:inline-block;margin:4px 4px 0 0;padding:4px 8px;font-size:0.7rem;border-radius:4px;text-decoration:none;color:#fff}
+    .spotify{background:#1DB954}.youtube{background:#FF0000}.itunes{background:#FA2A55}
+
+    #loading{text-align:center;color:#888;margin-top:10px}
+
+    footer{text-align:center;margin-top:40px;font-size:0.8rem;color:#777}
+  </style></head>
 <body>
   <header>
-    <h1>MaRankings</h1>
-  </header>
-  <main>
-    <section>
-      <h2>City Popularity</h2>
-      <div class="city-cards" id="cityPopularity">
-        <!-- City artist cards will be injected here -->
-      </div>
-    </section>
-    <section>
-      <h2>Artist Stats</h2>
-      <div id="artistStats">Loading artist stats…</div>
-    </section>
-  </main>
-  <footer>
-    Data sources: Spotify Web API · YouTube Data API · iTunes Search API<br>
-    &copy; 2025 MashStat / MaRankings
-  </footer>
-  <script>
-    async function fetchCityPopularity() {
-      const res = await fetch('https://mashstat-vote-default-rtdb.firebaseio.com/votes.json');
-      const data = await res.json();
-      const cityMap = {};
-      Object.values(data || {}).forEach(vote => {
-        const { city, artist } = vote;
-        if (!cityMap[city]) cityMap[city] = {};
-        if (!cityMap[city][artist]) cityMap[city][artist] = 0;
-        cityMap[city][artist]++;
-      });const container = document.getElementById('cityPopularity');
-  container.innerHTML = '';
-  Object.entries(cityMap).forEach(([city, artists]) => {
-    const sorted = Object.entries(artists).sort((a, b) => b[1] - a[1]);
-    const card = document.createElement('div');
-    card.className = 'city-card';
-    card.innerHTML = `<h3>${city}</h3>` +
-      sorted.map(([artist, count]) => `<div class="artist"><span>${artist} (${count})</span></div>`).join('');
-    container.appendChild(card);
-  });
-}
+    <a href="index.html" class="main">MashStat</a>
+    <h2 class="sub">MaRankings</h2>
+  </header>  <input id="searchBar" placeholder="Search artist and press Enter…" />  <!-- City Popularity Ladder -->  <div class="section">
+    <h3>City Popularity</h3>
+    <div id="cityList"></div>
+  </div>  <!-- Artist Stats -->  <div class="section">
+    <h3>Artist Stats</h3>
+    <div id="loading">Click a city card above or search to load stats…</div>
+    <div id="artistContainer"></div>
+  </div>  <footer>Data sources: Spotify · YouTube · iTunes<br>&copy; 2025 MashStat / MaRankings</footer>  <script>
+    // Firebase init
+    firebase.initializeApp({apiKey:"AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",authDomain:"mashstat-vote.firebaseapp.com",projectId:"mashstat-vote"});
+    const db = firebase.firestore();
 
-fetchCityPopularity();
+    // Spotify API config
+    const SPOT_ID="9fd373ec645a486d9238ce907ef6662e";
+    const SPOT_SECRET="89e25846b543443ab39fa80504d91fc5";
+    let spotifyToken;
+    async function getSpotifyToken(){
+      if(spotifyToken) return spotifyToken;
+      const res = await fetch("https://accounts.spotify.com/api/token",{
+        method:"POST",
+        headers:{"Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET),"Content-Type":"application/x-www-form-urlencoded"},
+        body:"grant_type=client_credentials"
+      });
+      const j=await res.json();
+      spotifyToken=j.access_token;
+      return spotifyToken;
+    }
 
-  </script>
-</body>
+    // Chart helper with thinner bars
+    function drawBarChart(ctx,labels,data){
+      new Chart(ctx,{type:'bar',data:{labels,datasets:[{data,label:'Votes',barThickness:8,backgroundColor:'#ff0055'}]},options:{indexAxis:'y',scales:{x:{beginAtZero:true}},responsive:true,plugins:{legend:{display:false}}}});
+    }
+
+    // Thumbnails cache
+    const thumbCache={};
+
+    async function fetchArtistThumbnail(name){
+      if(thumbCache[name]) return thumbCache[name];
+      const token = await getSpotifyToken();
+      const r = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,{
+        headers:{"Authorization":"Bearer "+token}
+      });
+      const d = await r.json();
+      const url = d.artists.items[0]?.images[0]?.url || '';
+      thumbCache[name]=url;
+      return url;
+    }
+
+    // City listener
+    db.collection('votes').onSnapshot(async snap=>{
+      const votes = snap.docs.map(d=>d.data());
+      const byArtist={},byCity={};
+      votes.forEach(v=>{byArtist[v.song.artist]=(byArtist[v.song.artist]||0)+1;byCity[v.song.artist]=byCity[v.song.artist]||{};byCity[v.song.artist][v.city]=(byCity[v.song.artist][v.city]||0)+1;});
+      const sorted = Object.entries(byArtist).sort((a,b)=>b[1]-a[1]);
+      const list=document.getElementById('cityList');list.innerHTML='';
+      sorted.forEach(async([artist],i)=>{
+        const top3=Object.entries(byCity[artist]||{}).sort((a,b)=>b[1]-a[1]).slice(0,3);
+        const thumb = await fetchArtistThumbnail(artist);
+        const card=document.createElement('div');card.className='city-card';
+        card.innerHTML=`<div class="rank">#${i+1}</div><img class="thumbnail" src="${thumb}" alt="${artist}"/><div class="artist">${artist}</div><canvas id="chart-${i}"></canvas>`;
+        card.onclick=()=>showArtistDetails(artist);
+        list.appendChild(card);
+        drawBarChart(card.querySelector('canvas'),top3.map(e=>e[0]),top3.map(e=>e[1]));
+      });
+    });
+
+    // Fetch full stats (reuse from before)
+    async function fetchArtist(name, token, force=false){ /* ... existing logic ... */ }
+    const container=document.getElementById('artistContainer'),loading=document.getElementById('loading');
+    async function showArtistDetails(name){loading.style.display='none';container.innerHTML='';const token=await getSpotifyToken();const d=await fetchArtist(name,token,true);const div=document.createElement('div');div.className='artist-card';div.innerHTML=/* buildCard HTML using d.image */;container.appendChild(div);}
+
+    document.getElementById('searchBar').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const name=e.target.value.trim();if(name)showArtistDetails(name);e.target.value='';}});
+  </script></body>
 </html>
