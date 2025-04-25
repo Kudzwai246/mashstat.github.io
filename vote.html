@@ -48,7 +48,7 @@
       <div id="message"></div>
     </form>
   </div>  <script>
-    // Firebase config & init
+    // Initialize Firebase
     firebase.initializeApp({
       apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
       authDomain: "mashstat-vote.firebaseapp.com",
@@ -60,6 +60,7 @@
 
     const auth = firebase.auth();
     const db   = firebase.firestore();
+
     const signInScreen = document.getElementById('signInScreen');
     const voteScreen   = document.getElementById('voteScreen');
     const googleBtn    = document.getElementById('googleSignInBtn');
@@ -68,76 +69,85 @@
     const messageDiv   = document.getElementById('message');
     const submitBtn    = document.getElementById('submitBtn');
 
-    // Toggle screens based on auth state
-    auth.onAuthStateChanged(user => {
-      signInScreen.classList.toggle('hidden', !!user);
-      voteScreen.classList.toggle('hidden', !user);
-    });
+    // On load: always show sign-in screen
+    signInScreen.classList.remove('hidden');
+    voteScreen.classList.add('hidden');
 
-    // Google Sign-In
-    googleBtn.addEventListener('click', () => {
+    // Explicit Google Sign-In
+    googleBtn.addEventListener('click', async () => {
       signInMsg.textContent = '';
-      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-        .catch(err => signInMsg.textContent = 'Error: ' + err.message);
+      try {
+        const result = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        // On success, show vote screen
+        signInScreen.classList.add('hidden');
+        voteScreen.classList.remove('hidden');
+      } catch (err) {
+        signInMsg.textContent = 'Error: ' + err.message;
+      }
     });
 
-    // Vote form submission
-    form.addEventListener('submit', async e => {
+    // Vote form submit
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
-      showMsg('Submitting vote...', '#aaa');
+      messageDiv.style.color = '#aaa';
+      messageDiv.textContent = 'Submitting…';
 
       const user = auth.currentUser;
       if (!user) {
-        showMsg('Not signed in.', 'red');
+        messageDiv.style.color = 'red';
+        messageDiv.textContent = 'You must sign in first.';
         submitBtn.disabled = false;
         return;
       }
 
-      const uid       = user.uid;
-      const today     = new Date().toISOString().slice(0,10).replace(/-/g,'');
-      const docId     = `${uid}_${today}`;
-      const docRef    = db.collection('votes').doc(docId);
-      const city      = document.getElementById('city').value.trim();
-      const songArtist = document.getElementById('songArtist').value.trim();
-      const songTitle  = document.getElementById('songTitle').value.trim();
-      const albumArtist= document.getElementById('albumArtist').value.trim();
-      const albumTitle = document.getElementById('albumTitle').value.trim();
+      const uid    = user.uid;
+      const today  = new Date().toISOString().slice(0,10).replace(/-/g,'');
+      const docId  = `${uid}_${today}`;
+      const docRef = db.collection('votes').doc(docId);
 
-      // Prevent double voting in the UI
+      // Prevent double voting locally
       if (localStorage.getItem(docId)) {
-        showMsg('You already voted today.', 'red');
+        messageDiv.style.color = 'red';
+        messageDiv.textContent = 'You already voted today.';
         submitBtn.disabled = false;
         return;
       }
 
-      // Attempt to create the document (Firestore rule prevents duplicates)
+      // Gather form data
+      const data = {
+        uid,
+        city:        document.getElementById('city').value.trim(),
+        song: {
+          artist: document.getElementById('songArtist').value.trim(),
+          title:  document.getElementById('songTitle').value.trim()
+        },
+        album: {
+          artist: document.getElementById('albumArtist').value.trim(),
+          title:  document.getElementById('albumTitle').value.trim()
+        },
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
       try {
-        await docRef.create({
-          uid,
-          city,
-          song: { artist: songArtist, title: songTitle },
-          album: { artist: albumArtist, title: albumTitle },
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        // Use create() so Firestore enforces no existing doc
+        await docRef.create(data);
         localStorage.setItem(docId, 'true');
-        showMsg('Vote submitted successfully!', 'lightgreen');
+        messageDiv.style.color = 'lightgreen';
+        messageDiv.textContent = 'Vote submitted successfully!';
         form.reset();
       } catch (err) {
         if (err.code === 'already-exists') {
-          showMsg('You already voted today.', 'red');
+          messageDiv.style.color = 'red';
+          messageDiv.textContent = 'You already voted today.';
         } else {
           console.error(err);
-          showMsg('Error submitting vote.', 'red');
+          messageDiv.style.color = 'red';
+          messageDiv.textContent = 'Error submitting vote.';
         }
       } finally {
         submitBtn.disabled = false;
       }
     });
-
-    function showMsg(text, color) {
-      messageDiv.textContent = text;
-      messageDiv.style.color = color;
-    }
   </script></body>
 </html>
