@@ -68,7 +68,6 @@
 
     const auth = firebase.auth();
     const db   = firebase.firestore();
-
     const signInScreen = document.getElementById('signInScreen');
     const voteScreen   = document.getElementById('voteScreen');
     const googleBtn    = document.getElementById('googleSignInBtn');
@@ -76,6 +75,12 @@
     const form         = document.getElementById('voteForm');
     const messageDiv   = document.getElementById('message');
     const submitBtn    = document.getElementById('submitBtn');
+
+    // Helper to show messages
+    function showMessage(text, color) {
+      messageDiv.textContent = text;
+      messageDiv.style.color = color;
+    }
 
     // Always start on sign-in screen
     signInScreen.classList.remove('hidden');
@@ -85,8 +90,7 @@
     googleBtn.addEventListener('click', async () => {
       signInMsg.textContent = '';
       try {
-        const result = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-        // Show vote screen on success
+        await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
         signInScreen.classList.add('hidden');
         voteScreen.classList.remove('hidden');
       } catch (err) {
@@ -98,13 +102,11 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
-      messageDiv.style.color = '#aaa';
-      messageDiv.textContent = 'Submitting…';
+      showMessage('Submitting…', '#aaa');
 
       const user = auth.currentUser;
       if (!user) {
-        messageDiv.style.color = 'red';
-        messageDiv.textContent = 'Please sign in to vote.';
+        showMessage('Please sign in to vote.', 'red');
         submitBtn.disabled = false;
         return;
       }
@@ -116,8 +118,7 @@
 
       // Local block
       if (localStorage.getItem(docId)) {
-        messageDiv.style.color = 'red';
-        messageDiv.textContent = 'You have already voted today.';
+        showMessage('You have already voted today.', 'red');
         submitBtn.disabled = false;
         return;
       }
@@ -140,24 +141,11 @@
       try {
         await docRef.create(payload);
         localStorage.setItem(docId, 'true');
-        messageDiv.style.color = 'lightgreen';
-        messageDiv.textContent = 'Vote submitted successfully!';
+        showMessage('Vote submitted successfully!', 'lightgreen');
         form.reset();
       } catch (err) {
-        console.error('Vote error:', err);
-        switch (err.code) {
-          case 'already-exists':
-            messageDiv.style.color = 'red';
-            messageDiv.textContent = 'You have already voted today.';
-            break;
-          case 'permission-denied':
-            messageDiv.style.color = 'red';
-            messageDiv.textContent = 'Permission denied. Please ensure you are signed in.';
-            break;
-          default:
-            messageDiv.style.color = 'red';
-            messageDiv.textContent = 'Error submitting vote. Please try again later.';
-        }
+        console.error('Vote error:', err.code, err.message);
+        showMessage(`Error (${err.code}): ${err.message}`, 'red');
       } finally {
         submitBtn.disabled = false;
       }
