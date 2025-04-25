@@ -2,7 +2,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vote on MashStat</title>  <!-- Google Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">  <!-- Firebase SDKs (Compat) -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  <style>
+  <title>Vote on MashStat</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <!-- Firebase SDKs (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #121212; color: #eee; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
     .screen { width: 100%; max-width: 400px; background: #1e1e1e; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
@@ -14,7 +21,8 @@
     button { width: 100%; padding: 12px; background: #ff0055; color: #fff; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
     #message { text-align: center; margin-top: 15px; font-weight: 600; }
-  </style></head>
+  </style>
+</head>
 <body>  <!-- Sign-In Screen -->  <div id="signInScreen" class="screen">
     <h1>Sign in to Vote</h1>
     <button id="googleSignInBtn">Sign in with Google</button>
@@ -69,24 +77,24 @@
     const messageDiv   = document.getElementById('message');
     const submitBtn    = document.getElementById('submitBtn');
 
-    // On load: always show sign-in screen
+    // Always start on sign-in screen
     signInScreen.classList.remove('hidden');
     voteScreen.classList.add('hidden');
 
-    // Explicit Google Sign-In
+    // Sign in flow
     googleBtn.addEventListener('click', async () => {
       signInMsg.textContent = '';
       try {
         const result = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-        // On success, show vote screen
+        // Show vote screen on success
         signInScreen.classList.add('hidden');
         voteScreen.classList.remove('hidden');
       } catch (err) {
-        signInMsg.textContent = 'Error: ' + err.message;
+        signInMsg.textContent = 'Sign-in error: ' + err.message;
       }
     });
 
-    // Vote form submit
+    // Vote submission
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
@@ -96,7 +104,7 @@
       const user = auth.currentUser;
       if (!user) {
         messageDiv.style.color = 'red';
-        messageDiv.textContent = 'You must sign in first.';
+        messageDiv.textContent = 'Please sign in to vote.';
         submitBtn.disabled = false;
         return;
       }
@@ -106,18 +114,18 @@
       const docId  = `${uid}_${today}`;
       const docRef = db.collection('votes').doc(docId);
 
-      // Prevent double voting locally
+      // Local block
       if (localStorage.getItem(docId)) {
         messageDiv.style.color = 'red';
-        messageDiv.textContent = 'You already voted today.';
+        messageDiv.textContent = 'You have already voted today.';
         submitBtn.disabled = false;
         return;
       }
 
-      // Gather form data
-      const data = {
+      // Prepare payload
+      const payload = {
         uid,
-        city:        document.getElementById('city').value.trim(),
+        city: document.getElementById('city').value.trim(),
         song: {
           artist: document.getElementById('songArtist').value.trim(),
           title:  document.getElementById('songTitle').value.trim()
@@ -130,20 +138,25 @@
       };
 
       try {
-        // Use create() so Firestore enforces no existing doc
-        await docRef.create(data);
+        await docRef.create(payload);
         localStorage.setItem(docId, 'true');
         messageDiv.style.color = 'lightgreen';
         messageDiv.textContent = 'Vote submitted successfully!';
         form.reset();
       } catch (err) {
-        if (err.code === 'already-exists') {
-          messageDiv.style.color = 'red';
-          messageDiv.textContent = 'You already voted today.';
-        } else {
-          console.error(err);
-          messageDiv.style.color = 'red';
-          messageDiv.textContent = 'Error submitting vote.';
+        console.error('Vote error:', err);
+        switch (err.code) {
+          case 'already-exists':
+            messageDiv.style.color = 'red';
+            messageDiv.textContent = 'You have already voted today.';
+            break;
+          case 'permission-denied':
+            messageDiv.style.color = 'red';
+            messageDiv.textContent = 'Permission denied. Please ensure you are signed in.';
+            break;
+          default:
+            messageDiv.style.color = 'red';
+            messageDiv.textContent = 'Error submitting vote. Please try again later.';
         }
       } finally {
         submitBtn.disabled = false;
