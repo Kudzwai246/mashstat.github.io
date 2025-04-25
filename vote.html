@@ -11,22 +11,22 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #121212; color: #eee; font-family: 'Montserrat', sans-serif;
-           display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-    .screen { width: 100%; max-width: 400px; background: #1e1e1e; padding: 30px;
-              border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-    .hidden { display: none; }
-    h1, h2 { font-family: 'Playfair Display', serif; color: #ff0055;
-             text-align: center; margin-bottom: 20px; }
-    .input-group { margin-bottom: 15px; }
-    label { display: block; margin-bottom: 6px; color: #ccc; }
-    input { width: 100%; padding: 10px; border: none; border-radius: 5px;
-            background: #2a2a2a; color: #fff; }
-    button { width: 100%; padding: 12px; background: #ff0055; color: #fff;
-             border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    #message { text-align: center; margin-top: 15px; font-weight: 600; }
+    * { box-sizing: border-box; margin:0; padding:0 }
+    body { background:#121212; color:#eee; font-family:'Montserrat',sans-serif;
+           display:flex; align-items:center; justify-content:center; min-height:100vh }
+    .screen { width:100%; max-width:400px; background:#1e1e1e; padding:30px;
+              border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.5) }
+    .hidden { display:none }
+    h1,h2 { font-family:'Playfair Display',serif; color:#ff0055;
+             text-align:center; margin-bottom:20px }
+    .input-group { margin-bottom:15px }
+    label { display:block; margin-bottom:6px; color:#ccc }
+    input { width:100%; padding:10px; border:none; border-radius:5px;
+            background:#2a2a2a; color:#fff }
+    button { width:100%; padding:12px; background:#ff0055; color:#fff;
+             border:none; border-radius:5px; font-size:1rem; cursor:pointer }
+    button:disabled { opacity:0.6; cursor:not-allowed }
+    #message { text-align:center; margin-top:15px; font-weight:600 }
   </style>
 </head>
 <body>
@@ -96,23 +96,28 @@
       messageDiv.style.color = color;
     }
 
-    // Always start on sign-in screen
-    signInScreen.classList.remove('hidden');
-    voteScreen.classList.add('hidden');
+    // React to auth state changes
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        signInScreen.classList.add('hidden');
+        voteScreen.classList.remove('hidden');
+      } else {
+        signInScreen.classList.remove('hidden');
+        voteScreen.classList.add('hidden');
+      }
+    });
 
-    // Sign in flow
+    // Trigger Google Sign-In
     googleBtn.addEventListener('click', async () => {
       signInMsg.textContent = '';
       try {
         await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-        signInScreen.classList.add('hidden');
-        voteScreen.classList.remove('hidden');
       } catch (err) {
         signInMsg.textContent = 'Sign-in error: ' + err.message;
       }
     });
 
-    // Vote submission
+    // Handle vote form submission
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
@@ -130,14 +135,14 @@
       const docId  = `${uid}_${today}`;
       const docRef = db.collection('votes').doc(docId);
 
-      // Local block
+      // Client-side block
       if (localStorage.getItem(docId)) {
         showMessage('You have already voted today.', 'red');
         submitBtn.disabled = false;
         return;
       }
 
-      // Prepare payload
+      // Build payload
       const payload = {
         uid,
         city: document.getElementById('city').value.trim(),
@@ -153,13 +158,11 @@
       };
 
       try {
-        // Check existing
         const snap = await docRef.get();
-        if (snap.exists) throw { code: 'already-exists', message: 'You have already voted today.' };
-        // Write data
+        if (snap.exists) throw { code:'already-exists', message:'You have already voted today.' };
         await docRef.set(payload);
-        localStorage.setItem(docId, 'true');
-        showMessage('Vote submitted successfully!', 'lightgreen');
+        localStorage.setItem(docId,'true');
+        showMessage('Vote submitted successfully!','lightgreen');
         form.reset();
       } catch (err) {
         console.error('Vote error:', err.code, err.message);
@@ -171,4 +174,3 @@
   </script>
 </body>
 </html>
-0
