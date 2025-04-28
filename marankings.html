@@ -11,29 +11,29 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px}
-    header{text-align:center;margin-bottom:20px;border-bottom:3px solid #ff0055;padding-bottom:8px}
-    header .main{font-family:'Playfair Display',serif;font-size:2.5rem;color:#ff0055}
-    #searchBar{width:100%;padding:10px;margin:15px 0;background:#222;border:none;border-radius:4px;color:#eee}
-    h3{font-family:'Playfair Display',serif;color:#ff0055;margin-bottom:10px}
-    #cityList{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    header{text-align:center;margin-bottom:20px;border-bottom:3px solid #ff0055;padding-bottom:10px}
+    header .main{font-family:'Playfair Display',serif;font-size:3rem;color:#ff0055;text-decoration:none}
+    #searchBar{width:100%;padding:12px;margin:15px 0;border:none;border-radius:4px;background:#222;color:#eee}
+    h3{font-family:'Playfair Display',serif;color:#ff0055;margin-top:20px;border-bottom:2px solid #ff0055;display:inline-block;padding-bottom:4px}
+    #cityList{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
     .city-card{background:#1e1e1e;padding:12px;border:1px solid #333;border-radius:8px;transition:transform .2s,border-color .2s;position:relative}
     .city-card:hover{transform:scale(1.02);border-color:#ff0055}
     .city-card .rank{font-size:1.2rem;color:#ff0055;font-weight:600}
     .city-card img{width:100%;height:120px;object-fit:cover;border-radius:4px;margin:8px 0}
     .city-card canvas{width:100%!important;height:60px!important}
     .city-card .toggle{position:absolute;top:8px;right:8px;background:#ff0055;color:#fff;padding:4px 6px;font-size:0.8rem;cursor:pointer}
-    #artistContainer{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:15px}
+    #artistContainer{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:10px}
     .artist-card{background:#181818;border-radius:8px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.5);transition:transform .2s}
     .artist-card:hover{transform:scale(1.03)}
     .artist-card img{width:100%;height:100px;object-fit:cover;background:#333}
     .artist-details{padding:10px}
     .artist-name{font-size:1.1rem;color:#ff0055;margin-bottom:6px}
-    .meta-block{margin-bottom:8px}
     .meta-block h4{font-size:0.85rem;color:#ff0055;margin-bottom:4px}
-    .meta-block p{font-size:0.8rem;color:#ccc}
+    .meta-block p{font-size:0.8rem;color:#ccc;margin:2px 0}
     .links a{display:inline-block;margin:4px 4px 0 0;padding:4px 6px;font-size:0.75rem;border-radius:4px;color:#fff}
     .spotify{background:#1DB954}.youtube{background:#FF0000}.apple{background:#000}
-    #loadMore{display:block;margin:20px auto;padding:10px 20px;background:#ff0055;color:#fff;border:none;border-radius:4px;}
+    #loadMore{display:block;margin:20px auto;padding:10px 20px;background:#ff0055;color:#fff;border:none;border-radius:4px}
+    #searchPrompt{text-align:center;color:#888;margin-top:10px}
   </style>
 </head>
 <body>
@@ -43,40 +43,43 @@
   <input id="searchBar" placeholder="Search artist and press Enter…" />
   <section>
     <h3>City Popularity</h3>
-    <div id="cityList">Loading…</div>
+    <div id="cityList">Loading city popularity…</div>
   </section>
   <section>
     <h3>Artist Stats</h3>
     <div id="artistContainer"></div>
-    <button id="loadMore" style="display:none;">Load more</button>
+    <button id="loadMore" style="display:none;">Load more artists</button>
+    <p id="searchPrompt">Search artist to see stats</p>
   </section>
   <footer style="text-align:center;margin-top:30px;color:#777;font-size:0.8rem;">
-    Data sources: Spotify · Firestore<br>&copy; 2025 MashStat / MaRankings
+    Data sources: Spotify Web API · Firestore<br>&copy; 2025 MashStat / MaRankings
   </footer>
 <script>
   // Firebase init
-  firebase.initializeApp({ apiKey:"AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10", authDomain:"mashstat-vote.firebaseapp.com", projectId:"mashstat-vote" });
-  const db = firebase.firestore();// Spotify token & cache const SPOT_ID="9fd373ec645a486d9238ce907ef6662e", SPOT_SECRET="89e25846b543443ab39fa80504d91fc5"; let spotifyToken; const artistCache = {}; async function getSpotifyToken(){ if(spotifyToken) return spotifyToken; const res = await fetch("https://accounts.spotify.com/api/token",{method:"POST",headers:{"Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET),"Content-Type":"application/x-www-form-urlencoded"},body:"grant_type=client_credentials"}); spotifyToken=(await res.json()).access_token; return spotifyToken; }
+  firebase.initializeApp({
+    apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
+    authDomain: "mashstat-vote.firebaseapp.com",
+    projectId: "mashstat-vote"
+  });
+  const db = firebase.firestore();// Spotify config const SPOT_ID = "9fd373ec645a486d9238ce907ef6662e"; const SPOT_SECRET = "89e25846b543443ab39fa80504d91fc5"; let spotifyToken; const artistCache = {}; async function getSpotifyToken(){ if(spotifyToken) return spotifyToken; const res = await fetch("https://accounts.spotify.com/api/token",{ method:"POST",headers:{ "Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET), "Content-Type":"application/x-www-form-urlencoded" },body:"grant_type=client_credentials" }); spotifyToken = (await res.json()).access_token; return spotifyToken; }
 
-function normalize(n){return n.trim().toLowerCase().replace(/[^a-z0-9]/g,"");}
+function normalize(n){return n.trim().toLowerCase().replace(/[^a-z0-9]/g,"");} function mergeVotes(votes){ const m = {}; votes.forEach(v=>{ const key = normalize(v.song.artist); if(!m[key]) m[key] = { artist:v.song.artist, counts:{}, total:0 }; m[key].total++; (m[key].counts[v.city]||(m[key].counts[v.city]=0)); m[key].counts[v.city]++; }); return Object.values(m).sort((a,b)=>b.total-a.total); }
 
-// Merge votes function processVotes(votes){ const map={}; votes.forEach(v=>{ const key=normalize(v.song.artist); if(!map[key]) map[key]={name:v.song.artist,total:0,counts:{}}; map[key].total++; const c=v.city||"Unknown"; map[key].counts[c]=(map[key].counts[c]||0)+1; }); return Object.values(map).sort((a,b)=>b.total-a.total); }
+async function fetchThumbnail(name){ const key=normalize(name); if(artistCache[key]?.thumb) return artistCache[key].thumb; const token=await getSpotifyToken(); let url=""; try{ const r=await fetch(https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1,{headers:{"Authorization":"Bearer "+token}}); const j=await r.json(); url=j.artists.items[0]?.images[0]?.url||""; }catch{}; if(!url) return null; artistCache[key]=artistCache[key]||{}; artistCache[key].thumb=url; return url; }
 
-// Draw bar function drawBar(canvas,counts){ const labels=Object.keys(counts),data=labels.map(l=>counts[l]); new Chart(canvas,{type:'bar',data:{labels,datasets:[{data,backgroundColor:'#ff0055',barThickness:6}]},options:{indexAxis:'y',scales:{x:{beginAtZero:true}},plugins:{legend:{display:false}}}}); }
+function drawBar(canvas,labels,data){ new Chart(canvas,{type:'bar',data:{labels,datasets:[{data,backgroundColor:'#ff0055',barThickness:6}]},options:{indexAxis:'y',scales:{x:{beginAtZero:true}},plugins:{legend:{display:false}}}}); }
 
-// Fetch thumbnail async function fetchThumb(name){const key=normalize(name); if(artistCache[key]?.thumb) return artistCache[key].thumb; const token=await getSpotifyToken(); let url=''; // Spotify try{let r=await fetch(https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1,{headers:{"Authorization":"Bearer "+token}}); let j=await r.json(); url=j.artists.items[0]?.images[0]?.url||''; }catch{}; artistCache[key]=artistCache[key]||{}; artistCache[key].thumb=url; return url; }
+// City popularity db.collection('votes').onSnapshot(async snap=>{ const votes=snap.docs.map(d=>d.data()); const merged=mergeVotes(votes); const list=document.getElementById('cityList'); list.innerHTML=''; for(let i=0;i<merged.length;i++){ const v=merged[i]; const thumb=await fetchThumbnail(v.artist); if(!thumb) continue; // skip no-thumb const card=document.createElement('div'); card.className='city-card'; card.innerHTML=<div class="rank">#${i+1}</div><img src="${thumb}"/><canvas></canvas><div class="toggle">Stats</div>; list.appendChild(card); drawBar(card.querySelector('canvas'),Object.keys(v.counts),Object.values(v.counts)); card.querySelector('.toggle').onclick=()=>toggleCard(card,v.artist); } });
 
-// Render city cards db.collection('votes').onSnapshot(async snap=>{ const votes=snap.docs.map(d=>d.data()); const arr=processVotes(votes); const list=document.getElementById('cityList'); list.innerHTML=''; arr.forEach(async(item,i)=>{ const card=document.createElement('div'); card.className='city-card'; const thumb=await fetchThumb(item.name); card.innerHTML=<div class="rank">#${i+1}</div><img src="${thumb}" alt=""/><canvas></canvas><div class="toggle">Stats</div>; list.appendChild(card); drawBar(card.querySelector('canvas'),item.counts); card.querySelector('.toggle').onclick=()=>toggleCard(card,item.name,item.counts); }); });
+async function fetchArtist(name){ const key=normalize(name); if(artistCache[key]?.detail) return artistCache[key].detail; const token=await getSpotifyToken(); const r=await fetch(https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1,{headers:{"Authorization":"Bearer "+token}}); const j=await r.json(),a=j.artists.items[0]; const d={name:a.name,image:a.images[0]?.url||'',followers:a.followers.total,popularity:a.popularity,external_urls:a.external_urls}; artistCache[key].detail=d; return d; }
 
-// Toggle card async function toggleCard(card,name,counts){ if(!card.classList.contains('stats')){ card.classList.add('stats'); card.innerHTML=''; const d=await getArtist(name); card.innerHTML=<img src="${d.image}"/><div class="artist-details"><div class="artist-name">${d.name}</div><div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div><div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div><div class="links"><a class="spotify" href="${d.external_urls.spotify}" target="_blank">Spotify</a></div></div>; } else { location.reload(); } }
+function toggleCard(card,name){ if(!card.classList.toggle('stats-mode')) return location.reload(); card.innerHTML=''; fetchArtist(name).then(d=>{ card.innerHTML=<img src="${d.image}"/><div class="artist-details"><div class="artist-name">${d.name}</div><div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div><div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div><div class="links"><a class="spotify" href="${d.external_urls.spotify}" target="_blank">Spotify</a></div></div>; }); }
 
-// Fetch artist details async function getArtist(name){const key=normalize(name); if(artistCache[key]?.detail) return artistCache[key].detail; const token=await getSpotifyToken(); let r=await fetch(https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1,{headers:{"Authorization":"Bearer "+token}}); let j=await r.json(),a=j.artists.items[0]; const det={name:a.name,image:a.images[0]?.url||'',followers:a.followers.total,popularity:a.popularity,external_urls:a.external_urls}; artistCache[key].detail=det; return det; }
+// Artist stats pagination let statsList=[],shown=0; const cont=document.getElementById('artistContainer'),btn=document.getElementById('loadMore'),prompt=document.getElementById('searchPrompt'); function render(){ cont.innerHTML=''; statsList.slice(0,shown).forEach(d=>{ const c=document.createElement('div');c.className='artist-card'; c.innerHTML=<img src="${d.image}"/><div class="artist-details"><div class="artist-name">${d.name}</div><div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div><div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div></div>; cont.appendChild(c); }); btn.style.display=shown<statsList.length?'block':'none'; prompt.style.display=shown>=statsList.length?'block':'none'; } btn.onclick=()=>{shown+=4;render();};
 
-// Artist stats pagination let statsList=[],shown=0; const cont=document.getElementById('artistContainer'),btn=document.getElementById('loadMore'); btn.onclick=()=>{shown+=4; render();}; function render(){cont.innerHTML='';statsList.slice(0,shown).forEach(d=>{const c=document.createElement('div');c.className='artist-card';c.innerHTML=<img src="${d.image}"/><div class="artist-details"><div class="artist-name">${d.name}</div><div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div><div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div></div>;cont.appendChild(c);});btn.style.display=shown<statsList.length?'block':'none';}
+// init top4 db.collection('votes').get().then(snap=>{ const merged=mergeVotes(snap.docs.map(d=>d.data())); const top=merged.slice(0,4).map(v=>v.artist); Promise.all(top.map(fetchArtist)).then(arr=>{statsList=arr;shown=4;render();}); });
 
-// Initial load db.collection('votes').get().then(s=>{ const arr=processVotes(s.docs.map(d=>d.data())).map(x=>x.name).slice(0,4); Promise.all(arr.map(getArtist)).then(a=>{statsList=a;shown=4;render();}); });
-
-// Search document.getElementById('searchBar').addEventListener('keydown',async e=>{ if(e.key==='Enter'){e.preventDefault();const name=e.target.value.trim();if(!name)return;e.target.value='';const d=await getArtist(name);statsList.unshift(d);shown++;render();} }); </script>
+document.getElementById('searchBar').addEventListener('keydown',async e=>{ if(e.key==='Enter'){ e.preventDefault();const name=e.target.value.trim();if(!name)return; const d=await fetchArtist(name); statsList.unshift(d);shown++;render();e.target.value=''; } }); </script>
 
 </body>
 </html>
