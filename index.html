@@ -1,135 +1,63 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MashStat – Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
-    /* Reset & base */
+    /* Base Reset */
     * { box-sizing: border-box; margin:0; padding:0; }
-    body { font-family: 'Montserrat', sans-serif; background: #f9f9f9; color: #111; }
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }/* Header */
-header { padding: 16px; }
-header .logo { height: 40px; }
-
-main { padding: 0 16px; }
-
-/* About */
-#about { margin-bottom: 32px; }
-#about h2 { font-family: 'Playfair Display', serif; color: #ff0055; font-size: 1.8rem; margin-bottom: 8px; }
-#about p { font-size: 1rem; color: #555; }
-
-/* Button grid */
-#buttons { margin-bottom: 40px; }
-.btn-grid {
-  display: grid;
-  grid-template-areas:
-    "a a"
-    "b c"
-    "d e";
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  justify-items: center;
-}
-.btn {
-  background: #ff0055;
-  color: #fff;
-  padding: 16px 24px;
-  border-radius: 50px;
-  font-weight: 600;
-  text-align: center;
-  transition: background 0.2s;
-  width: 100%;
-  max-width: 200px;
-}
-.btn:hover { background: #e6004a; }
-.btn-large { grid-area: a; font-size: 1.2rem; padding: 20px 28px; }
-.btn-news { grid-area: b; }
-.btn-mash100 { grid-area: c; }
-.btn-masha50 { grid-area: d; }
-.btn-vote { grid-area: e; }
-
-/* Feature tabs */
-#tabs { margin-bottom: 40px; }
-.tabs { display: flex; flex-wrap: wrap; gap: 24px; }
-.tab {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  overflow: hidden;
-  flex: 1 1 280px;
-  display: flex;
-  flex-direction: column;
-}
-.tab img { height: 160px; object-fit: cover; }
-.tab-content { padding: 16px; }
-.tab-content h3 { margin-bottom: 8px; color: #ff0055; font-size: 1.1rem; }
-.tab-content p { font-size: 0.9rem; color: #555; }
-
+    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }
+    header { display: flex; align-items: center; padding: 20px; background: #000; }
+    header img { height: 50px; }
+    header .about { margin-left: 20px; color: #eee; font-size: 0.9rem; max-width: 600px; }
+    /* Floating pyramid buttons inspired by Billboard's dynamic CTAs and our previous hero */
+    .cta-pyramid { position: relative; width: 300px; margin: 40px auto; }
+    .btn { display: block; background: #ff0055; color: #fff; text-align: center; padding: 15px; border-radius: 5px; text-decoration: none; font-weight: 600; transition: transform 0.2s; }
+    .btn:hover { transform: translateY(-4px); }
+    .btn-main { font-size: 1.2rem; margin-bottom: 20px; }
+    .pyramid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; justify-items: center; }
+    /* Feature tabs under pyramid, with thumbnails */
+    .features { max-width: 900px; margin: 60px auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 30px; }
+    .feature-card { background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; text-align: center; }
+    .feature-card img { width: 100%; height: 120px; object-fit: cover; }
+    .feature-card h4 { padding: 10px; color: #ff0055; }
+    .feature-card p { padding: 0 10px 15px; font-size: 0.9rem; color: #555; }
   </style>
 </head>
 <body>
   <header>
-    <a href="index.html"><img src="mashstat_logo_small.png" alt="MashStat Logo" class="logo"></a>
-  </header>
-  <main>
-    <!-- About -->
-    <section id="about">
-      <h2>About MashStat</h2>
-      <p>MashStat is Zimbabwe’s first fan-powered music chart platform. We combine real streaming data with your daily votes to deliver national and city rankings for songs, albums, and artists—all in one place.</p>
-    </section><!-- Floating Buttons -->
-<section id="buttons">
-  <div class="btn-grid">
-    <a href="marankings.html" class="btn btn-large">MaRankings</a>
-    <a href="news.html" class="btn btn-news">News</a>
-    <a href="mash100.html" class="btn btn-mash100">Mash 100</a>
-    <a href="masha50.html" class="btn btn-masha50">Masha 50</a>
-    <a href="vote.html" class="btn btn-vote">Vote Now</a>
-  </div>
-</section>
-
-<!-- Feature Tabs -->
-<section id="tabs">
-  <div class="tabs">
-    <div class="tab">
-      <img src="asserts/marankings_thumb.jpg" alt="MaRankings">
-      <div class="tab-content">
-        <h3>MaRankings</h3>
-        <p>See which artists are hot in every city—discover local favorites and trends across Zimbabwe.</p>
-      </div>
+    <img src="mashstat_logo.png" alt="MashStat Logo">
+    <p class="about">MashStat is Zimbabwe’s first fan-powered music chart platform—combining real streaming data with daily listener votes to deliver local, city and national rankings you can trust.</p>
+  </header>  <div class="cta-pyramid">
+    <a href="marankings.html" class="btn btn-main">MaRankings</a>
+    <div class="pyramid">
+      <a href="news.html" class="btn">News</a>
+      <a href="mash100.html" class="btn">Mash 100</a>
+      <a href="masha50.html" class="btn">MashA 50</a>
+      <a href="vote.html" class="btn">Vote Now</a>
     </div>
-    <div class="tab">
-      <img src="asserts/news_thumb.jpg" alt="News">
-      <div class="tab-content">
-        <h3>News</h3>
-        <p>Read all about the latest headlines, artist interviews, and behind-the-scenes stories in Zimbabwe’s music scene.</p>
-      </div>
+  </div>  <section class="features">
+    <div class="feature-card">
+      <img src="thumb_news.jpg" alt="News">
+      <h4>News</h4>
+      <p>Read all about the latest headlines and stories from Zimbabwe’s music scene.</p>
     </div>
-    <div class="tab">
-      <img src="asserts/mash100_thumb.jpg" alt="Mash 100">
-      <div class="tab-content">
-        <h3>Mash 100</h3>
-        <p>Discover the top 100 most streamed songs this week nationwide—powered by real data.</p>
-      </div>
+    <div class="feature-card">
+      <img src="thumb_mash100.jpg" alt="Mash 100">
+      <h4>Mash 100</h4>
+      <p>Discover the 100 most streamed songs in Zimbabwe this week.</p>
     </div>
-    <div class="tab">
-      <img src="asserts/masha50_thumb.jpg" alt="Masha 50">
-      <div class="tab-content">
-        <h3>Masha 50</h3>
-        <p>Explore the top 50 albums captivating listeners across Zimbabwe each week.</p>
-      </div>
+    <div class="feature-card">
+      <img src="thumb_masha50.jpg" alt="MashA 50">
+      <h4>MashA 50</h4>
+      <p>Explore the top 50 albums captivating listeners across Zimbabwe.</p>
     </div>
-    <div class="tab">
-      <img src="asserts/vote_thumb.jpg" alt="Vote Now">
-      <div class="tab-content">
-        <h3>Vote Now</h3>
-        <p>Cast your daily vote for your favorite song and album to shape the charts fairly and transparently.</p>
-      </div>
+    <div class="feature-card">
+      <img src="thumb_vote.jpg" alt="Vote">
+      <h4>Vote</h4>
+      <p>Cast your daily vote for your favorite song and album to shape the charts.</p>
     </div>
-  </div>
-</section>
-
-  </main>
+  </section>
 </body>
 </html>
