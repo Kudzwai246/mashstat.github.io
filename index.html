@@ -1,43 +1,78 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>MashStat – Home</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
+  <script>
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config','G-8BMMTDWP3G');
+  </script>
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
   <style>
-    /* Base Reset */
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }
-    header { display: flex; align-items: center; padding: 20px; background: #000; }
-    header img { height: 50px; }
-    header .about { margin-left: 20px; color: #eee; font-size: 0.9rem; max-width: 600px; }
-    /* Floating pyramid buttons inspired by Billboard's dynamic CTAs and our previous hero */
-    .cta-pyramid { position: relative; width: 300px; margin: 40px auto; }
-    .btn { display: block; background: #ff0055; color: #fff; text-align: center; padding: 15px; border-radius: 5px; text-decoration: none; font-weight: 600; transition: transform 0.2s; }
-    .btn:hover { transform: translateY(-4px); }
-    .btn-main { font-size: 1.2rem; margin-bottom: 20px; }
-    .pyramid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; justify-items: center; }
-    /* Feature tabs under pyramid, with thumbnails */
-    .features { max-width: 900px; margin: 60px auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 30px; }
-    .feature-card { background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; text-align: center; }
-    .feature-card img { width: 100%; height: 120px; object-fit: cover; }
-    .feature-card h4 { padding: 10px; color: #ff0055; }
-    .feature-card p { padding: 0 10px 15px; font-size: 0.9rem; color: #555; }
+    /* Reset & base */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Montserrat',sans-serif;background:#121212;color:#eee;line-height:1.6;}
+    a{color:inherit;text-decoration:none;}
+
+    /* Header */
+    header{display:flex;align-items:center;padding:20px;background:#000}
+    header img{height:50px}
+    .about{margin-left:20px;color:#ccc;font-size:0.9rem;max-width:600px}
+
+    /* Hero background accent */
+    .hero-bg{background:#1e1e1e;padding:40px 20px}
+
+    /* CTA pyramid */
+    .cta-pyramid{position:relative;width:320px;margin:40px auto}
+    .btn{display:block;background:#ff0055;color:#fff;text-align:center;padding:14px 0;border-radius:6px;
+         font-weight:600,transition:transform .2s}
+    .btn:hover{transform:translateY(-3px)}
+    .btn-main{font-size:1.3rem;margin-bottom:24px}
+    .pyramid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+    /* Features grid */
+    .features{max-width:1000px;margin:60px auto;display:grid;
+              grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px}
+    .feature-card{background:#1e1e1e;border-radius:8px;overflow:hidden;
+                  display:flex;flex-direction:column;height:360px; /* taller */ 
+                  box-shadow:0 4px 12px rgba(0,0,0,0.4)}
+    .feature-card img{width:100%;height:180px;object-fit:cover}
+    .feature-card h4{padding:12px;color:#ff0055;font-family:'Playfair Display',serif;font-size:1.1rem}
+    .feature-card p{padding:0 12px 12px;color:#aaa;flex-grow:1}
+
+    /* Footer */
+    footer{background:#000;padding:20px;color:#666;text-align:center;font-size:0.8rem}
+
   </style>
 </head>
 <body>
+
   <header>
     <img src="mashstat_logo.png" alt="MashStat Logo">
     <p class="about">MashStat is Zimbabwe’s first fan-powered music chart platform—combining real streaming data with daily listener votes to deliver local, city and national rankings you can trust.</p>
-  </header>  <div class="cta-pyramid">
-    <a href="marankings.html" class="btn btn-main">MaRankings</a>
-    <div class="pyramid">
-      <a href="news.html" class="btn">News</a>
-      <a href="mash100.html" class="btn">Mash 100</a>
-      <a href="masha50.html" class="btn">MashA 50</a>
-      <a href="vote.html" class="btn">Vote Now</a>
+  </header>
+
+  <div class="hero-bg">
+    <div class="cta-pyramid">
+      <a href="marankings.html" class="btn btn-main">MaRankings</a>
+      <div class="pyramid">
+        <a href="news.html" class="btn">News</a>
+        <a href="mash100.html" class="btn">Mash 100</a>
+        <a href="masha50.html" class="btn">MashA 50</a>
+        <a href="vote.html" class="btn">Vote Now</a>
+      </div>
     </div>
-  </div>  <section class="features">
+  </div>
+
+  <section class="features">
     <div class="feature-card">
       <img src="asserts/hq720.jpg" alt="News">
       <h4>News</h4>
@@ -59,5 +94,9 @@
       <p>Cast your daily vote for your favorite song and album to shape the charts.</p>
     </div>
   </section>
+
+  <footer>
+    &copy; 2025 MashStat. All rights reserved.
+  </footer>
 </body>
 </html>
