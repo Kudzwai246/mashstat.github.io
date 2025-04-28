@@ -1,64 +1,74 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}  
-    gtag('js', new Date());
-    gtag('config', 'G-8BMMTDWP3G');
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MashStat - Zimbabwe's Official Music Charts</title>
-  <!-- reCAPTCHA v3 -->
-  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_jh8rAAAAANoyWe7BwNuD2RvComRRqpTMWJDJ"></script>
-  <!-- Firebase SDKs -->
-  <script src="/__/firebase/9.23.0/firebase-app-compat.js"></script>
-  <script src="/__/firebase/9.23.0/firebase-auth-compat.js"></script>
-  <script src="/__/firebase/9.23.0/firebase-functions-compat.js"></script>
-  <script src="/__/firebase/init.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MashStat – Zimbabwe's Official Music Charts</title>
   <style>
-    /* Reset */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Montserrat', sans-serif; background: #fafafa; color: #111; }
-    /* NavBar */
-    header { background: #000; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
-    header .logo { height: 50px; }
-    nav a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: 600; font-size: 0.9rem; }
-    nav a:hover { text-decoration: underline; }/* Hero */
-.hero { background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #fff; text-align: center; padding: 100px 20px; }
-.hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
-.hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.85; }
-.hero .hero-buttons a { display: inline-block; margin: 0 10px; padding: 12px 24px; background: #ff0055; color: #fff; font-weight: 600; border-radius: 4px; transition: background 0.3s; text-decoration: none; }
-.hero .hero-buttons a:hover { background: #e6004a; }
-
-/* Features */
-.features { display: flex; flex-wrap: wrap; justify-content: center; padding: 60px 20px; }
-.feature { width: 280px; margin: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
-.feature img { width: 100%; height: 160px; object-fit: cover; }
-.feature-content { padding: 20px; }
-.feature-content h3 { font-size: 1.2rem; margin-bottom: 10px; color: #000; }
-.feature-content p { font-size: 0.9rem; color: #555; }
-
-/* Share Button */
-#shareMashStat { position: fixed; bottom: 24px; right: 24px; background: #1DB954; color: #fff; border: none; padding: 14px 18px; border-radius: 50px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background 0.2s; }
-#shareMashStat:hover { background: #17a74a; }
-
-/* Footer */
-footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-size: 0.8rem; }
-
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f8f8;
+    }
+    header {
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+    main {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .section {
+      margin-bottom: 60px;
+    }
+    .section h2 {
+      margin-bottom: 20px;
+    }
+    .btn-floating {
+      position: fixed;
+      right: 20px;
+      background: #e91e63; /* MashStat pink */
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 20px;
+      font-size: 16px;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+      z-index: 100;
+    }
+    .btn-floating:hover {
+      transform: scale(1.05);
+    }
+    /* Larger MaRankings button positioned above others */
+    #btn-marankings {
+      bottom: 140px;
+      font-size: 18px;
+      padding: 18px 24px;
+    }
+    /* Other floating buttons: Mash100, MashA50, Vote Now */
+    #btn-mash100 { bottom: 100px; }
+    #btn-masha50 { bottom: 60px; }
+    #btn-vote   { bottom: 20px; }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
   <header>
-    <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
+    <h1>MashStat Logo</h1>
     <nav>
-      <a href="mash100.html">Mash 100</a>
+      <a href="index.html">Mash 100</a>
       <a href="masha50.html">MashA 50</a>
       <a href="marankings.html">MaRankings</a>
       <a href="news.html">News</a>
@@ -66,77 +76,39 @@ footer { background: #111; color: #ccc; text-align: center; padding: 20px; font-
       <a href="vote.html">Vote</a>
       <a href="about.html">About</a>
     </nav>
-  </header>  <!-- Hero Section -->  <section class="hero">
-    <h1>Zimbabwe's Official Music Charts</h1>
+  </header>
+  <main>
+    <h2>Zimbabwe's Official Music Charts</h2>
     <p>Track the hottest songs, albums, and artists in Zimbabwe—all based on real streaming data, updated weekly.</p>
-    <div class="hero-buttons">
-      <a href="mash100.html">View Mash 100</a>
-      <a href="masha50.html">View MashA 50</a>
-      <a href="vote.html">Vote Now</a>
+    <div class="section">
+      <h3>Top Songs</h3>
+      <p>### Mash 100 – Top Songs</p>
+      <p>Discover Zimbabwe’s 100 most streamed tracks this week across all major platforms.</p>
     </div>
-  </section>  <!-- Feature Previews -->  <section class="features">
-    <div class="feature">
-      <img src="asserts/atenda-chinx-lockdown.webp" alt="Top Songs">
-      <div class="feature-content">
-        <h3>Mash 100 – Top Songs</h3>
-        <p>Discover Zimbabwe’s 100 most streamed tracks this week across all major platforms.</p>
-      </div>
-    </div><div class="feature">
-  <img src="asserts/winky-d-pabho-ft-bling4.jpeg" alt="Top Albums">
-  <div class="feature-content">
-    <h3>MashA 50 – Top Albums</h3>
-    <p>Explore the top 50 albums captivating listeners in Zimbabwe each week.</p>
-  </div>
-</div>
+    <div class="section">
+      <h3>Top Albums</h3>
+      <p>### MashA 50 – Top Albums</p>
+      <p>Explore the top 50 albums captivating listeners in Zimbabwe each week.</p>
+    </div>
+    <div class="section">
+      <h3>Artist Rankings</h3>
+      <p>### MaRankings – Artists</p>
+      <p>See who's on the rise with our in-depth artist performance tracker.</p>
+    </div>
+    <div class="section">
+      <h3>News</h3>
+      <p>### News</p>
+      <p>Stay updated with the latest headlines and stories from Zimbabwe’s music scene.</p>
+    </div>
+    <div class="section">
+      <h3>Vote</h3>
+      <p>### Vote</p>
+      <p>Cast your daily vote for your favorite song or album to help shape Zimbabwe’s music charts.</p>
+    </div>
+  </main>  <!-- Floating Action Buttons --><a id="btn-marankings" class="btn-floating" href="marankings.html">MaRankings</a> <a id="btn-mash100"    class="btn-floating" href="mash100.html">View Mash 100</a> <a id="btn-masha50"    class="btn-floating" href="masha50.html">View MashA 50</a> <a id="btn-vote"       class="btn-floating" href="vote.html">Vote Now</a>
 
-<div class="feature">
-  <img src="asserts/hq720.jpg" alt="Artist Rankings">
-  <div class="feature-content">
-    <h3>MaRankings – Artists</h3>
-    <p>See who's on the rise with our in-depth artist performance tracker.</p>
-  </div>
-</div>
-
-<div class="feature">
-  <img src="asserts/zimbabwe_s_chiwoniso_big_12725.jpg" alt="News">
-  <div class="feature-content">
-    <h3>News</h3>
-    <p>Stay updated with the latest headlines and stories from Zimbabwe’s music scene.</p>
-  </div>
-</div>
-
-<div class="feature">
-  <img src="asserts/vote.png" alt="Vote">
-  <div class="feature-content">
-    <h3>Vote</h3>
-    <p>Cast your daily vote for your favorite song or album to help shape Zimbabwe’s music charts.</p>
-  </div>
-</div>
-
-  </section>  <!-- Share Button --><button id="shareMashStat">📣 Share MashStat</button>
-
-  <script>
-    const shareBtn = document.getElementById('shareMashStat');
-    const shareData = {
-      title: 'MashStat – Zimbabwe’s Official Music Charts',
-      text: 'Check out MashStat for the latest top songs, albums & artist rankings in Zimbabwe! 🎶',
-      url: 'https://mashstat-vote.web.app/'
-    };
-    shareBtn.addEventListener('click', async () => {
-      if (navigator.share) {
-        try { await navigator.share(shareData); return; } catch {}      
-      }
-      const u = encodeURIComponent(shareData.url);
-      const t = encodeURIComponent(shareData.text);
-      [
-        `https://twitter.com/intent/tweet?text=${t}&url=${u}`,
-        `https://www.facebook.com/sharer/sharer.php?u=${u}`,
-        `https://api.whatsapp.com/send?text=${t}%20${u}`,
-        `https://www.linkedin.com/sharing/sharesite/?url=${u}`
-      ].forEach(link => window.open(link, '_blank', 'width=600,height=400'));
-    });
-  </script>  <!-- Footer -->  <footer>
-    &copy; 2025 MashStat. All rights reserved.
+  <footer style="text-align:center; padding:20px; background:#fff;">
+    <p>📣 Share MashStat &copy; 2025 MashStat. All rights reserved.</p>
   </footer>
 </body>
 </html>
