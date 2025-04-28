@@ -1,171 +1,193 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MashStat - Zimbabwe's Official Music Charts</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
+  <title>MashStat - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* ---- Base ---- */
-    * { box-sizing: border-box; }
+    /* Global */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
-      padding: 0;
-      background-color: #0e0e0e;
-      color: #ffffff;
       font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #333;
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
       min-height: 100vh;
     }
+    a { text-decoration: none; }/* Header */
+header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+header .logo {
+  width: 60px;
+  height: auto;
+}
 
-    /* ---- Header ---- */
-    .header {
-      width: 100%;
-      max-width: 1000px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-    }
-    .header .page-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 20px;
-      color: #00ccff;
-      text-shadow: 0 0 5px #00ccff;
-    }
-    .header .logo {
-      width: 80px;
-      filter: drop-shadow(0 0 5px #1a75ff);
-    }
+/* About section */
+.about {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 20px;
+  text-align: left;
+  padding: 0 20px;
+}
+.about h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  color: #e91e63;
+  margin-bottom: 10px;
+}
+.about p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
 
-    /* ---- Main Titles ---- */
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 48px;
-      margin: 10px 0 5px;
-      color: #00ccff;
-      text-shadow: 0 0 5px #00ccff;
-    }
-    .subtitle {
-      font-size: 18px;
-      color: #bbbbbb;
-      margin-bottom: 30px;
-    }
+/* Buttons pyramid */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 0;
+}
+.row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.btn {
+  background: #e91e63;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn:hover { transform: scale(1.05); }
+.btn-large {
+  padding: 20px 32px;
+  font-size: 18px;
+}
+.btn-small {
+  padding: 14px 24px;
+  font-size: 15px;
+}
 
-    /* ---- Description ---- */
-    .description {
-      max-width: 800px;
-      font-size: 16px;
-      color: #cccccc;
-      margin-bottom: 50px;
-      padding: 0 20px;
-      line-height: 1.6;
-    }
+/* Features tabs */
+.features {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  padding: 0 20px 40px;
+  margin-bottom: 40px;
+}
+.feature {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+}
+.feature img {
+  width: 100%;
+  display: block;
+}
+.feature-content {
+  padding: 16px;
+}
+.feature-content h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  color: #e91e63;
+  margin-bottom: 8px;
+}
+.feature-content p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
 
-    /* ---- Nav + Floating Button Container ---- */
-    .nav-container {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 80px;
-    }
+/* Footer */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: #999;
+  border-top: 1px solid #eee;
+}
 
-    /* Floating pink MaRankings button */
-    .btn-floating {
-      position: absolute;
-      top: -50px;
-      right: 0;
-      background: #e91e63;
-      color: #fff;
-      font-weight: bold;
-      padding: 14px 20px;
-      border-radius: 30px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.2s;
-      text-decoration: none;
-      font-size: 16px;
-    }
-    .btn-floating:hover {
-      transform: scale(1.05);
-    }
-
-    /* ---- Static Nav Buttons ---- */
-    .nav-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-    }
-    .nav-buttons a {
-      text-decoration: none;
-      background: linear-gradient(135deg, #1a75ff, #00ccff);
-      color: #fff;
-      font-weight: bold;
-      padding: 16px 24px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,204,255,0.4);
-      transition: all 0.3s ease-in-out;
-      font-size: 15px;
-    }
-    .nav-buttons a:hover {
-      background: linear-gradient(135deg, #00ccff, #1a75ff);
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0,204,255,0.6);
-    }
-
-    /* ---- Footer ---- */
-    footer {
-      margin-top: auto;
-      font-size: 12px;
-      color: #777;
-      padding: 20px 0;
-    }
   </style>
 </head>
-<body>
-
-  <!-- header row: page title + logo -->
-  <div class="header">
-    <div class="page-title">
-      MashStat - Zimbabwe's Official Music Charts
-    </div>
+<body>  <header>
     <img src="mashstat_logo.png" alt="MashStat Logo" class="logo" />
-  </div>
-
-  <!-- main heading + subtitle -->
-  <h1>MashStat</h1>
-  <div class="subtitle">Zimbabwe's Official Music Charts</div>
-
-  <!-- description -->
-  <div class="description">
-    MashStat is Zimbabwe's premier platform for tracking and showcasing the
-    nation's top music trends. We compile data from streams, radio, and social
-    media to bring you the most accurate charts. Updated every Wednesday, our
-    platform reflects what’s hot across the country. Whether you're a fan,
-    artist, or label — this is where Zimbabwe watches music rise.
-  </div>
-
-  <!-- nav + floating MaRankings -->
-  <div class="nav-container">
-    <a href="marankings.html" class="btn-floating">MaRankings – Artists</a>
-    <div class="nav-buttons">
-      <a href="mash100.html">Mash 100 – Top Songs</a>
-      <a href="masha50.html">MashA 50 – Top Albums</a>
-      <a href="news.html">News</a>
-      <a href="submit.html">Submit Your Music</a>
-      <a href="about.html">About MashStat</a>
+  </header>  <section class="about">
+    <h2>About MashStat</h2>
+    <p>
+      MashStat is Zimbabwe's premier platform for tracking and showcasing the nation's top music trends.
+      We compile data from streams, radio, and social media to deliver the most accurate charts.
+      Updated weekly, MashStat shines a spotlight on what's driving Zimbabwe's music scene.
+    </p>
+  </section>  <section class="button-container">
+    <div class="row">
+      <a href="marankings.html" class="btn btn-large">MaRankings</a>
     </div>
-  </div>
-
-  <!-- footer -->
-  <footer>
+    <div class="row">
+      <a href="news.html" class="btn btn-small">News</a>
+      <a href="mash100.html" class="btn btn-small">Mash 100</a>
+    </div>
+    <div class="row">
+      <a href="masha50.html" class="btn btn-small">MashA 50</a>
+      <a href="vote.html" class="btn btn-small">Vote Now</a>
+    </div>
+  </section>  <section class="features">
+    <div class="feature">
+      <img src="thumb-news.jpg" alt="News Thumbnail" />
+      <div class="feature-content">
+        <h3>News</h3>
+        <p>Read all about Zimbabwe’s music scene: stories, interviews, and breaking headlines.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <img src="thumb-mash100.jpg" alt="Mash 100 Thumbnail" />
+      <div class="feature-content">
+        <h3>Mash 100</h3>
+        <p>Discover the top 100 most streamed tracks in Zimbabwe, updated weekly.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <img src="thumb-masha50.jpg" alt="MashA 50 Thumbnail" />
+      <div class="feature-content">
+        <h3>MashA 50</h3>
+        <p>Explore Zimbabwe’s 50 most popular albums of the week.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <img src="thumb-vote.jpg" alt="Vote Thumbnail" />
+      <div class="feature-content">
+        <h3>Vote Now</h3>
+        <p>Cast your daily vote for your favorite track or album.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <img src="thumb-marankings.jpg" alt="MaRankings Thumbnail" />
+      <div class="feature-content">
+        <h3>MaRankings</h3>
+        <p>Track rising artists and see who’s climbing the charts.</p>
+      </div>
+    </div>
+  </section>  <footer>
     &copy; 2025 MashStat. All rights reserved.
-  </footer>
-
-</body>
+  </footer></body>
 </html>
