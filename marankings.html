@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>MaRankings – Zimbabwe Music Charts</title>
-
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing:border-box; margin:0; padding:0; }
     body { background:#111; color:#eee; font-family:'Montserrat',sans-serif; padding:20px; }
@@ -25,51 +21,38 @@
     .city-card .rank { font-size:1.2rem; color:#ff0055; font-weight:600; }
     .city-card img { width:100%; height:120px; object-fit:cover; border-radius:4px; margin:8px 0; }
     .city-card canvas { width:100% !important; height:60px !important; }
-    .toggle-stats { position:absolute; top:8px; right:8px; background:#ff0055; color:#fff; padding:4px 6px; font-size:0.8rem; cursor:pointer; }
+    .toggle-stats { position:absolute; top:8px; right:8px; background:#ff0055; color:#fff; padding:4px 6px; font-size:0.8rem; cursor:pointer; }#artistContainer { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:15px; }
+.artist-card { background:#181818; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.5); overflow:hidden; transition:transform .2s; }
+.artist-card:hover { transform:scale(1.03); }
+.artist-card img { width:100%; height:100px; object-fit:cover; background:#333; }
+.artist-details { padding:10px; }
+.artist-name { font-size:1.1rem; color:#ff0055; margin-bottom:6px; }
+.meta-block { margin-bottom:8px; }
+.meta-block h4 { font-size:0.85rem; color:#ff0055; margin-bottom:4px; }
+.meta-block p { font-size:0.8rem; color:#ccc; }
+.links a { display:inline-block; margin:4px 4px 0 0; padding:4px 6px; font-size:0.75rem; border-radius:4px; color:#fff; text-decoration:none; }
+.links .spotify { background:#1DB954; }
+.links .youtube { background:#FF0000; }
+.links .apple { background:#000; }
 
-    #artistContainer { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:16px; margin-top:15px; }
-    .artist-card { background:#181818; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.5); overflow:hidden; transition:transform .2s; }
-    .artist-card:hover { transform:scale(1.03); }
-    .artist-card img { width:100%; height:100px; object-fit:cover; background:#333; }
-    .artist-details { padding:10px; }
-    .artist-name { font-size:1.1rem; color:#ff0055; margin-bottom:6px; }
-    .meta-block { margin-bottom:8px; }
-    .meta-block h4 { font-size:0.85rem; color:#ff0055; margin-bottom:4px; }
-    .meta-block p { font-size:0.8rem; color:#ccc; }
-    .links a { display:inline-block; margin:4px 4px 0 0; padding:4px 6px; font-size:0.75rem; border-radius:4px; color:#fff; text-decoration:none; }
-    .links .spotify { background:#1DB954; }
-    .links .youtube { background:#FF0000; }
-    .links .apple { background:#000; }
+#loadMore { display:block; margin:20px auto; padding:10px 20px; background:#ff0055; color:#fff; font-size:1rem; border:none; border-radius:4px; }
+#searchPrompt { text-align:center; color:#888; margin-top:10px; }
 
-    #loadMore { display:block; margin:20px auto; padding:10px 20px; background:#ff0055; color:#fff; font-size:1rem; border:none; border-radius:4px; }
-    #searchPrompt { text-align:center; color:#888; margin-top:10px; }
   </style>
 </head>
-<body>
-
-  <header>
+<body>  <header>
     <a href="index.html" class="main">MashStat</a>
-  </header>
-
-  <input id="searchBar" placeholder="Search artist and press Enter…" />
-
-  <section>
+  </header>  <input id="searchBar" placeholder="Search artist and press Enter…" />  <section>
     <h3>City Popularity</h3>
     <div id="cityList">Loading city popularity…</div>
-  </section>
-
-  <section>
+  </section>  <section>
     <h3>Artist Stats</h3>
     <div id="artistContainer"></div>
     <button id="loadMore" style="display:none;">Load more artists</button>
     <p id="searchPrompt">Search artist to see stats</p>
-  </section>
-
-  <footer style="text-align:center; margin-top:30px; font-size:0.8rem; color:#777;">
+  </section>  <footer style="text-align:center; margin-top:30px; font-size:0.8rem; color:#777;">
     Data sources: Spotify Web API · Firestore<br>&copy; 2025 MashStat / MaRankings
-  </footer>
-
-<script>
+  </footer><script>
   // Firebase init (use your config)
   firebase.initializeApp({
     apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
@@ -116,7 +99,6 @@
     if(artistCache[key]?.thumb) return artistCache[key].thumb;
     const token = await getSpotifyToken();
     let url = "";
-    // Spotify
     try {
       const res = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`, {
         headers:{"Authorization":"Bearer "+token}
@@ -124,7 +106,6 @@
       const js = await res.json();
       url = js.artists.items[0]?.images[0]?.url || "";
     } catch{}
-    // hide card if no thumb
     artistCache[key] = { thumb:url };
     return url;
   }
@@ -168,7 +149,6 @@
     const votes = snap.docs.map(d=>d.data());
     const merged = mergeVotes(votes);
     cityList.innerHTML = "";
-    // render city popularity
     for(let i=0; i<merged.length; i++){
       const v = merged[i];
       const thumb = await fetchThumbnail(v.song.artist);
@@ -184,9 +164,9 @@
       card.querySelector(".toggle-stats").onclick = ()=> toggleCard(card, v.song.artist, v.cityCounts);
       cityList.appendChild(card);
     }
-    // initial load top 4 artists
-    const topArtists = merged.slice(0,4).map(v=>v.song.artist);
-    statsList = await Promise.all(topArtists.map(fetchArtist));
+    // load random initial artists
+    const initialArtists = ["Drake","Feli Nandi","Winky D","Holy Ten"];
+    statsList = await Promise.all(initialArtists.map(fetchArtist));
     shown = statsList.length;
     renderStats();
   });
@@ -194,16 +174,12 @@
   function toggleCard(card, artist, cityCounts){
     if(card.dataset.mode==="stats"){
       card.dataset.mode="city";
-      // reload city view
-      card.querySelector("button").textContent="Stats";
       const thumb = artistCache[normalizeName(artist)].thumb;
-      card.innerHTML = `<div class="rank">${card.querySelector('.rank').outerHTML}</div>
-                        <img src="${thumb}" alt="${artist}"/><canvas></canvas><button class="toggle-stats">Stats</button>`;
+      card.innerHTML = `<div class="rank">#</div><img src="${thumb}" alt="${artist}"/><canvas></canvas><button class="toggle-stats">Stats</button>`;
       drawBar(card.querySelector("canvas"), Object.keys(cityCounts), Object.values(cityCounts));
       card.querySelector(".toggle-stats").onclick = ()=> toggleCard(card, artist, cityCounts);
     } else {
       card.dataset.mode="stats";
-      // show artist stats
       fetchArtist(artist).then(d=>{
         card.innerHTML = `
           <img src="${d.image}" alt="${d.name}"/>
@@ -226,8 +202,7 @@
     for(let i=0; i<shown && i<statsList.length; i++){
       const d = statsList[i];
       const c = document.createElement("div"); c.className="artist-card";
-      c.innerHTML = `<img src="${d.image}" alt="${d.name}"/>
-        <div class="artist-details">
+      c.innerHTML = `<img src="${d.image}" alt="${d.name}"/><div class="artist-details">
           <div class="artist-name">${d.name}</div>
           <div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div>
           <div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div>
@@ -238,22 +213,13 @@
     searchPrompt.style.display = shown >= statsList.length ? "block" : "none";
   }
 
-  loadMore.onclick = ()=>{ shown+=4; renderStats(); };
+  loadMore.onclick = ()=>{ shown+=2; renderStats(); };
 
-  document.getElementById("searchBar").addEventListener("keydown", async e=>{
-    if(e.key==="Enter"){
-      e.preventDefault();
-      const name = e.target.value.trim();
-      if(!name) return;
-      // add searched artist
+  document.getElementById("searchBar").addEventListener("keydown",async e=>{
+    if(e.key==="Enter"){ e.preventDefault(); const name=e.target.value.trim(); if(!name) return;
       const d = await fetchArtist(name);
-      statsList.unshift(d);
-      shown++;
-      renderStats();
-      e.target.value="";
+      statsList.unshift(d); shown++; renderStats(); e.target.value="";
     }
   });
-</script>
-
-</body>
+</script></body>
 </html>
