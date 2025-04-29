@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MashStat – Home</title>
 
   <!-- Google Analytics -->
@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap"
     rel="stylesheet"
   />
 
@@ -36,12 +36,12 @@
     /* Header / Nav */
     header {
       background: #000;
-      padding: 10px 20px;
+      padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    header img.logo { height: 50px; }
+    header img.logo { height: 48px; }
     nav a {
       color: #fff;
       margin-left: 20px;
@@ -51,44 +51,88 @@
     nav a:hover { text-decoration: underline; }
 
     /* Hero CTA */
-    .hero-bg { background: #121212; padding: 40px 20px; }
+    .hero-bg { background: #121212; padding: 32px 20px; text-align: center; }
     .cta-pyramid {
-      position: relative;
-      width: 320px;
-      margin: 40px auto;
+      display: inline-block;
+      text-align: center;
     }
     .btn {
-      display: block;
+      display: inline-block;
       background: #ff0055;
       color: #fff;
       text-align: center;
-      padding: 14px 0;
-      border-radius: 6px;
+      padding: 8px 16px;
+      border-radius: 4px;
       font-weight: 600;
+      font-size: 0.9rem;
+      margin: 4px;
       transition: transform .2s;
     }
-    .btn:hover { transform: translateY(-3px); }
-    .btn-main { font-size: 1.3rem; margin-bottom: 24px; }
-    .pyramid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-main {
+      font-size: 1.1rem;
+      padding: 10px 20px;
+      margin-bottom: 12px;
+    }
+    .pyramid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
 
     /* Section Titles */
     .section-title {
       font-family: 'Playfair Display', serif;
       color: #ff0055;
       font-size: 2rem;
-      margin: 40px 20px 20px;
+      margin: 48px 24px 16px;
       border-bottom: 2px solid #ff0055;
       display: inline-block;
     }
 
-    /* MashStat Exclusives */
+    /* Feature Cards */
+    .features {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform .2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .feature-card h4 {
+      padding: 12px;
+      color: #ff0055;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+    .feature-card p {
+      padding: 0 12px 12px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    /* MashStat Exclusives (Video Cards) */
     .news-container {
       max-width: 900px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 24px;
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 32px;
     }
     .news-card {
       background: #fff;
@@ -98,17 +142,17 @@
     }
     .news-video iframe {
       width: 100%;
-      height: 315px;
+      height: 320px;
       border: none;
     }
     .news-content {
       padding: 20px;
     }
     .news-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: #333;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .news-link {
       color: #ff0055;
@@ -116,9 +160,9 @@
     }
     .news-link:hover { text-decoration: underline; }
 
-    /* External News */
+    /* External News Grid */
     .external-hint {
-      margin: 50px 0 10px;
+      margin: 40px 0 8px;
       text-align: center;
       font-style: italic;
       color: #777;
@@ -127,9 +171,9 @@
     .auto-news-grid {
       max-width: 1000px;
       margin: 0 auto 60px;
-      padding: 0 20px;
+      padding: 0 24px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
       gap: 20px;
     }
     .auto-news-item {
@@ -137,27 +181,29 @@
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform .2s;
     }
+    .auto-news-item:hover { transform: translateY(-3px); }
     .auto-news-item img {
       width: 100%;
-      height: 200px;
+      height: 180px;
       object-fit: cover;
     }
     .auto-news-content {
-      padding: 15px;
+      padding: 12px;
     }
     .auto-news-title a {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: #ff0055;
     }
     .auto-news-desc {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #555;
-      margin: 8px 0;
+      margin: 6px 0;
     }
     .auto-news-source {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #999;
       text-align: right;
     }
@@ -167,11 +213,13 @@
       background: #000;
       padding: 20px;
       text-align: center;
-      color: #666;
+      color: #888;
       font-size: 0.8rem;
+      margin-top: 40px;
     }
   </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -200,6 +248,31 @@
     </div>
   </div>
 
+  <!-- Feature Cards -->
+  <div class="section-title">What We Offer</div>
+  <div class="features">
+    <div class="feature-card">
+      <img src="asserts/hq720.jpg" alt="Latest News">
+      <h4>News</h4>
+      <p>Read the freshest headlines from Zimbabwe’s music scene—now right on our homepage.</p>
+    </div>
+    <div class="feature-card">
+      <img src="asserts/atenda-chinx-lockdown.webp" alt="Top 100 Songs">
+      <h4>Mash 100</h4>
+      <p>Discover the top 100 streamed tracks in Zimbabwe each week, updated daily.</p>
+    </div>
+    <div class="feature-card">
+      <img src="asserts/winky-d-pabho-ft-bling4.jpeg" alt="Top Albums">
+      <h4>MashA 50</h4>
+      <p>Explore the 50 most-voted albums across the nation—and cast your own vote!</p>
+    </div>
+    <div class="feature-card">
+      <img src="asserts/vote.png" alt="Vote Now">
+      <h4>Vote</h4>
+      <p>Your daily vote drives the charts—help shape Zimbabwe’s official rankings.</p>
+    </div>
+  </div>
+
   <!-- MashStat Exclusives -->
   <div class="section-title">MashStat Exclusives</div>
   <div class="news-container">
@@ -217,7 +290,7 @@
         <iframe src="https://www.youtube.com/embed/yDTni3WFNOE" allowfullscreen></iframe>
       </div>
       <div class="news-content">
-        <div class="news-title">Feli Nandi’s Ndisiyei Soars to #2 on MashA50</div>
+        <div class="news-title">Feli Nandi’s Ndisiyei Soars to #2 on MashA 50</div>
         <a class="news-link" href="articles/feli-ndisiyei.html">Read Full Article →</a>
       </div>
     </div>
@@ -242,7 +315,7 @@
     &copy; 2025 MashStat. All rights reserved.
   </footer>
 
-  <!-- Auto-fetch external RSS headlines -->
+  <!-- Auto-fetch external RSS headlines w/ thumbnail logic -->
   <script>
   (async()=>{
     const feeds = [
@@ -253,10 +326,9 @@
     const container = document.getElementById('externalNews');
     container.innerHTML = '';
 
-    // Determine how many headlines: 20 + 5 per hour, capped at 100
-    const now       = new Date();
-    const hours     = now.getHours();
-    const totalMax  = Math.min(20 + hours * 5, 100);
+    // determine headline count dynamically
+    const hours    = new Date().getHours();
+    const totalMax = Math.min(20 + hours*5, 100);
 
     let allItems = [];
     for (let feed of feeds) {
@@ -265,17 +337,42 @@
         const doc     = new DOMParser().parseFromString(xmlText,'application/xml');
         const items   = Array.from(doc.querySelectorAll('item'));
 
-        items.forEach(item => {
+        for (let item of items) {
           const title   = item.querySelector('title')?.textContent || '';
           const link    = item.querySelector('link')?.textContent  || '';
           const pubDate = item.querySelector('pubDate')?.textContent || '';
-          let desc      = item.querySelector('description')?.textContent || '';
-          desc = desc.replace(/<[^>]+>/g,'').slice(0,120) + '…';
+          let desc      = (item.querySelector('description')?.textContent || '')
+                            .replace(/<[^>]+>/g,'').slice(0,120) + '…';
 
+          // image-extraction: media:content, enclosure, media:thumbnail,
+          // content:encoded, then <img> in description
           let imgUrl = '';
-          const m = item.getElementsByTagName('media:content')[0]
-                 || item.getElementsByTagName('enclosure')[0];
-          if (m && m.getAttribute('url')) imgUrl = m.getAttribute('url');
+          const m1 = item.getElementsByTagName('media:content')[0]
+                    || item.getElementsByTagName('enclosure')[0];
+          if (m1?.getAttribute('url')) imgUrl = m1.getAttribute('url');
+
+          if (!imgUrl) {
+            const thumb = item.getElementsByTagName('media:thumbnail')[0];
+            if (thumb?.getAttribute('url')) imgUrl = thumb.getAttribute('url');
+          }
+
+          if (!imgUrl) {
+            const ced = item.getElementsByTagName('content:encoded')[0];
+            if (ced) {
+              const tmp = document.createElement('div');
+              tmp.innerHTML = ced.textContent;
+              const img = tmp.querySelector('img');
+              if (img) imgUrl = img.src;
+            }
+          }
+
+          if (!imgUrl) {
+            const descHTML = item.querySelector('description')?.textContent || '';
+            const tmp2     = document.createElement('div');
+            tmp2.innerHTML = descHTML;
+            const img2     = tmp2.querySelector('img');
+            if (img2) imgUrl = img2.src;
+          }
 
           allItems.push({
             title,
@@ -283,32 +380,33 @@
             pubDate: new Date(pubDate),
             desc,
             source: feed.name,
-            imgUrl
+            imgUrl: imgUrl || 'news-placeholder.png'
           });
-        });
+        }
       } catch(e) {
         console.warn('Failed to load', feed.name, e);
       }
     }
 
-    // Sort by newest first and render up to totalMax
-    allItems.sort((a,b)=> b.pubDate - a.pubDate);
-    allItems.slice(0, totalMax).forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'auto-news-item';
-      div.innerHTML = `
-        <img src="${item.imgUrl || 'news-placeholder.png'}" alt="">
-        <div class="auto-news-content">
-          <div class="auto-news-title">
-            <a href="${item.link}" target="_blank">${item.title}</a>
-          </div>
-          <div class="auto-news-desc">${item.desc}</div>
-          <div class="auto-news-source">
-            Source: ${item.source} • ${item.pubDate.toLocaleDateString()}
-          </div>
-        </div>`;
-      container.appendChild(div);
-    });
+    allItems
+      .sort((a,b)=> b.pubDate - a.pubDate)
+      .slice(0, totalMax)
+      .forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'auto-news-item';
+        card.innerHTML = `
+          <img src="${item.imgUrl}" alt="">
+          <div class="auto-news-content">
+            <div class="auto-news-title">
+              <a href="${item.link}" target="_blank">${item.title}</a>
+            </div>
+            <div class="auto-news-desc">${item.desc}</div>
+            <div class="auto-news-source">
+              Source: ${item.source} • ${item.pubDate.toLocaleDateString()}
+            </div>
+          </div>`;
+        container.appendChild(card);
+      });
   })();
   </script>
 </body>
