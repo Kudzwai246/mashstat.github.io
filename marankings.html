@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>MaRankings – Zimbabwe Music Charts</title>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
   <script>
-    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-    gtag('js',new Date());gtag('config','G-8BMMTDWP3G');
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config','G-8BMMTDWP3G');
   </script>
 
   <!-- Firebase -->
@@ -16,6 +18,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
   <style>
@@ -23,12 +26,10 @@
     body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px}
     header{text-align:center;margin-bottom:20px;border-bottom:3px solid #ff0055;padding-bottom:10px}
     .main{font-family:'Playfair Display',serif;font-size:3rem;color:#ff0055;text-decoration:none}
-
     #searchBar{width:100%;padding:12px;margin:15px 0;background:#222;border:none;border-radius:4px;color:#eee}
     section{margin-top:20px}
     h3{font-family:'Playfair Display',serif;color:#ff0055;font-size:1.6rem;margin-bottom:10px;
         border-bottom:2px solid #ff0055;display:inline-block;padding-bottom:4px}
-
     #cityLoading,#artistLoading{text-align:center;color:#888;margin:10px 0}
     #cityList{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
     .city-card{background:#1e1e1e;padding:12px;border:1px solid #333;border-radius:8px;
@@ -40,7 +41,6 @@
     .city-card canvas{width:100%!important;height:60px!important}
     .toggle-stats{position:absolute;top:8px;right:8px;background:#ff0055;color:#fff;
                   padding:4px 6px;font-size:0.8rem;cursor:pointer}
-
     #artistContainer{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:15px}
     .artist-card{background:#181818;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.5);
                  overflow:hidden;transition:transform .2s}
@@ -54,7 +54,6 @@
     .links a{display:inline-block;margin:4px 4px 0 0;padding:4px 6px;font-size:0.75rem;
              border-radius:4px;color:#fff;text-decoration:none}
     .spotify{background:#1DB954}.youtube{background:#FF0000}.apple{background:#000}
-
     #loadMore{display:block;margin:20px auto;padding:10px 20px;background:#ff0055;color:#fff;
               border:none;border-radius:4px;font-size:1rem;cursor:pointer}
     #searchPrompt{text-align:center;color:#888;margin-top:10px}
@@ -84,7 +83,7 @@
   </footer>
 
 <script>
-  // Firebase
+  // Firebase init
   firebase.initializeApp({
     apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
     authDomain: "mashstat-vote.firebaseapp.com",
@@ -93,7 +92,8 @@
   const db = firebase.firestore();
 
   // Spotify creds + cache
-  const SPOT_ID="9fd373ec645a486d9238ce907ef6662e", SPOT_SECRET="89e25846b543443ab39fa80504d91fc5";
+  const SPOT_ID="9fd373ec645a486d9238ce907ef6662e",
+        SPOT_SECRET="89e25846b543443ab39fa80504d91fc5";
   let spotifyToken; const cache={};
 
   async function getToken(){
@@ -106,7 +106,6 @@
   }
   function norm(n){return n.trim().toLowerCase().replace(/[^a-z0-9]/g,"");}
 
-  // fetch + cache artist details
   async function getArtist(name){
     let k=norm(name);
     if(cache[k]?.detail) return cache[k].detail;
@@ -116,8 +115,7 @@
     let j=await r.json(),a=j.artists.items[0];
     let det={name:a.name,image:a.images[0]?.url||"",followers:a.followers.total,popularity:a.popularity,
              urls:{spotify:a.external_urls.spotify}};
-    cache[k]={detail:det,thumb:det.image};
-    return det;
+    cache[k]={detail:det,thumb:det.image}; return det;
   }
 
   function drawBar(c,labels,data){
@@ -125,34 +123,32 @@
       options:{indexAxis:'y',scales:{x:{beginAtZero:true}},plugins:{legend:{display:false}}}});
   }
 
-  // merge song+album votes
   function mergeVotes(votes){
     let m={};
     votes.forEach(v=>{
-      // both song and album
-      [v.song.artist, v.album.artist].forEach(artist=>{
+      [v.song.artist,v.album.artist].forEach(artist=>{
         let k=norm(artist);
         if(!m[k]) m[k]={artist,cityCounts:{},count:0};
-        m[k].count++;
-        m[k].cityCounts[v.city]=(m[k].cityCounts[v.city]||0)+1;
+        m[k].count++; m[k].cityCounts[v.city]=(m[k].cityCounts[v.city]||0)+1;
       });
     });
-    return Object.values(m).sort((a,b)=>b.count - a.count);
+    return Object.values(m).sort((a,b)=>b.count-a.count);
   }
 
-  // CITY section
+  // City Popularity
   const cityList=document.getElementById("cityList"), cityLoad=document.getElementById("cityLoading");
   db.collection('votes').onSnapshot(async snap=>{
     cityLoad.style.display='block'; cityList.innerHTML='';
     let merged=mergeVotes(snap.docs.map(d=>d.data()));
-    let lastCount=-1, lastRank=0;
-    merged.forEach(async (v,i)=>{
+    merged.sort((a,b)=>b.count-a.count);
+    let lastCount=null, lastRank=0;
+    for(let i=0;i<merged.length;i++){
+      let v=merged[i];
+      let rank=(v.count!==lastCount?(lastRank=i+1,lastCount=v.count):lastRank);
       let det=await getArtist(v.artist);
-      if(!det.image) return;            // hide no-thumb
-      let rank = v.count===lastCount? lastRank : (lastRank=i+1, lastCount=v.count);
+      if(!det.image) continue;
       let card=document.createElement("div"); card.className="city-card";
-      card.innerHTML=`
-        <div class="rank">#${rank}</div>
+      card.innerHTML=`<div class="rank">#${rank}</div>
         <img src="${det.image}" alt="${det.name}"/>
         <div class="artist-label">${det.name}</div>
         <canvas></canvas>
@@ -160,15 +156,17 @@
         <button class="toggle-stats">Stats</button>`;
       drawBar(card.querySelector("canvas"),Object.keys(v.cityCounts),Object.values(v.cityCounts));
       cityList.appendChild(card);
-    });
+    }
     cityLoad.style.display='none';
   });
 
-  // ARTIST STATS
-  const artLoad=document.getElementById("artistLoading"), artC=document.getElementById("artistContainer"),
-        loadMore=document.getElementById("loadMore"), searchPrompt=document.getElementById("searchPrompt"),
+  // Artist Stats
+  const artLoad=document.getElementById("artistLoading"),
+        artC=document.getElementById("artistContainer"),
+        loadMore=document.getElementById("loadMore"),
+        searchPrompt=document.getElementById("searchPrompt"),
         sb=document.getElementById("searchBar");
-  let statsList=[],shown=0;
+  let statsList=[], shown=0;
   async function loadDefaults(){
     artLoad.style.display='block';
     let defs=["Feli Nandi","Nutty O","Holy Ten","Winky D"];
@@ -177,7 +175,6 @@
     artLoad.style.display='none';
   }
   loadDefaults();
-
   function renderStats(){
     artC.innerHTML='';
     statsList.slice(0,shown).forEach(d=>{
@@ -194,13 +191,11 @@
     searchPrompt.style.display=shown>=statsList.length?'block':'none';
   }
   loadMore.onclick=()=>{shown+=4;renderStats();};
-
   sb.addEventListener("keydown",async e=>{
     if(e.key==='Enter'){
       e.preventDefault(); let name=sb.value.trim(); if(!name)return;
-      artLoad.style.display='block';
-      let d=await getArtist(name); statsList.unshift(d); shown++; renderStats();
-      artLoad.style.display='none'; sb.value='';
+      artLoad.style.display='block'; let d=await getArtist(name);
+      statsList.unshift(d); shown++; renderStats(); artLoad.style.display='none'; sb.value='';
     }
   });
 </script>
