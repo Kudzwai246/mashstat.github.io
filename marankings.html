@@ -1,25 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>MaRankings – Zimbabwe Music Charts</title>
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-  <script>
-    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  <title>MaRankings – Zimbabwe Music Charts</title>  <!-- Google Analytics -->  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>  <script>
+    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}    
     gtag('js',new Date());gtag('config','G-8BMMTDWP3G');
-  </script>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
-  <style>
+  </script>  <!-- Firebase -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  <!-- Chart.js -->  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">  <style>
     /* Reset & base */
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px}
@@ -38,7 +23,7 @@
     .city-card{background:#1e1e1e;padding:12px;border:1px solid #333;border-radius:8px;
                transition:transform .2s,border-color .2s;position:relative;overflow:hidden}
     .city-card:hover{transform:scale(1.02);border-color:#ff0055}
-    .rank{font-size:1.2rem;color:#ff0055;font-weight:600}
+    .rank{font-size:1.2rem;color:#ff0055;font-weight:600;display:inline-block;width:100%}
     .city-card img{width:100%;height:120px;object-fit:cover;border-radius:4px;margin:8px 0}
     .city-card canvas{width:100%!important;height:60px!important}
     .toggle-stats{position:absolute;top:8px;right:8px;background:#ff0055;color:#fff;
@@ -66,33 +51,22 @@
 
     /* Loading text */
     #cityLoading,#artistLoading{text-align:center;color:#888;margin:10px 0}
-  </style>
-</head>
-<body>
-
-  <header><a href="index.html" class="main">MashStat</a></header>
-  <input id="searchBar" placeholder="Search artist and press Enter…" />
-
-  <section>
+  </style></head>
+<body>  <header><a href="index.html" class="main">MashStat</a></header>
+  <input id="searchBar" placeholder="Search artist and press Enter…" />  <section>
     <h3>City Popularity</h3>
     <div id="cityLoading">Loading city popularity…</div>
     <div id="cityList"></div>
-  </section>
-
-  <section>
+  </section>  <section>
     <h3>Artist Stats</h3>
     <div id="artistLoading">Loading artist stats…</div>
     <div id="artistContainer"></div>
     <button id="loadMore" style="display:none;">Load more artists</button>
     <p id="searchPrompt" style="display:none;">Search artist to see stats</p>
-  </section>
-
-  <footer style="text-align:center;margin-top:30px;font-size:0.8rem;color:#777">
+  </section>  <footer style="text-align:center;margin-top:30px;font-size:0.8rem;color:#777">
     Data sources: Spotify Web API · Firestore<br>&copy; 2025 MashStat / MaRankings
-  </footer>
-
-<script>
-  // — Firebase init
+  </footer><script>
+  // Firebase init
   firebase.initializeApp({
     apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
     authDomain: "mashstat-vote.firebaseapp.com",
@@ -100,7 +74,7 @@
   });
   const db = firebase.firestore();
 
-  // — Spotify credentials & cache
+  // Spotify creds & cache
   const SPOT_ID="9fd373ec645a486d9238ce907ef6662e",
         SPOT_SECRET="89e25846b543443ab39fa80504d91fc5";
   let spotifyToken;
@@ -131,27 +105,14 @@
       headers:{"Authorization":"Bearer "+token}
     });
     const js = await res.json(), a = js.artists.items[0];
-    const det = {
-      name: a.name,
-      image: a.images[0]?.url||"",
-      followers: a.followers.total,
-      popularity: a.popularity,
-      urls: { spotify: a.external_urls.spotify }
-    };
+    const det = { name: a.name, image: a.images[0]?.url||"", followers: a.followers.total, popularity: a.popularity, urls: { spotify: a.external_urls.spotify } };
     // YouTube
-    try{
-      const y = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${encodeURIComponent(name)}&key=AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10`);
-      const yj=await y.json(), ch=yj.items[0]?.id?.channelId;
-      if(ch) det.urls.youtube="https://www.youtube.com/channel/"+ch;
-    }catch{}
-    // Apple Music
-    try{
-      const it=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(name)}&entity=musicArtist&limit=1`);
-      const itj=await it.json(), ai=itj.results[0];
-      if(ai) det.urls.apple=ai.artistLinkUrl;
-    }catch{}
-    cache[key]={detail:det,thumb:det.image};
-    return det;
+    try{ const y = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${encodeURIComponent(name)}&key=AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10`);
+          const yj=await y.json(), ch=yj.items[0]?.id?.channelId; if(ch) det.urls.youtube="https://www.youtube.com/channel/"+ch; }catch{}
+    // Apple
+    try{ const it=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(name)}&entity=musicArtist&limit=1`);
+          const itj=await it.json(), ai=itj.results[0]; if(ai) det.urls.apple=ai.artistLinkUrl; }catch{}
+    cache[key]={detail:det,thumb:det.image}; return det;
   }
 
   // Draw horizontal bar
@@ -161,86 +122,47 @@
     });
   }
 
-  // Merge vote records by normalized artist
+  // Merge votes for song and album separately
   function mergeVotes(votes){
-    const m={};
+    const songMap={}, albumMap={};
     votes.forEach(v=>{
-      const k=norm(v.song.artist);
-      if(!m[k]) m[k]={song:v.song,cityCounts:{},count:0};
-      m[k].count++; m[k].cityCounts[v.city]=(m[k].cityCounts[v.city]||0)+1;
+      let ks=norm(v.song.artist), ka=norm(v.album.artist);
+      if(!songMap[ks]) songMap[ks]={artist:v.song.artist,cityCounts:{},count:0};
+      songMap[ks].count++; songMap[ks].cityCounts[v.city]=(songMap[ks].cityCounts[v.city]||0)+1;
+      if(!albumMap[ka]) albumMap[ka]={artist:v.album.artist,cityCounts:{},count:0};
+      albumMap[ka].count++; albumMap[ka].cityCounts[v.city]=(albumMap[ka].cityCounts[v.city]||0)+1;
     });
-    return Object.values(m).sort((a,b)=>b.count-a.count);
+    // combine both lists
+    return { songs:Object.values(songMap).sort((a,b)=>b.count-a.count), albums:Object.values(albumMap).sort((a,b)=>b.count-a.count) };
   }
 
-  // — City Popularity rendering
+  // City Popularity rendering
   const cityList=document.getElementById("cityList"), cityLoad=document.getElementById("cityLoading");
   db.collection('votes').onSnapshot(async snap=>{
     cityLoad.style.display='block'; cityList.innerHTML='';
-    const merged=mergeVotes(snap.docs.map(d=>d.data()));
-    for(let i=0;i<merged.length;i++){
-      const v=merged[i];
-      const det=await getArtist(v.song.artist);
-      if(!det.image) continue;  // hide if no thumbnail
+    const {songs,albums} = mergeVotes(snap.docs.map(d=>d.data()));
+    // render songs then albums with draw
+    [...songs, ...albums].forEach(async(v,i)=>{
+      const det=await getArtist(v.artist); if(!det.image) return;
       const card=document.createElement("div"); card.className="city-card";
-      card.innerHTML=`
-        <div class="rank">#${i+1}</div>
+      card.innerHTML=`<div class="rank">#${i+1}${i>0 && ( (songs[i-1]||{}).count===v.count || (albums[i-1-songs.length]||{}).count===v.count )? ' (tie)':''}</div>
         <img src="${det.image}" alt="${det.name}"/>
         <div class="meta-block"><h4>Followers</h4><p>${det.followers.toLocaleString()}</p></div>
         <canvas></canvas>
         <button class="toggle-stats">Stats</button>`;
       drawBar(card.querySelector("canvas"),Object.keys(v.cityCounts),Object.values(v.cityCounts));
       cityList.appendChild(card);
-      // toggle logic omitted for brevity
-    }
+    });
     cityLoad.style.display='none';
   });
 
-  // — Artist Stats rendering
-  const artLoad=document.getElementById("artistLoading"), artC=document.getElementById("artistContainer"),
-        loadMore=document.getElementById("loadMore"), searchPrompt=document.getElementById("searchPrompt"),
-        sb=document.getElementById("searchBar");
+  // Artist Stats rendering (unchanged)
+  const artLoad=document.getElementById("artistLoading"), artC=document.getElementById("artistContainer"), loadMore=document.getElementById("loadMore"), searchPrompt=document.getElementById("searchPrompt"), sb=document.getElementById("searchBar");
   let statsList=[], shown=0;
-
-  async function loadDefaults(){
-    artLoad.style.display='block';
-    const defaults=["Feli Nandi","Nutty O","Holy Ten","Winky D"];
-    statsList = await Promise.all(defaults.map(getArtist));
-    shown = statsList.length; renderStats();
-    artLoad.style.display='none';
-  }
+  async function loadDefaults(){ artLoad.style.display='block'; const defaults=["Feli Nandi","Nutty O","Holy Ten","Winky D"]; statsList=await Promise.all(defaults.map(getArtist)); shown=statsList.length; renderStats(); artLoad.style.display='none'; }
   loadDefaults();
-
-  function renderStats(){
-    artC.innerHTML='';
-    for(let i=0;i<shown && i<statsList.length;i++){
-      const d=statsList[i], c=document.createElement("div"); c.className="artist-card";
-      c.innerHTML=`<img src="${d.image}" alt="${d.name}"/><div class="artist-details">
-        <div class="artist-name">${d.name}</div>
-        <div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div>
-        <div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div>
-        <div class="links">
-          <a class="spotify" href="${d.urls.spotify}" target="_blank">Spotify</a>
-          ${d.urls.apple?`<a class="apple" href="${d.urls.apple}" target="_blank">Apple</a>`:""}
-          ${d.urls.youtube?`<a class="youtube" href="${d.urls.youtube}" target="_blank">YouTube</a>`:""}
-        </div>
-      </div>`;
-      artC.appendChild(c);
-    }
-    loadMore.style.display=shown<statsList.length?'block':'none';
-    searchPrompt.style.display=shown>=statsList.length?'block':'none';
-  }
-
-  loadMore.onclick=()=>{ shown+=4; renderStats(); };
-
-  sb.addEventListener("keydown",async e=>{
-    if(e.key==='Enter'){
-      e.preventDefault(); const name=sb.value.trim(); if(!name)return;
-      artLoad.style.display='block';
-      const d=await getArtist(name);
-      statsList.unshift(d); shown++; renderStats();
-      artLoad.style.display='none'; sb.value='';
-    }
-  });
-</script>
-</body>
+  function renderStats(){ artC.innerHTML=''; for(let i=0;i<shown && i<statsList.length;i++){const d=statsList[i],c=document.createElement("div");c.className="artist-card";c.innerHTML=`<img src="${d.image}" alt="${d.name}"/><div class="artist-details"><div class="artist-name">${d.name}</div><div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div><div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div><div class="links"><a class="spotify" href="${d.urls.spotify}" target="_blank">Spotify</a>${d.urls.apple?`<a class="apple" href="${d.urls.apple}" target="_blank">Apple</a>`:""}${d.urls.youtube?`<a class="youtube" href="${d.urls.youtube}" target="_blank">YouTube</a>`:""}</div></div>`;artC.appendChild(c);}loadMore.style.display=shown<statsList.length?'block':'none';searchPrompt.style.display=shown>=statsList.length?'block':'none';}
+  loadMore.onclick=()=>{shown+=4;renderStats();};
+  sb.addEventListener("keydown",async e=>{if(e.key==='Enter'){e.preventDefault();const name=sb.value.trim();if(!name)return;artLoad.style.display='block';const d=await getArtist(name);statsList.unshift(d);shown++;renderStats();artLoad.style.display='none';sb.value='';}});
+</script></body>
 </html>
