@@ -33,7 +33,6 @@
         border-bottom:2px solid #ff0055;display:inline-block;padding-bottom:4px}
 
     #cityLoading,#artistLoading{text-align:center;color:#888;margin:10px 0}
-    /* Force two columns always so ties sit side by side */
     #cityList{display:grid;grid-template-columns:repeat(2,1fr)!important;gap:16px}
     .city-card{background:#1e1e1e;padding:12px;border:1px solid #333;border-radius:8px;
                position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
@@ -41,7 +40,8 @@
     .rank{font-size:1.2rem;color:#ff0055;font-weight:600}
     .city-card img{width:100%;height:100px;object-fit:cover;border-radius:4px;margin:8px 0}
     .artist-label{font-size:1rem;color:#fff;margin-bottom:6px}
-    .city-card canvas{width:100%!important;height:60px!important}
+    /* increased min-height for up to 3 bars */
+    .city-card canvas{width:100%!important;height:100px!important}
     .toggle-stats{position:absolute;top:8px;right:8px;background:#ff0055;color:#fff;
                   padding:4px 6px;font-size:0.8rem;cursor:pointer}
 
@@ -88,7 +88,7 @@
   </footer>
 
 <script>
-  // Firebase init
+  // Firebase
   firebase.initializeApp({
     apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
     authDomain: "mashstat-vote.firebaseapp.com",
@@ -96,7 +96,7 @@
   });
   const db = firebase.firestore();
 
-  // Spotify creds + cache
+  // Spotify & cache
   const SPOT_ID="9fd373ec645a486d9238ce907ef6662e",
         SPOT_SECRET="89e25846b543443ab39fa80504d91fc5";
   let spotifyToken; const cache={};
@@ -124,8 +124,8 @@
   }
 
   function drawBar(c,labels,data){
-    new Chart(c,{type:'bar',data:{labels,datasets:[{data,backgroundColor:'#ff0055',barThickness:6}]},
-      options:{indexAxis:'y',scales:{x:{beginAtZero:true}},plugins:{legend:{display:false}}}});
+    new Chart(c,{type:'bar',data:{labels,datasets:[{data,backgroundColor:'#ff0055',barThickness:8}]},
+      options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:{beginAtZero:true}},plugins:{legend:{display:false}}}});
   }
 
   function mergeVotes(votes){
@@ -145,26 +145,22 @@
   db.collection('votes').onSnapshot(async snap=>{
     cityLoad.style.display='block'; cityList.innerHTML='';
     let entries=mergeVotes(snap.docs.map(d=>d.data()));
-    // sort by count desc
     entries.sort((a,b)=>b.count - a.count);
-    // assign ranks
     let lastCount=null, lastRank=0;
-    let ranked = entries.map((v,i)=>{
+    let ranked=entries.map((v,i=>{
       if(v.count!==lastCount){ lastCount=v.count; lastRank=i+1; }
       return {...v,rank:lastRank};
-    });
-    // render
+    }));
     for(let entry of ranked){
       let det=await getArtist(entry.artist);
       if(!det.image) continue;
       let card=document.createElement("div"); card.className="city-card";
-      card.innerHTML=`<div class="rank">#${entry.rank}</div>
+      let canvas=document.createElement("canvas"); canvas.style.height='100px';
+      card.innerHTML=`<div class="rank">(${entry.rank})</div>
         <img src="${det.image}" alt="${det.name}"/>
-        <div class="artist-label">${det.name}</div>
-        <canvas></canvas>
-        <div class="meta-block"><h4>Votes</h4><p>${entry.count}</p></div>
-        <button class="toggle-stats">Stats</button>`;
-      drawBar(card.querySelector("canvas"),Object.keys(entry.cityCounts),Object.values(entry.cityCounts));
+        <div class="artist-label">${det.name}</div>`;}
+      card.appendChild(canvas);
+      drawBar(canvas,Object.keys(entry.cityCounts),Object.values(entry.cityCounts));
       cityList.appendChild(card);
     }
     cityLoad.style.display='none';
