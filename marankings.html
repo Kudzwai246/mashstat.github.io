@@ -33,14 +33,13 @@
         border-bottom:2px solid #ff0055;display:inline-block;padding-bottom:4px}
 
     #cityLoading,#artistLoading{text-align:center;color:#888;margin:10px 0}
-    #cityList{display:grid;grid-template-columns:repeat(2,1fr)!important;gap:16px}
+    #cityList{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .city-card{background:#1e1e1e;padding:12px;border:1px solid #333;border-radius:8px;
                position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
     .city-card:hover{transform:scale(1.02);border-color:#ff0055}
     .rank{font-size:1.2rem;color:#ff0055;font-weight:600}
     .city-card img{width:100%;height:100px;object-fit:cover;border-radius:4px;margin:8px 0}
     .artist-label{font-size:1rem;color:#fff;margin-bottom:6px}
-    /* increased min-height for up to 3 bars */
     .city-card canvas{width:100%!important;height:100px!important}
     .toggle-stats{position:absolute;top:8px;right:8px;background:#ff0055;color:#fff;
                   padding:4px 6px;font-size:0.8rem;cursor:pointer}
@@ -88,7 +87,7 @@
   </footer>
 
 <script>
-  // Firebase
+  // Firebase init
   firebase.initializeApp({
     apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
     authDomain: "mashstat-vote.firebaseapp.com",
@@ -96,112 +95,173 @@
   });
   const db = firebase.firestore();
 
-  // Spotify & cache
+  // Spotify credentials + in-memory cache
   const SPOT_ID="9fd373ec645a486d9238ce907ef6662e",
         SPOT_SECRET="89e25846b543443ab39fa80504d91fc5";
-  let spotifyToken; const cache={};
+  let spotifyToken;
+  const cache = {};
 
   async function getToken(){
     if(spotifyToken) return spotifyToken;
-    let r=await fetch("https://accounts.spotify.com/api/token",{method:"POST",
-      headers:{"Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET),
-               "Content-Type":"application/x-www-form-urlencoded"},
-      body:"grant_type=client_credentials"});
-    spotifyToken=(await r.json()).access_token; return spotifyToken;
-  }
-  function norm(n){return n.trim().toLowerCase().replace(/[^a-z0-9]/g,"");}
-
-  async function getArtist(name){
-    let k=norm(name);
-    if(cache[k]?.detail) return cache[k].detail;
-    let token=await getToken();
-    let r=await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,
-                      {headers:{"Authorization":"Bearer "+token}});
-    let j=await r.json(),a=j.artists.items[0];
-    let det={name:a.name,image:a.images[0]?.url||"",followers:a.followers.total,popularity:a.popularity,
-             urls:{spotify:a.external_urls.spotify}};
-    cache[k]={detail:det,thumb:det.image}; return det;
+    const res = await fetch("https://accounts.spotify.com/api/token", {
+      method:"POST",
+      headers:{
+        "Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET),
+        "Content-Type":"application/x-www-form-urlencoded"
+      },
+      body:"grant_type=client_credentials"
+    });
+    spotifyToken = (await res.json()).access_token;
+    return spotifyToken;
   }
 
-  function drawBar(c,labels,data){
-    new Chart(c,{type:'bar',data:{labels,datasets:[{data,backgroundColor:'#ff0055',barThickness:8}]},
-      options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:{beginAtZero:true}},plugins:{legend:{display:false}}}});
+  function normalize(n){
+    return n.trim().toLowerCase().replace(/[^a-z0-9]/g,"");
+  }
+
+  async function fetchArtistDetail(name){
+    const key = normalize(name);
+    if(cache[key]?.detail) return cache[key].detail;
+    const token = await getToken();
+    const resp = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`, {
+      headers: { "Authorization":"Bearer "+token }
+    });
+    const js = await resp.json();
+    const a = js.artists.items[0];
+    const det = {
+      name: a.name,
+      image: a.images[0]?.url||"",
+      followers: a.followers.total,
+      popularity: a.popularity,
+      urls: { spotify: a.external_urls.spotify }
+    };
+    cache[key] = { detail: det };
+    return det;
+  }
+
+  function drawBar(canvas, labels, data){
+    new Chart(canvas, {
+      type:'bar',
+      data:{ labels, datasets:[{ data, backgroundColor:'#ff0055', barThickness:8 }] },
+      options:{ maintainAspectRatio:false, indexAxis:'y', scales:{ x:{ beginAtZero:true }}, plugins:{ legend:{ display:false }}}
+    });
   }
 
   function mergeVotes(votes){
-    let m={};
+    const m = {};
     votes.forEach(v=>{
-      [v.song.artist,v.album.artist].forEach(artist=>{
-        let key=norm(artist);
-        if(!m[key]) m[key]={artist,cityCounts:{},count:0};
-        m[key].count++; m[key].cityCounts[v.city]=(m[key].cityCounts[v.city]||0)+1;
+      [v.song.artist, v.album.artist].forEach(artist=>{
+        const k = normalize(artist);
+        if(!m[k]) m[k] = { artist, cityCounts:{}, count:0 };
+        m[k].count++;
+        m[k].cityCounts[v.city] = (m[k].cityCounts[v.city]||0) + 1;
       });
     });
     return Object.values(m);
   }
 
-  // City Popularity
-  const cityList=document.getElementById("cityList"), cityLoad=document.getElementById("cityLoading");
-  db.collection('votes').onSnapshot(async snap=>{
-    cityLoad.style.display='block'; cityList.innerHTML='';
-    let entries=mergeVotes(snap.docs.map(d=>d.data()));
-    entries.sort((a,b)=>b.count - a.count);
-    let lastCount=null, lastRank=0;
-    let ranked=entries.map((v,i=>{
-      if(v.count!==lastCount){ lastCount=v.count; lastRank=i+1; }
-      return {...v,rank:lastRank};
-    }));
-    for(let entry of ranked){
-      let det=await getArtist(entry.artist);
-      if(!det.image) continue;
-      let card=document.createElement("div"); card.className="city-card";
-      let canvas=document.createElement("canvas"); canvas.style.height='100px';
-      card.innerHTML=`<div class="rank">(${entry.rank})</div>
-        <img src="${det.image}" alt="${det.name}"/>
-        <div class="artist-label">${det.name}</div>`;}
+  // — City Popularity
+  const cityLoading = document.getElementById('cityLoading'),
+        cityList    = document.getElementById('cityList');
+
+  db.collection('votes').onSnapshot(async snap => {
+    cityLoading.style.display = 'block';
+    cityList.innerHTML = '';
+
+    // 1) merge & sort
+    const merged = mergeVotes(snap.docs.map(d=>d.data()));
+    merged.sort((a,b)=>b.count - a.count);
+
+    // 2) assign ranks
+    let lastCount = null, lastRank = 0;
+    const ranked = merged.map((v,i)=>{
+      if(v.count !== lastCount){
+        lastCount = v.count;
+        lastRank = i+1;
+      }
+      return { ...v, rank: lastRank };
+    });
+
+    // 3) fetch all details in parallel
+    const details = await Promise.all(ranked.map(e => fetchArtistDetail(e.artist)));
+
+    // 4) render cards in order
+    for(let i=0; i<ranked.length; i++){
+      const e = ranked[i], d = details[i];
+      if(!d.image) continue;  // hide missing thumbnails
+      const card = document.createElement('div'); card.className = 'city-card';
+      const canvas = document.createElement('canvas'); card.appendChild(canvas);
+      card.innerHTML = `
+        <div class="rank">(${e.rank})</div>
+        <img src="${d.image}" alt="${d.name}"/>
+        <div class="artist-label">${d.name}</div>
+        <div class="meta-block"><h4>Votes</h4><p>${e.count}</p></div>
+      `;
       card.appendChild(canvas);
-      drawBar(canvas,Object.keys(entry.cityCounts),Object.values(entry.cityCounts));
+      drawBar(canvas, Object.keys(e.cityCounts), Object.values(e.cityCounts));
       cityList.appendChild(card);
     }
-    cityLoad.style.display='none';
+
+    cityLoading.style.display = 'none';
   });
 
-  // Artist Stats
-  const artLoad=document.getElementById("artistLoading"),
-        artC=document.getElementById("artistContainer"),
-        loadMore=document.getElementById("loadMore"),
-        searchPrompt=document.getElementById("searchPrompt"),
-        sb=document.getElementById("searchBar");
-  let statsList=[], shown=0;
-  async function loadDefaults(){
-    artLoad.style.display='block';
-    let defs=["Feli Nandi","Nutty O","Holy Ten","Winky D"];
-    statsList=await Promise.all(defs.map(getArtist));
-    shown=statsList.length; renderStats();
-    artLoad.style.display='none';
+  // — Artist Stats
+  const artistLoading = document.getElementById('artistLoading'),
+        artistContainer = document.getElementById('artistContainer'),
+        loadMoreBtn     = document.getElementById('loadMore'),
+        searchPrompt    = document.getElementById('searchPrompt'),
+        searchBar       = document.getElementById('searchBar');
+
+  let statsList = [], shown = 0;
+
+  async function loadInitialStats(){
+    artistLoading.style.display = 'block';
+    const defaults = ["Feli Nandi","Nutty O","Holy Ten","Winky D"];
+    statsList = await Promise.all(defaults.map(fetchArtistDetail));
+    shown = statsList.length;
+    renderStats();
+    artistLoading.style.display = 'none';
   }
-  loadDefaults();
+  loadInitialStats();
+
   function renderStats(){
-    artC.innerHTML='';
-    statsList.slice(0,shown).forEach(d=>{
-      let c=document.createElement("div"); c.className="artist-card";
-      c.innerHTML=`<img src="${d.image}" alt="${d.name}"/><div class="artist-details">
-        <div class="artist-name">${d.name}</div>
-        <div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div>
-        <div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div>
-        <div class="links"><a class="spotify" href="${d.urls.spotify}" target="_blank">Spotify</a></div>
-      </div>`;
-      artC.appendChild(c);
+    artistContainer.innerHTML = '';
+    statsList.slice(0, shown).forEach(d=>{
+      const card = document.createElement('div'); card.className = 'artist-card';
+      card.innerHTML = `
+        <img src="${d.image}" alt="${d.name}"/>
+        <div class="artist-details">
+          <div class="artist-name">${d.name}</div>
+          <div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div>
+          <div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div>
+          <div class="links">
+            <a class="spotify" href="${d.urls.spotify}" target="_blank">Spotify</a>
+          </div>
+        </div>
+      `;
+      artistContainer.appendChild(card);
     });
-    loadMore.style.display=shown<statsList.length?'block':'none';
-    searchPrompt.style.display=shown>=statsList.length?'block':'none';
+    loadMoreBtn.style.display = (shown < statsList.length) ? 'block' : 'none';
+    searchPrompt.style.display = (shown >= statsList.length) ? 'block' : 'none';
   }
-  loadMore.onclick=()=>{shown+=4;renderStats();};
-  sb.addEventListener("keydown",async e=>{
-    if(e.key==='Enter'){
-      e.preventDefault(); let name=sb.value.trim(); if(!name)return;
-      artLoad.style.display='block'; let d=await getArtist(name);
-      statsList.unshift(d); shown++; renderStats(); artLoad.style.display='none'; sb.value='';
+
+  loadMoreBtn.onclick = () => {
+    shown += 4;
+    renderStats();
+  };
+
+  searchBar.addEventListener('keydown', async e => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      const name = searchBar.value.trim();
+      if(!name) return;
+      artistLoading.style.display = 'block';
+      const d = await fetchArtistDetail(name);
+      statsList.unshift(d);
+      shown++;
+      renderStats();
+      artistLoading.style.display = 'none';
+      searchBar.value = '';
     }
   });
 </script>
