@@ -2,10 +2,9 @@
  * buildCharts.js
  * CommonJS style so Node can execute without extra flags.
  */
-const fs              = require('fs');
-const admin           = require('firebase-admin');
-const SpotifyWebApi   = require('spotify-web-api-node');
-const {google}        = require('googleapis');
+const fs            = require('fs');
+const admin         = require('firebase-admin');
+const SpotifyWebApi = require('spotify-web-api-node');
 
 // 1) Init Firebase Admin
 const svc = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -57,13 +56,13 @@ async function getSpotifyToken(){
   // 6) Enrich with Spotify “popularity” as proxy for streams
   async function enrich(item, type){
     if(type==='song'){
-      const res = await spotify.searchTracks(\`track:\${item.title} artist:\${item.artist}\`,{ limit:1 });
+      const res = await spotify.searchTracks(\`track:\${item.title} artist:\${item.artist}\`, { limit: 1 });
       const tr  = res.body.tracks.items[0];
-      item.streams = tr? tr.popularity: 0;
+      item.streams = tr ? tr.popularity : 0;
     } else {
-      const res = await spotify.searchAlbums(\`album:\${item.title} artist:\${item.artist}\`,{ limit:1 });
+      const res = await spotify.searchAlbums(\`album:\${item.title} artist:\${item.artist}\`, { limit: 1 });
       const al  = res.body.albums.items[0];
-      item.streams = al? (al.total_tracks||0): 0;
+      item.streams = al ? (al.total_tracks||0) : 0;
     }
     return item;
   }
