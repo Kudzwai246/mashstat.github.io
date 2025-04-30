@@ -1,9 +1,9 @@
 name: Weekly Chart Update
 
 on:
-  workflow_dispatch: {}    # allow manual runs
+  workflow_dispatch: {}          # allow manual runs
   schedule:
-    - cron: '15 0 * * 3'   # every Wednesday at 00:15 UTC
+    - cron: '15 0 * * 3'        # every Wednesday at 00:15 UTC
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
           YOUTUBE_API_KEY:       ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/buildCharts.js
 
-     - name: Commit JSON back to repo
+      - name: Commit JSON back to repo
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token:   ${{ secrets.GITHUB_TOKEN }}
@@ -42,6 +42,6 @@ jobs:
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken:               ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount:  ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId:               live
+          repoToken:              ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId:              live
