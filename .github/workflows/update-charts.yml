@@ -1,7 +1,7 @@
-name: Weekly Chart Update
+# (name: Weekly Chart Update
 
 on:
-  workflow_dispatch: {}          # allow manual runs
+  workflow_dispatch: {}          # allow manual trigger
   schedule:
     - cron: '15 0 * * 3'        # every Wednesday at 00:15 UTC
 
@@ -44,4 +44,4 @@ jobs:
         with:
           repoToken:              ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId:              live
+          channelId:              live)
