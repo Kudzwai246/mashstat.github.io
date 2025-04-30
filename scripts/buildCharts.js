@@ -56,11 +56,11 @@ async function getSpotifyToken(){
   // Enrich with Spotify popularity
   async function enrich(item, type){
     if(type==='song'){
-      const res = await spotify.searchTracks(\`track:\${item.title} artist:\${item.artist}\`, { limit: 1 });
+      const res = await spotify.searchTracks(`track:${item.title} artist:${item.artist}`, { limit: 1 });
       const tr  = res.body.tracks.items[0];
       item.streams = tr ? tr.popularity : 0;
     } else {
-      const res = await spotify.searchAlbums(\`album:\${item.title} artist:\${item.artist}\`, { limit: 1 });
+      const res = await spotify.searchAlbums(`album:${item.title} artist:${item.artist}`, { limit: 1 });
       const al  = res.body.albums.items[0];
       item.streams = al ? (al.total_tracks||0) : 0;
     }
