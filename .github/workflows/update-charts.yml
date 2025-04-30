@@ -29,14 +29,15 @@ jobs:
           YOUTUBE_API_KEY:       ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/buildCharts.js
 
-      - name: Commit JSON back to repo
-        uses: devops-infra/action-push@v0.6.0
+     - name: Commit JSON back to repo
+        uses: ad-m/github-push-action@v0.6.0
         with:
           github_token:   ${{ secrets.GITHUB_TOKEN }}
           commit_message: 'Weekly charts update'
           file_pattern: |
             public/mash100.json
             public/masha50.json
+          force: true
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
