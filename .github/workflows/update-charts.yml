@@ -1,0 +1,33 @@
+name: Weekly Chart Update
+on:
+  schedule:
+    - cron: '15 0 * * 3'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: node-version: '18'
+      - run: npm install spotify-web-api-node firebase-admin googleapis
+      - name: Build charts JSON
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          SPOTIFY_CLIENT_ID:     ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          YOUTUBE_API_KEY:       ${{ secrets.YOUTUBE_API_KEY }}
+        run: node scripts/buildCharts.js
+      - name: Commit JSON
+        uses: devops-infra/action-push@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: 'Weekly charts update'
+          file_pattern: |
+            public/mash100.json
+            public/masha50.json
+      - name: Deploy Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
