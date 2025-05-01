@@ -46,11 +46,11 @@
   <div id="chart" class="chart"></div>
 
   <script>
-    // Fallback data if JSON fetch fails
+    // Fallback data
     const fallbackData = [
       { rank:1, title:"Pabho", artist:"Winky D", streams:0, votes:0, artworkUrl:"", peak:1, last:null },
       { rank:2, title:"Ndisiyei", artist:"Feli Nandi", streams:0, votes:0, artworkUrl:"", peak:2, last:1 }
-      // …add up to 50 entries if you want full fallback…
+      // ...add more if desired...
     ];
 
     function renderItem(item) {
@@ -58,17 +58,17 @@
       div.className = 'chart-item';
       const art = document.createElement('div');
       art.className = 'artwork';
-      art.style.backgroundImage = item.artworkUrl ? \`url(\${item.artworkUrl})\` : 'none';
+      art.style.backgroundImage = item.artworkUrl ? `url(${item.artworkUrl})` : 'none';
       div.appendChild(art);
-      div.innerHTML += \`
-        <span class="rank">\${item.rank}.</span>
-        <span class="album-title">\${item.title}</span>
-        <span class="artist-name">\${item.artist}</span>
-        <div class="streams">Streams: \${item.streams.toLocaleString()} &nbsp; Votes: \${item.votes}</div>
+      div.innerHTML += `
+        <span class="rank">${item.rank}.</span>
+        <span class="album-title">${item.title}</span>
+        <span class="artist-name">${item.artist}</span>
+        <div class="streams">Streams: ${item.streams.toLocaleString()} &nbsp; Votes: ${item.votes}</div>
         <div class="meta">
-          <div><span class="label">Peak:</span>\${item.peak}</div>
-          <div><span class="label">Last:</span>\${item.last===null?'—':item.last}</div>
-        </div>\`;
+          <div><span class="label">Peak:</span>${item.peak}</div>
+          <div><span class="label">Last:</span>${item.last===null?'—':item.last}</div>
+        </div>`;
       return div;
     }
 
@@ -84,7 +84,7 @@
       data.sort((a,b)=>a.rank-b.rank);
       const chart = document.getElementById('chart');
       chart.innerHTML = '';
-      data.forEach(item => chart.appendChild(renderItem(item)));
+      data.forEach(item=>chart.appendChild(renderItem(item)));
     }
 
     loadChart();
