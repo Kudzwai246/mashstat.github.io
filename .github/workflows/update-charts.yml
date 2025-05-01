@@ -10,20 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) checkout with creds so we can push later
-      - uses: actions/checkout@v3
+      # 1) checkout full history and credentials so we can push
+      - name: Checkout code
+        uses: actions/checkout@v3
         with:
           persist-credentials: true
+          fetch-depth: 0
+          ref: main
 
-      # 2) install Node
-      - uses: actions/setup-node@v3
+      # 2) Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # 3) install our npm libs
-      - run: npm install spotify-web-api-node firebase-admin googleapis
+      # 3) Install libs
+      - name: Install dependencies
+        run: npm install spotify-web-api-node firebase-admin googleapis
 
-      # 4) build the JSON
+      # 4) Build the JSON
       - name: Build charts JSON
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
@@ -32,21 +37,29 @@ jobs:
           YOUTUBE_API_KEY:       ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/buildCharts.js
 
-      # 5) commit & push only if JSON changed
+      # 5) Debug info (optional — you can remove once it works)
+      - name: Git debug
+        run: |
+          echo "Branch:" $(git branch --show-current)
+          git status
+          git remote -v
+
+      # 6) Commit & push if changed
       - name: Commit & push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/mash100.json public/masha50.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Weekly charts update"
-            git push origin main
-          else
+          if git diff --cached --quiet; then
             echo "No changes to commit"
+          else
+            git commit -m "Weekly charts update"
+            git push
           fi
 
-      # 6) deploy to Firebase
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      # 7) Deploy to Firebase
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken:              ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
