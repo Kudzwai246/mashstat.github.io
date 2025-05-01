@@ -1,9 +1,9 @@
-name: Weekly Chart Update
+# (name: Weekly Chart Update
 
 on:
-  workflow_dispatch: {}          # allow manual trigger
+  workflow_dispatch: {}
   schedule:
-    - cron: '15 0 * * 3'         # every Wednesday at 00:15 UTC
+    - cron: '15 0 * * 3'
 
 jobs:
   build:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true    # needed so later git push uses the GITHUB_TOKEN
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -29,17 +31,21 @@ jobs:
           YOUTUBE_API_KEY:       ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/buildCharts.js
 
-      - name: Commit JSON back to repo
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch:       main
-          directory:    public
-          force:        true
+      - name: Commit & push chart JSON (if changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/mash100.json public/masha50.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Weekly charts update"
+            git push origin main
+          fi
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken:              ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId:              live
+          channelId:              live)
