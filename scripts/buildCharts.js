@@ -1,18 +1,17 @@
 /**
  * buildCharts.js
  * Generates mash100.json & masha50.json by combining Spotify streams + Firestore votes.
- * CommonJS format so Node v18 can run without extra flags.
  */
 const fs            = require('fs');
 const admin         = require('firebase-admin');
 const SpotifyWebApi = require('spotify-web-api-node');
 
-// Initialize Firebase Admin SDK
+// Firebase Admin init
 const svc = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 admin.initializeApp({ credential: admin.credential.cert(svc) });
 const db = admin.firestore();
 
-// Setup Spotify client
+// Spotify client init
 const spotify = new SpotifyWebApi({
   clientId:     process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET
@@ -23,22 +22,20 @@ async function getSpotifyToken(){
   spotify.setAccessToken(data.body.access_token);
 }
 
-// Main
 (async ()=>{
   await getSpotifyToken();
 
-  // Date range: past week
-  const today   = new Date();
-  const weekAgo = new Date(today);
+  // last 7 days
+  const weekAgo = new Date();
   weekAgo.setDate(weekAgo.getDate() - 7);
 
-  // Fetch votes from Firestore
+  // fetch votes
   const snap = await db.collection('votes')
                      .where('timestamp', '>=', weekAgo)
                      .get();
   const votes = snap.docs.map(d=>d.data());
 
-  // Tally votes separately for song and album
+  // tally votes by song and album
   function tally(key){
     const m = {};
     votes.forEach(v => {
@@ -53,7 +50,7 @@ async function getSpotifyToken(){
   const songVotes  = tally('song');
   const albumVotes = tally('album');
 
-  // Enrich with Spotify popularity/streams
+  // enrich via Spotify API
   async function enrich(item, type){
     if(type==='song'){
       const res = await spotify.searchTracks(\`track:\${item.title} artist:\${item.artist}\`, { limit: 1 });
@@ -67,17 +64,17 @@ async function getSpotifyToken(){
     return item;
   }
 
-  // Build mash100 (top 100 songs)
+  // build & sort mash100
   let mash100 = await Promise.all(songVotes.map(v=>enrich(v,'song')));
   mash100.sort((a,b)=> (b.votes + b.streams) - (a.votes + a.streams));
   mash100 = mash100.slice(0,100);
 
-  // Build masha50 (top 50 albums)
+  // build & sort masha50
   let masha50 = await Promise.all(albumVotes.map(v=>enrich(v,'album')));
   masha50.sort((a,b)=> (b.votes + b.streams) - (a.votes + a.streams));
   masha50 = masha50.slice(0,50);
 
-  // Write JSON into public/
+  // write JSON
   if(!fs.existsSync('public')) fs.mkdirSync('public');
   fs.writeFileSync('public/mash100.json', JSON.stringify(mash100,null,2));
   fs.writeFileSync('public/masha50.json', JSON.stringify(masha50,null,2));
