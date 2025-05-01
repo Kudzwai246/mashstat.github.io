@@ -20,24 +20,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body { font-family:'Montserrat',sans-serif; background:#121212; color:#fff; padding:20px; }
-    .logo-link { text-align:center; margin-bottom:20px; display:block; }
-    .logo { height:50px; }
-    h1 { font-family:'Playfair Display',serif; text-align:center; font-size:2.5rem; margin-bottom:5px; }
-    .description { text-align:center; color:#aaa; margin-bottom:30px; font-size:1rem; }
-    .chart { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
-    .chart-item { background:#1e1e1e; border-radius:6px; padding:12px; position:relative; display:flex; flex-direction:column; justify-content:space-between; min-height:160px; overflow:hidden; }
-    .chart-item.highlight { grid-column:1/-1; background:#333; box-shadow:0 0 20px rgba(255,0,85,0.6); }
-    .artwork { width:100%; border-radius:4px; margin-bottom:8px; object-fit:cover; height:100px; }
-    .rank { font-size:1.4rem; font-weight:700; color:#ff0055; }
-    .song-title { font-size:1.1rem; font-weight:600; margin:4px 0; color:#fff; }
-    .artist-name { color:#0af; font-style:italic; font-size:0.9rem; }
-    .streams { font-size:0.75rem; color:#ccc; margin-top:4px; }
-    .trend { position:absolute; top:8px; right:8px; font-size:1.2rem; }
-    .trend.down { color:#f55; } .trend.up { color:#5f5; } .trend.new { color:#5f5; }
-    .meta { display:flex; justify-content:space-between; font-size:0.75rem; color:#ccc; margin-top:8px; }
-    .meta .label { font-weight:600; margin-right:4px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background: #121212; color: #fff; padding: 20px; }
+    .logo-link { display: block; text-align: center; margin-bottom: 20px; }
+    .logo { height: 50px; }
+    h1 { font-family: 'Playfair Display', serif; text-align: center; font-size: 2.5rem; margin-bottom: 5px; }
+    .description { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 1rem; }
+    .chart { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 16px; }
+    .chart-item { background: #1e1e1e; border-radius: 6px; padding: 12px; position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 160px; transition: transform .2s; }
+    .chart-item:hover { transform: scale(1.02); }
+    .chart-item.highlight { grid-column: 1 / -1; background: #333; box-shadow: 0 0 20px rgba(255,0,85,0.6); }
+    .artwork { width: 100%; height: 0; padding-bottom: 100%; background-size: cover; background-position: center; border-radius: 4px; margin-bottom: 8px; }
+    .rank { font-size: 1.4rem; font-weight: 700; color: #ff0055; }
+    .song-title { font-size: 1.1rem; font-weight: 600; margin: 4px 0; color: #fff; }
+    .artist-name { color: #0af; font-style: italic; font-size: 0.9rem; }
+    .streams { font-size: 0.75rem; color: #ccc; margin-top: 4px; }
+    .trend { position: absolute; top: 8px; right: 8px; font-size: 1.2rem; }
+    .trend.down { color: #f55; } .trend.up { color: #5f5; } .trend.new { color: #5f5; }
+    .meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: #ccc; margin-top: 8px; }
+    .meta .label { font-weight: 600; margin-right: 4px; }
   </style>
 </head>
 <body>
@@ -46,30 +47,30 @@
     <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
   </a>
   <h1>Mash 100 – Top Songs</h1>
-  <p class="description">
-    This chart ranks the top 100 most streamed tracks in Zimbabwe across all major platforms. Updated weekly.
-  </p>
+  <p class="description">This chart ranks the top 100 most streamed tracks in Zimbabwe across all major platforms. Updated weekly.</p>
+
   <div id="chart" class="chart"></div>
 
   <script>
-    // Fallback if JSON is missing or too short
+    // Fallback data if fetch fails or too few entries
     const fallbackData = [
       { rank:1, title:"Hope dzandairota", artist:"Bling 4", streams:0, votes:0, artworkUrl:"", trend:"new", peak:1, last:null },
       { rank:2, title:"Zampele", artist:"Oriyano ft. Spirit", streams:0, votes:0, artworkUrl:"", trend:"down", peak:1, last:1 }
-      // …extend as needed…
+      // ...add more if desired...
     ];
 
     function renderItem(item) {
       const div = document.createElement('div');
-      div.className = 'chart-item' + (item.rank===1 ? ' highlight' : '');
-      div.innerHTML = `
-        <img src="${item.artworkUrl}" alt="${item.title} artwork" class="artwork">
+      div.className = 'chart-item' + (item.rank===1?' highlight':'');
+      const art = document.createElement('div');
+      art.className = 'artwork';
+      art.style.backgroundImage = item.artworkUrl ? `url(${item.artworkUrl})` : 'none';
+      div.appendChild(art);
+      div.innerHTML += `
         <span class="rank">${item.rank}.</span>
         <span class="song-title">${item.title}</span>
         <span class="artist-name">${item.artist}</span>
-        <span class="trend ${item.trend}">
-          ${ item.trend==='new' ? '●' : (item.trend==='up'?'▲':'▼') }
-        </span>
+        <span class="trend ${item.trend}">${ item.trend==='new'?'●':(item.trend==='up'?'▲':'▼') }</span>
         <div class="streams">Streams: ${item.streams.toLocaleString()} &nbsp; Votes: ${item.votes}</div>
         <div class="meta">
           <div><span class="label">Peak:</span>${item.peak}</div>
@@ -81,8 +82,8 @@
     async function loadChart() {
       let data;
       try {
-        const r = await fetch('mash100.json');
-        data = await r.json();
+        const resp = await fetch('mash100.json');
+        data = await resp.json();
         if (!Array.isArray(data) || data.length < 5) throw new Error();
       } catch {
         data = fallbackData;
@@ -90,7 +91,7 @@
       data.sort((a,b)=>a.rank-b.rank);
       const chart = document.getElementById('chart');
       chart.innerHTML = '';
-      data.forEach(i=>chart.appendChild(renderItem(i)));
+      data.forEach(item=>chart.appendChild(renderItem(item)));
     }
 
     loadChart();
