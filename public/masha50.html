@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MashA 50 – Top Albums</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8BMMTDWP3G');
+  </script>
+
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Segoe UI',sans-serif; background:#f4f4f4; color:#333; padding:20px; }
+    .logo-link { text-align:center; margin-bottom:20px; display:block; }
+    .logo { width:160px; }
+    h1 { text-align:center; font-size:2em; margin-bottom:5px; }
+    .description { text-align:center; font-style:italic; color:navy; margin-bottom:30px; }
+    .chart { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+    .chart-item { background:#fff; border-radius:8px; padding:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); position:relative; }
+    .artwork { width:100%; height:0; padding-bottom:100%; background-size:cover; background-position:center; border-radius:4px; margin-bottom:8px; }
+    .rank { font-weight:700; color:#e91e63; margin-bottom:4px; display:block; }
+    .album-title { font-size:1.1em; font-weight:600; margin-bottom:2px; }
+    .artist-name { color:#666; margin-bottom:8px; display:block; }
+    .streams { font-size:.8em; color:#555; }
+    .meta { font-size:.75em; color:#777; display:flex; justify-content:space-between; margin-top:8px; }
+    .meta .label { font-weight:600; margin-right:4px; }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="logo-link">
+    <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
+  </a>
+
+  <h1>MashA 50 – Top Albums</h1>
+  <p class="description">
+    This chart ranks the top 50 most streamed albums in Zimbabwe across YouTube, Spotify, and Apple Music. Updated weekly.
+  </p>
+
+  <div id="chart" class="chart"></div>
+
+  <script>
+    // Static fallback if JSON is missing or too few entries
+    const fallbackData = [
+      { rank:1, title:"Pabho", artist:"Winky D", streams:0, votes:0, artworkUrl:"", peak:1, last:null },
+      { rank:2, title:"Ndisiyei", artist:"Feli Nandi", streams:0, votes:0, artworkUrl:"", peak:2, last:1 }
+      // …extend up to rank 50 if desired…
+    ];
+
+    function renderItem(item) {
+      const div = document.createElement('div');
+      div.className = 'chart-item';
+      // Create a square artwork div via background-image
+      const art = document.createElement('div');
+      art.className = 'artwork';
+      art.style.backgroundImage = item.artworkUrl
+        ? `url(\${item.artworkUrl})`
+        : 'none';
+      div.appendChild(art);
+
+      div.innerHTML += \`
+        <span class="rank">\${item.rank}.</span>
+        <span class="album-title">\${item.title}</span>
+        <span class="artist-name">\${item.artist}</span>
+        <div class="streams">Streams: \${item.streams.toLocaleString()} &nbsp; Votes: \${item.votes}</div>
+        <div class="meta">
+          <div><span class="label">Peak:</span>\${item.peak}</div>
+          <div><span class="label">Last:</span>\${item.last===null?'—':item.last}</div>
+        </div>\`;
+      return div;
+    }
+
+    async function loadChart() {
+      let data;
+      try {
+        const r = await fetch('masha50.json');
+        data = await r.json();
+        if (!Array.isArray(data) || data.length < 5) throw new Error();
+      } catch {
+        data = fallbackData;
+      }
+      data.sort((a,b)=>a.rank-b.rank);
+      const container = document.getElementById('chart');
+      container.innerHTML = '';
+      data.forEach(item => {
+        container.appendChild(renderItem(item));
+      });
+    }
+
+    loadChart();
+  </script>
+
+</body>
+</html>
