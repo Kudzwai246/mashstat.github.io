@@ -46,24 +46,20 @@
   <div id="chart" class="chart"></div>
 
   <script>
-    // Static fallback if JSON is missing or too few entries
+    // Fallback data if JSON fetch fails
     const fallbackData = [
       { rank:1, title:"Pabho", artist:"Winky D", streams:0, votes:0, artworkUrl:"", peak:1, last:null },
       { rank:2, title:"Ndisiyei", artist:"Feli Nandi", streams:0, votes:0, artworkUrl:"", peak:2, last:1 }
-      // …extend up to rank 50 if desired…
+      // …add up to 50 entries if you want full fallback…
     ];
 
     function renderItem(item) {
       const div = document.createElement('div');
       div.className = 'chart-item';
-      // Create a square artwork div via background-image
       const art = document.createElement('div');
       art.className = 'artwork';
-      art.style.backgroundImage = item.artworkUrl
-        ? `url(\${item.artworkUrl})`
-        : 'none';
+      art.style.backgroundImage = item.artworkUrl ? \`url(\${item.artworkUrl})\` : 'none';
       div.appendChild(art);
-
       div.innerHTML += \`
         <span class="rank">\${item.rank}.</span>
         <span class="album-title">\${item.title}</span>
@@ -79,22 +75,19 @@
     async function loadChart() {
       let data;
       try {
-        const r = await fetch('masha50.json');
-        data = await r.json();
+        const resp = await fetch('masha50.json');
+        data = await resp.json();
         if (!Array.isArray(data) || data.length < 5) throw new Error();
       } catch {
         data = fallbackData;
       }
       data.sort((a,b)=>a.rank-b.rank);
-      const container = document.getElementById('chart');
-      container.innerHTML = '';
-      data.forEach(item => {
-        container.appendChild(renderItem(item));
-      });
+      const chart = document.getElementById('chart');
+      chart.innerHTML = '';
+      data.forEach(item => chart.appendChild(renderItem(item)));
     }
 
     loadChart();
   </script>
-
 </body>
 </html>
