@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) checkout full history and credentials so we can push
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -18,17 +17,14 @@ jobs:
           fetch-depth: 0
           ref: main
 
-      # 2) Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # 3) Install libs
       - name: Install dependencies
         run: npm install spotify-web-api-node firebase-admin googleapis
 
-      # 4) Build the JSON
       - name: Build charts JSON
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
@@ -37,27 +33,21 @@ jobs:
           YOUTUBE_API_KEY:       ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/buildCharts.js
 
-      # 5) Debug info (optional — you can remove once it works)
-      - name: Git debug
-        run: |
-          echo "Branch:" $(git branch --show-current)
-          git status
-          git remote -v
-
-      # 6) Commit & push if changed
       - name: Commit & push if changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git add public/mash100.json public/masha50.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
             git commit -m "Weekly charts update"
-            git push
+            git push origin main
           fi
 
-      # 7) Deploy to Firebase
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
