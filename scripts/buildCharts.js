@@ -1,6 +1,7 @@
 /**
  * buildCharts.js
- * Generates mash100.json & masha50.json by combining Spotify streams + Firestore votes.
+ * Generates mash100.json & masha50.json by combining Spotify streams + Firestore votes,
+ * now including artworkUrl for each track/album.
  */
 
 const fs            = require('fs');
@@ -54,7 +55,7 @@ async function getSpotifyToken() {
   const songVotes  = tally('song');
   const albumVotes = tally('album');
 
-  // enrich via Spotify API
+  // enrich via Spotify API, now grabbing artwork URL too
   async function enrich(item, type) {
     if (type === 'song') {
       const res = await spotify.searchTracks(
@@ -62,14 +63,27 @@ async function getSpotifyToken() {
         { limit: 1 }
       );
       const tr = res.body.tracks.items[0];
-      item.streams = tr ? tr.popularity : 0;
+      if (tr) {
+        item.streams     = tr.popularity || 0;
+        // Spotify track object has album.images array
+        item.artworkUrl  = tr.album.images[0]?.url || '';
+      } else {
+        item.streams    = 0;
+        item.artworkUrl = '';
+      }
     } else {
       const res = await spotify.searchAlbums(
         `album:${item.title} artist:${item.artist}`,
         { limit: 1 }
       );
       const al = res.body.albums.items[0];
-      item.streams = al ? (al.total_tracks || 0) : 0;
+      if (al) {
+        item.streams     = al.total_tracks || 0;
+        item.artworkUrl  = al.images[0]?.url || '';
+      } else {
+        item.streams    = 0;
+        item.artworkUrl = '';
+      }
     }
     return item;
   }
