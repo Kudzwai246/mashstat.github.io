@@ -1,112 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>MashA 50 – Top Albums</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-8BMMTDWP3G');
-  </script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MashA50 Chart</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
+    html, body {
       margin: 0;
-      padding: 20px;
-      color: #333;
+      height: 100%;
+      overflow: hidden;
     }
-
-    .logo {
-      width: 160px;
-      display: block;
-      margin: 0 auto 20px auto;
-    }
-
-    h1 {
-      text-align: center;
-      color: #111;
-      font-size: 2em;
-    }
-
-    .description {
-      text-align: center;
-      font-size: 1.1em;
-      margin-bottom: 30px;
-      color: navy;
-      font-style: italic;
-    }
-
-    .chart-item {
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .album-title {
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-
-    .artist-name {
-      font-size: 1em;
-      color: #666;
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-  <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
-  <h1>MashA 50 – Top Albums</h1>
-  <p class="description">This chart ranks the top 50 most streamed albums in Zimbabwe across YouTube, Spotify, and Apple Music. Week of April 16</p>
-
-  <div class="chart-item"><span class="album-title">1. Pabho</span><br><span class="artist-name">Winky D</span></div>
-  <div class="chart-item"><span class="album-title">2. Ndisiyei</span><br><span class="artist-name">Feli Nandi</span></div>
-  <div class="chart-item"><span class="album-title">3. Trap Yevafundisi</span><br><span class="artist-name">Saintflow</span></div>
-  <div class="chart-item"><span class="album-title">4. Pariah</span><br><span class="artist-name">Shona Prince</span></div>
-  <div class="chart-item"><span class="album-title">5. GNX</span><br><span class="artist-name">Kendrick Lamar</span></div>
-  <div class="chart-item"><span class="album-title">6. NOP Makoni</span><br><span class="artist-name">Voltz JT</span></div>
-  <div class="chart-item"><span class="album-title">7. Kupa Kuturika</span><br><span class="artist-name">Alick Macheso</span></div>
-  <div class="chart-item"><span class="album-title">8. King of Hearts</span><br><span class="artist-name">Shona Prince</span></div>
-  <div class="chart-item"><span class="album-title">9. From Boys to Men</span><br><span class="artist-name">Ti Gonz</span></div>
-  <div class="chart-item"><span class="album-title">10. 3 Stripes Section B </span><br><span class="artist-name">Bagga</span></div>
-  <div class="chart-item"><span class="album-title">11. Tinosvitswa Nashe</span><br><span class="artist-name">Alick Macheso</span></div>
-  <div class="chart-item"><span class="album-title">12. Repentance</span><br><span class="artist-name">Baba Harare</span></div>
-  <div class="chart-item"><span class="album-title">13. Energy</span><br><span class="artist-name">Holy 10</span></div>
-  <div class="chart-item"><span class="album-title">14. $ome $exy $ongs 4u</span><br><span class="artist-name">Drake</span></div>
-  <div class="chart-item"><span class="album-title">15. Muna Jumbo</span><br><span class="artist-name">Michael Magz</span></div>
-  <div class="chart-item"><span class="album-title">16. Chiremerera</span><br><span class="artist-name">Jah Prayzah</span></div>
-  <div class="chart-item"><span class="album-title">17. I Am Music</span><br><span class="artist-name">Playbook Carti</span></div>
-  <div class="chart-item"><span class="album-title">18. Lovers Reggae 2</span><br><span class="artist-name">Sir Calaz</span></div>
-  <div class="chart-item"><span class="album-title">19. Conscious Diary</span><br><span class="artist-name">Killer T</span></div>
-  <div class="chart-item"><span class="album-title">20. Tiri Vemuma Streets</span><br><span class="artist-name">Killer T</span></div>
-  <div class="chart-item"><span class="album-title">21. Lovers Reggae</span><br><span class="artist-name">Sir Calaz</span></div>
-  <div class="chart-item"><span class="album-title">22. Tateguru</span><br><span class="artist-name">Master H</span></div>
-  <div class="chart-item"><span class="album-title">23. MeVsMe</span><br><span class="artist-name">Freeman</span></div>
-  <div class="chart-item"><span class="album-title">24. Trophy</span><br><span class="artist-name">Freeman</span></div>
-  <div class="chart-item"><span class="album-title">25. The Love Letter</span><br><span class="artist-name">Nox</span></div>
-  <div class="chart-item"><span class="album-title">26. It's Not Me, It's You</span><br><span class="artist-name">Kae Chaps</span></div>
-  <div class="chart-item"><span class="album-title">27. Bold</span><br><span class="artist-name">Tammy Moyo</span></div>
-  <div class="chart-item"><span class="album-title">28. Butterflies</span><br><span class="artist-name">Shashl</span></div>
-  <div class="chart-item"><span class="album-title">29. Ngwendeza</span><br><span class="artist-name">Soul Jah Love</span></div>
-  <div class="chart-item"><span class="album-title">30. Nhanzva</span><br><span class="artist-name">Mbeu</span></div>
-  <div class="chart-item"><span class="album-title">31. Rise and Lead</span><br><span class="artist-name">Saintflow</span></div>
-  <div class="chart-item"><span class="album-title">32. Bholato Bholato</span><br><span class="artist-name">Sir Calaz</span></div>
-  <div class="chart-item"><span class="album-title">33. Hokoyo</span><br><span class="artist-name">Jah Prayzah</span></div>
-  <div class="chart-item"><span class="album-title">34. Prove Them Wrong</span><br><span class="artist-name">Baba Harare</span></div>
-  <div class="chart-item"><span class="album-title">35. Mustard Seed</span><br><span class="artist-name">Nutty O</span></div>
-  <div class="chart-item"><span class="album-title">36. 11:11</span><br><span class="artist-name">Chris brown</span></div>
-  <div class="chart-item"><span class="album-title">37. Zvakarongeka</span><br><span class="artist-name">Jah Signal</span></div>
-  <div class="chart-item"><span class="album-title">38. Can Rush Greatness</span><br><span class="artist-name">Central Cee</span></div>
-  <div class="chart-item"><span class="album-title">39. BlownBoy RU</span><br><span class="artist-name">Rugger</span></div>
-  <div class="chart-item"><span class="album-title">40. Asante III</span><br><span class="artist-name">MŌRDA</span></div>
-  
+  <iframe src="https://mashstat-vote.web.app/mashA50"></iframe>
 </body>
 </html>
