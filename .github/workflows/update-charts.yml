@@ -1,15 +1,21 @@
 name: Weekly Chart Update
 
+# Grant the Actions bot write access so it can commit JSON back
+permissions:
+  contents: write
+  id-token: write
+
 on:
-  workflow_dispatch: {}
+  workflow_dispatch: {}          # manual trigger
   schedule:
-    - cron: '15 0 * * 3'
+    - cron: '15 0 * * 3'         # every Wednesday at 00:15 UTC
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # 1) Checkout full history on main, with credentials so we can push
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -17,14 +23,17 @@ jobs:
           fetch-depth: 0
           ref: main
 
+      # 2) Set up Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # 3) Install dependencies
       - name: Install dependencies
         run: npm install spotify-web-api-node firebase-admin googleapis
 
+      # 4) Build the JSON files
       - name: Build charts JSON
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
@@ -33,6 +42,7 @@ jobs:
           YOUTUBE_API_KEY:       ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/buildCharts.js
 
+      # 5) Commit & push if changed
       - name: Commit & push if changed
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -48,6 +58,7 @@ jobs:
             git push origin main
           fi
 
+      # 6) Deploy to Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
