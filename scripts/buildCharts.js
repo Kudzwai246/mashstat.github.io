@@ -42,7 +42,6 @@ async function getSpotifyToken() {
   function tally(key) {
     const m = {};
     votes.forEach(v => {
-      // v.song or v.album should have { artist, title }
       const id = v[key].artist + '|' + v[key].title;
       m[id] = (m[id] || 0) + 1;
     });
