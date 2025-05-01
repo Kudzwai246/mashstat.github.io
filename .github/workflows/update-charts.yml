@@ -1,9 +1,9 @@
-# (name: Weekly Chart Update
+name: Weekly Chart Update
 
 on:
   workflow_dispatch: {}          # allow manual trigger
   schedule:
-    - cron: '15 0 * * 3'        # every Wednesday at 00:15 UTC
+    - cron: '15 0 * * 3'         # every Wednesday at 00:15 UTC
 
 jobs:
   build:
@@ -32,16 +32,14 @@ jobs:
       - name: Commit JSON back to repo
         uses: ad-m/github-push-action@v0.6.0
         with:
-          github_token:   ${{ secrets.GITHUB_TOKEN }}
-          commit_message: 'Weekly charts update'
-          file_pattern: |
-            public/mash100.json
-            public/masha50.json
-          force: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch:       main
+          directory:    public
+          force:        true
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken:              ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId:              live)
+          channelId:              live
