@@ -1,41 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>MashA 50 – Top Albums</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MashA 50 – Top Albums</title>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-  <script>
-    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-    gtag('js',newDate());gtag('config','G-8BMMTDWP3G');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8BMMTDWP3G');</script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px}
-    header{display:flex;align-items:center;margin-bottom:20px}
-    header img{height:50px;cursor:pointer}
-    h1{font-family:'Playfair Display',serif;color:#ff0055;font-size:2rem;margin-left:15px}
-    #chart{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px}
-    .card{background:#1e1e1e;border:1px solid #333;border-radius:6px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.5);display:flex;flex-direction:column}
-    .art{width:100%;height:0;padding-bottom:100%;background:#333;background-size:cover;background-position:center}
-    .info{padding:12px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
-    .rank{font-size:1.4rem;color:#ff0055;font-weight:700}
-    .title{font-size:1.1rem;margin:6px 0;font-weight:600}
-    .artist{color:#aaa;font-size:0.9rem;margin-bottom:8px}
-    .stats{font-size:0.8rem;color:#ccc;display:flex;justify-content:space-between}
-    .stats div{display:flex;align-items:center}
-    .stats span{margin-left:4px}
-    .weeks::before{content:'⏳';}
-    .peak::before{content:'🔼';}
-    .streams::before{content:'💿';}
-    .votes::before{content:'👍';}
+    body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px;}
+    header{display:flex;align-items:center;margin-bottom:20px;}
+    header img{height:50px;cursor:pointer;}
+    h1{font-family:'Playfair Display',serif;color:#ff0055;font-size:2rem;margin-left:15px;}
+    #chart{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px;}
+    .card{background:#1e1e1e;border:1px solid #333;border-radius:6px;overflow:hidden;
+          box-shadow:0 2px 6px rgba(0,0,0,0.5);display:flex;flex-direction:column;height:1.2cm;}
+    .art{width:100%;flex:0 0 60%;background:#333;background-size:cover;background-position:center;}
+    .info{padding:8px;flex:1;display:flex;flex-direction:column;justify-content:space-between;font-size:0.8rem;}
+    .rank{color:#ff0055;font-weight:700;}
+    .title{font-weight:600;margin:4px 0;}
+    .artist{color:#ccc;}
+    .stats{display:flex;justify-content:space-between;}
+    .stats div{display:flex;align-items:center;}
+    .weeks::before{content:'⏱';margin-right:4px;}
+    .peak::before{content:'★';margin-right:4px;}
+    .streams::before{content:'🎧';margin-right:4px;}
+    .votes::before{content:'👍';margin-right:4px;}
   </style>
 </head>
 <body>
   <header>
     <a href="index.html"><img src="mashstat_logo.png" alt="MashStat Logo"></a>
-    <h1>MashA 50 – Top Albums</h1>
+    <h1>MashA 50 – Top Albums</h1>
   </header>
   <div id="chart">Loading chart…</div>
   <script>
@@ -43,24 +39,21 @@
       .then(r=>r.json())
       .then(data=>{
         const c=document.getElementById('chart'); c.innerHTML='';
-        data.forEach((s,i)=>{
-          const card=document.createElement('div'); card.className='card';
-          card.innerHTML=`
-            <div class="art" style="background-image:url('${s.artwork||'asserts/vote.png'}')"></div>
+        data.forEach(s=>{
+          const d=document.createElement('div'); d.className='card';
+          d.innerHTML=`
+            <div class="art" style="background-image:url('${s.artworkUrl || 'mashstat_logo.png'}')"></div>
             <div class="info">
-              <div>
-                <div class="rank">${i+1}</div>
-                <div class="title">${s.title}</div>
-                <div class="artist">${s.artist}</div>
-              </div>
+              <div><span class="rank">${s.rank}.</span> <span class="title">${s.title}</span></div>
+              <div class="artist">${s.artist}</div>
               <div class="stats">
-                <div class="weeks"><span>${s.weeks||1}</span></div>
-                <div class="peak"><span>${s.peak||i+1}</span></div>
-                <div class="streams"><span>${s.streams||0}</span></div>
-                <div class="votes"><span>${s.count||0}</span></div>
+                <div class="weeks">${s.weeksOnChart||0}</div>
+                <div class="peak">${s.peakPosition||s.rank}</div>
+                <div class="streams">${Math.round(s.streams/1000)}k</div>
+                <div class="votes">${s.votes}</div>
               </div>
             </div>`;
-          c.appendChild(card);
+          c.appendChild(d);
         });
       })
       .catch(_=>document.getElementById('chart').textContent='Failed to load chart.');
