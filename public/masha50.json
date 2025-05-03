@@ -1,29 +1,15 @@
 [
   {
-    "artist": "Drake",
-    "title": "Views",
-    "votes": 2,
-    "streams": 20,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2739416ed64daf84936d89e671c"
-  },
-  {
     "artist": "Holy ten",
     "title": "Book of Malachai",
-    "votes": 14,
+    "votes": 13,
     "streams": 0,
     "artworkUrl": ""
   },
   {
     "artist": "Drake",
     "title": "Scary hours 3",
-    "votes": 3,
-    "streams": 0,
-    "artworkUrl": ""
-  },
-  {
-    "artist": "Bling 4",
-    "title": "Hosanna",
-    "votes": 2,
+    "votes": 1,
     "streams": 0,
     "artworkUrl": ""
   },

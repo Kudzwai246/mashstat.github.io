@@ -1,16 +1,9 @@
 [
   {
     "artist": "Drake",
-    "title": "God's Plan",
-    "votes": 2,
-    "streams": 85,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273f907de96b9a4fbc04accc0d5"
-  },
-  {
-    "artist": "Drake",
     "title": "Energy",
-    "votes": 3,
-    "streams": 71,
+    "votes": 1,
+    "streams": 72,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2732090f4f6cc406e6d3c306733"
   },
   {
@@ -19,13 +12,6 @@
     "votes": 1,
     "streams": 38,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27353dea52045fb93b1cb41e74c"
-  },
-  {
-    "artist": "Jah Prayzah",
-    "title": "Fambai neni",
-    "votes": 2,
-    "streams": 29,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27361d6d1ba3101c35fdd48e0c9"
   },
   {
     "artist": "Holy ten",
@@ -38,13 +24,6 @@
     "artist": "Holy ten",
     "title": "Shamwari yangu",
     "votes": 2,
-    "streams": 0,
-    "artworkUrl": ""
-  },
-  {
-    "artist": "Drake",
-    "title": "Kumba kunevanhu",
-    "votes": 1,
     "streams": 0,
     "artworkUrl": ""
   }
