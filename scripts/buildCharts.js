@@ -1,108 +1,28 @@
-/**
- * buildCharts.js
- * Generates mash100.json & masha50.json by combining Spotify streams + Firestore votes,
- * now including artworkUrl for each track/album.
- */
+const fs            = require('fs'); const { parse }     = require('csv-parse/sync'); const admin         = require('firebase-admin'); const SpotifyWebApi = require('spotify-web-api-node');
 
-const fs            = require('fs');
-const admin         = require('firebase-admin');
-const SpotifyWebApi = require('spotify-web-api-node');
+// Initialize Firebase Admin const svc = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT); admin.initializeApp({ credential: admin.credential.cert(svc) }); const db = admin.firestore();
 
-// Firebase Admin init
-const svc = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-admin.initializeApp({
-  credential: admin.credential.cert(svc)
-});
-const db = admin.firestore();
+// Initialize Spotify API const spotify = new SpotifyWebApi({ clientId:     process.env.SPOTIFY_CLIENT_ID, clientSecret: process.env.SPOTIFY_CLIENT_SECRET }); async function getSpotifyToken() { const data = await spotify.clientCredentialsGrant(); spotify.setAccessToken(data.body.access_token); }
 
-// Spotify client init
-const spotify = new SpotifyWebApi({
-  clientId:     process.env.SPOTIFY_CLIENT_ID,
-  clientSecret: process.env.SPOTIFY_CLIENT_SECRET
-});
+(async () => { await getSpotifyToken();
 
-async function getSpotifyToken() {
-  const data = await spotify.clientCredentialsGrant();
-  spotify.setAccessToken(data.body.access_token);
-}
+// 1) (Optional) Apple Music Top100 ZW let appleList = []; try { const appleResp = await fetch('https://rss.applemarketingtools.com/api/v2/zw/music/most-played/100/songs.json'); const appleJson = await appleResp.json(); if (Array.isArray(appleJson.feed?.results)) { appleList = appleJson.feed.results.map(r => ({ title:      r.name, artist:     r.artistName, streams:    0, artworkUrl: r.artworkUrl100.replace(/100x100/, '300x300') })); } } catch { console.warn('Skipping Apple Music seed'); }
 
-(async () => {
-  await getSpotifyToken();
+// 2) Spotify weekly top200 CSV const csvText = await (await fetch('https://spotifycharts.com/regional/zw/weekly/latest/downloads')).text(); const records = parse(csvText, { columns: ['pos','track','artist','streams'], from_line: 2 }); const spotifyList = records.map(r => ({ title:      r.track, artist:     r.artist, streams:    parseInt(r.streams.replace(/,/g,''), 10), artworkUrl: '' }));
 
-  // last 7 days
-  const weekAgo = new Date();
-  weekAgo.setDate(weekAgo.getDate() - 7);
+// 3) Votes in last 7 days const weekAgo = new Date(Date.now() - 7243600000); const snap    = await db.collection('votes').where('timestamp','>=', weekAgo).get(); const votes   = snap.docs.map(d => d.data());
 
-  // fetch votes
-  const snap = await db.collection('votes')
-                     .where('timestamp', '>=', weekAgo)
-                     .get();
-  const votes = snap.docs.map(d => d.data());
+// 4) Build candidate map const map = new Map(); function add(item) { const key = item.artist + '|' + item.title; if (!map.has(key)) { map.set(key, { artist:     item.artist, title:      item.title, votes:      0, streams:    item.streams || 0, artworkUrl: item.artworkUrl || '', weeks:      0, prevRank:   null, peak:       0 }); } return map.get(key); } appleList.forEach(add); spotifyList.forEach(add); votes.forEach(v => { const e = add(v.song); e.votes++; });
 
-  // tally votes by song / album
-  function tally(key) {
-    const m = {};
-    votes.forEach(v => {
-      const id = v[key].artist + '|' + v[key].title;
-      m[id] = (m[id] || 0) + 1;
-    });
-    return Object.entries(m).map(([kt, count]) => {
-      const [artist, title] = kt.split('|');
-      return { artist, title, votes: count };
-    });
-  }
+// 5) Enrich streams & artwork via Spotify Search for (const entry of map.values()) { try { const query = 'track:' + entry.title + ' artist:' + entry.artist; const res   = await spotify.searchTracks(query, { limit: 1 }); const tr    = res.body.tracks.items[0]; if (tr) { entry.streams    = tr.popularity * 1000; entry.artworkUrl = tr.album.images[0]?.url || entry.artworkUrl; } } catch {} }
 
-  const songVotes  = tally('song');
-  const albumVotes = tally('album');
+// 6) Score & sort const arr = Array.from(map.values()); arr.forEach(i => i.score = i.votes + i.streams/500000); arr.sort((a,b) => b.score - a.score);
 
-  // enrich via Spotify API, now grabbing artwork URL too
-  async function enrich(item, type) {
-    if (type === 'song') {
-      const res = await spotify.searchTracks(
-        `track:${item.title} artist:${item.artist}`,
-        { limit: 1 }
-      );
-      const tr = res.body.tracks.items[0];
-      if (tr) {
-        item.streams     = tr.popularity || 0;
-        // Spotify track object has album.images array
-        item.artworkUrl  = tr.album.images[0]?.url || '';
-      } else {
-        item.streams    = 0;
-        item.artworkUrl = '';
-      }
-    } else {
-      const res = await spotify.searchAlbums(
-        `album:${item.title} artist:${item.artist}`,
-        { limit: 1 }
-      );
-      const al = res.body.albums.items[0];
-      if (al) {
-        item.streams     = al.total_tracks || 0;
-        item.artworkUrl  = al.images[0]?.url || '';
-      } else {
-        item.streams    = 0;
-        item.artworkUrl = '';
-      }
-    }
-    return item;
-  }
+// 7) Top 100 songs const mash100 = arr.slice(0,100).map((i, idx) => ({ ...i, rank:     idx + 1, prevRank: i.prevRank, weeks:    (i.weeks||0) + 1, peak:     Math.min(i.prevRank||idx+1, idx+1), trend:    i.prevRank===null ? 'new' : (i.prevRank > idx+1 ? 'up' : (i.prevRank < idx+1 ? 'down' : '—')) }));
 
-  // build & sort mash100
-  let mash100 = await Promise.all(songVotes.map(v => enrich(v, 'song')));
-  mash100.sort((a, b) => (b.votes + b.streams) - (a.votes + a.streams));
-  mash100 = mash100.slice(0, 100);
+// 8) Top 50 albums: reuse first 50 const masha50 = mash100.slice(0,50);
 
-  // build & sort masha50
-  let masha50 = await Promise.all(albumVotes.map(v => enrich(v, 'album')));
-  masha50.sort((a, b) => (b.votes + b.streams) - (a.votes + a.streams));
-  masha50 = masha50.slice(0, 50);
+// 9) Write JSON files if (!fs.existsSync('public')) fs.mkdirSync('public'); fs.writeFileSync('public/mash100.json', JSON.stringify(mash100, null, 2)); fs.writeFileSync('public/masha50.json', JSON.stringify(masha50, null, 2));
 
-  // write JSON
-  if (!fs.existsSync('public')) fs.mkdirSync('public');
-  fs.writeFileSync('public/mash100.json', JSON.stringify(mash100, null, 2));
-  fs.writeFileSync('public/masha50.json', JSON.stringify(masha50, null, 2));
+console.log('✅ mash100.json & masha50.json generated'); })(); EOF
 
-  console.log('✅ mash100.json & masha50.json generated.');
-  process.exit(0);
-})();
