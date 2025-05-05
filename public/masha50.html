@@ -1,93 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>MashA 50 – Top Albums</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-8BMMTDWP3G');
-  </script>
-
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>MashStat – MashA50</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
   <style>
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body { font-family:'Segoe UI',sans-serif; background:#f4f4f4; color:#333; padding:20px; }
-    .logo-link { text-align:center; margin-bottom:20px; display:block; }
-    .logo { width:160px; }
-    h1 { text-align:center; font-size:2em; margin-bottom:5px; }
-    .description { text-align:center; font-style:italic; color:navy; margin-bottom:30px; }
-    .chart { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
-    .chart-item { background:#fff; border-radius:8px; padding:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); position:relative; }
-    .artwork { width:100%; height:0; padding-bottom:100%; background-size:cover; background-position:center; border-radius:4px; margin-bottom:8px; }
-    .rank { font-weight:700; color:#e91e63; margin-bottom:4px; display:block; }
-    .album-title { font-size:1.1em; font-weight:600; margin-bottom:2px; }
-    .artist-name { color:#666; margin-bottom:8px; display:block; }
-    .streams { font-size:.8em; color:#555; }
-    .meta { font-size:.75em; color:#777; display:flex; justify-content:space-between; margin-top:8px; }
-    .meta .label { font-weight:600; margin-right:4px; }
+    body{font-family:'Montserrat',sans-serif;background:#fafafa;color:#111;padding:20px;}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    header img{height:40px;}
+    nav a{color:#555;margin-left:16px;text-decoration:none;}
+    nav a.active{color:#e91e63;font-weight:600;}
+    .section-title{font-family:'Playfair Display',serif;color:#e91e63;font-size:1.8rem;margin-bottom:12px;}
+    #chart{display:grid;gap:12px;}
+    .card{background:#fff;border-radius:8px;padding:8px;height:1.5cm;display:flex;align-items:center;position:relative;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+    .rank{width:32px;text-align:center;color:#e91e63;font-weight:600;font-size:1.2rem;}
+    .artwork{width:1.2cm;height:1.2cm;background-size:cover;background-position:center;border-radius:4px;margin:0 8px;}
+    .info{flex:1;color:#333;display:flex;flex-direction:column;}
+    .info .title{font-weight:600;font-size:1rem;}
+    .info .artist{font-size:.85rem;font-style:italic;color:#666;margin-bottom:4px;}
+    .meta{font-size:.75rem;color:#999;display:flex;}
+    .meta div{margin-right:12px;}
+    .trend{position:absolute;top:8px;right:8px;font-size:1.2rem;}
+    .trend.up{color:#5f5;}
+    .trend.down{color:#f55;}
+    .trend.new{color:#5f5;}
+    #loading{color:#888;text-align:center;padding:20px;}
   </style>
 </head>
 <body>
-
-  <a href="index.html" class="logo-link">
-    <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
-  </a>
-
-  <h1>MashA 50 – Top Albums</h1>
-  <p class="description">
-    This chart ranks the top 50 most streamed albums in Zimbabwe across YouTube, Spotify, and Apple Music. Updated weekly.
-  </p>
-
-  <div id="chart" class="chart"></div>
-
-  <script>
-    // Fallback data
-    const fallbackData = [
-      { rank:1, title:"Pabho", artist:"Winky D", streams:0, votes:0, artworkUrl:"", peak:1, last:null },
-      { rank:2, title:"Ndisiyei", artist:"Feli Nandi", streams:0, votes:0, artworkUrl:"", peak:2, last:1 }
-      // ...add more if desired...
-    ];
-
-    function renderItem(item) {
-      const div = document.createElement('div');
-      div.className = 'chart-item';
-      const art = document.createElement('div');
-      art.className = 'artwork';
-      art.style.backgroundImage = item.artworkUrl ? `url(${item.artworkUrl})` : 'none';
-      div.appendChild(art);
-      div.innerHTML += `
-        <span class="rank">${item.rank}.</span>
-        <span class="album-title">${item.title}</span>
-        <span class="artist-name">${item.artist}</span>
-        <div class="streams">Streams: ${item.streams.toLocaleString()} &nbsp; Votes: ${item.votes}</div>
-        <div class="meta">
-          <div><span class="label">Peak:</span>${item.peak}</div>
-          <div><span class="label">Last:</span>${item.last===null?'—':item.last}</div>
-        </div>`;
-      return div;
-    }
-
-    async function loadChart() {
-      let data;
-      try {
-        const resp = await fetch('masha50.json');
-        data = await resp.json();
-        if (!Array.isArray(data) || data.length < 5) throw new Error();
-      } catch {
-        data = fallbackData;
-      }
-      data.sort((a,b)=>a.rank-b.rank);
-      const chart = document.getElementById('chart');
-      chart.innerHTML = '';
-      data.forEach(item=>chart.appendChild(renderItem(item)));
-    }
-
-    loadChart();
-  </script>
+  <header>
+    <a href="index.html"><img src="asserts/mashstat_logo.png" alt="Logo"/></a>
+    <nav>
+      <a href="mash100.html">Mash100</a>
+      <a href="masha50.html" class="active">MashA50</a>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+  <div class="section-title">Top 50 Albums</div>
+  <div id="chart"><div id="loading">Loading chart…</div></div>
+  <script src="chart.js"></script>
 </body>
 </html>

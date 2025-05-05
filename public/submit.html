@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit to MashStat</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 40px 20px;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 200px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      font-size: 2em;
+    }
+    .description {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 1em;
+      color: #cccccc;
+    }
+    form {
+      background-color: #1e1e1e;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: navy;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+      color: white;
+    }
+    button {
+      background-color: navy;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #000080;
+    }
+  </style>
+</head>
+<body>
+  <img src="mashstat_logo.png" alt="MashStat Logo" class="logo">
+  <h1>Submit to MashStat</h1>
+  <p class="description">
+    This page allows artists, producers, and management teams to submit new music (songs or albums)
+    for consideration in MashStat's national streaming charts. Please provide valid streaming links
+    (YouTube, Spotify, Apple Music, etc.) and accurate information to help us properly track and
+    represent your music based on Zimbabwean streaming data. All submissions are reviewed weekly.
+  </p>
+  <form action="https://formspree.io/f/xqaprvqr" method="POST">
+    <label for="name">Your Name or Stage Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="title">Song or Album Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="platforms">Streaming Links (YouTube, Spotify, Apple Music, etc):</label>
+    <textarea id="platforms" name="platforms" rows="4" required></textarea>
+
+    <input type="hidden" name="_redirect" value="thank-you.html">
+
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

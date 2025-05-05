@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vote on MashStat</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <!-- Firebase SDKs (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0 }
+    body { background:#121212; color:#eee; font-family:'Montserrat',sans-serif;
+           display:flex; align-items:center; justify-content:center; min-height:100vh }
+    .screen { width:100%; max-width:400px; background:#1e1e1e; padding:30px;
+              border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.5) }
+    .hidden { display:none }
+    h1,h2 { font-family:'Playfair Display',serif; color:#ff0055;
+             text-align:center; margin-bottom:20px }
+    .input-group { margin-bottom:15px }
+    label { display:block; margin-bottom:6px; color:#ccc }
+    input { width:100%; padding:10px; border:none; border-radius:5px;
+            background:#2a2a2a; color:#fff }
+    button { width:100%; padding:12px; background:#ff0055; color:#fff;
+             border:none; border-radius:5px; font-size:1rem; cursor:pointer }
+    button:disabled { opacity:0.6; cursor:not-allowed }
+    #message { text-align:center; margin-top:15px; font-weight:600 }
+  </style>
+</head>
+<body>
+
+  <!-- Sign-In Screen -->
+  <div id="signInScreen" class="screen">
+    <h1>Sign in to Vote</h1>
+    <button id="googleSignInBtn">Sign in with Google</button>
+    <div id="signInMessage" style="margin-top:15px;text-align:center;color:#f55;"></div>
+  </div>
+
+  <!-- Vote Screen -->
+  <div id="voteScreen" class="screen hidden">
+    <h2>Cast Your Daily Vote</h2>
+    <form id="voteForm">
+      <div class="input-group">
+        <label for="city">City/Town</label>
+        <input type="text" id="city" required placeholder="e.g. Norton" />
+      </div>
+      <h3 style="color:#ff0055;margin-bottom:10px;">Vote for Song</h3>
+      <div class="input-group">
+        <label for="songArtist">Song Artist</label>
+        <input type="text" id="songArtist" required placeholder="e.g. Feli Nandi" />
+      </div>
+      <div class="input-group">
+        <label for="songTitle">Song Title</label>
+        <input type="text" id="songTitle" required placeholder="e.g. Dzoka Kumba" />
+      </div>
+      <h3 style="color:#ff0055;margin-bottom:10px;">Vote for Album</h3>
+      <div class="input-group">
+        <label for="albumArtist">Album Artist</label>
+        <input type="text" id="albumArtist" required placeholder="e.g. Jah Prayzah" />
+      </div>
+      <div class="input-group">
+        <label for="albumTitle">Album Title</label>
+        <input type="text" id="albumTitle" required placeholder="e.g. Chapter One" />
+      </div>
+      <button type="submit" id="submitBtn">Submit Vote</button>
+      <div id="message"></div>
+    </form>
+  </div>
+
+  <script>
+    // Initialize Firebase
+    firebase.initializeApp({
+      apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
+      authDomain: "mashstat-vote.firebaseapp.com",
+      projectId: "mashstat-vote",
+      storageBucket: "mashstat-vote.firebasestorage.app",
+      messagingSenderId: "623901795277",
+      appId: "1:623901795277:web:26fb2334f252b65eed1a84"
+    });
+
+    const auth = firebase.auth();
+    const db   = firebase.firestore();
+    const signInScreen = document.getElementById('signInScreen');
+    const voteScreen   = document.getElementById('voteScreen');
+    const googleBtn    = document.getElementById('googleSignInBtn');
+    const signInMsg    = document.getElementById('signInMessage');
+    const form         = document.getElementById('voteForm');
+    const messageDiv   = document.getElementById('message');
+    const submitBtn    = document.getElementById('submitBtn');
+
+    // Helper to show messages
+    function showMessage(text, color) {
+      messageDiv.textContent = text;
+      messageDiv.style.color = color;
+    }
+
+    // React to auth state changes
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        signInScreen.classList.add('hidden');
+        voteScreen.classList.remove('hidden');
+      } else {
+        signInScreen.classList.remove('hidden');
+        voteScreen.classList.add('hidden');
+      }
+    });
+
+    // Trigger Google Sign-In
+    googleBtn.addEventListener('click', async () => {
+      signInMsg.textContent = '';
+      try {
+        await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+      } catch (err) {
+        signInMsg.textContent = 'Sign-in error: ' + err.message;
+      }
+    });
+
+    // Handle vote form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      showMessage('Submitting…', '#aaa');
+
+      const user = auth.currentUser;
+      if (!user) {
+        showMessage('Please sign in to vote.', 'red');
+        submitBtn.disabled = false;
+        return;
+      }
+
+      const uid    = user.uid;
+      const today  = new Date().toISOString().slice(0,10).replace(/-/g,'');
+      const docId  = `${uid}_${today}`;
+      const docRef = db.collection('votes').doc(docId);
+
+      // Client-side block
+      if (localStorage.getItem(docId)) {
+        showMessage('You have already voted today.', 'red');
+        submitBtn.disabled = false;
+        return;
+      }
+
+      // Build payload
+      const payload = {
+        uid,
+        city: document.getElementById('city').value.trim(),
+        song: {
+          artist: document.getElementById('songArtist').value.trim(),
+          title:  document.getElementById('songTitle').value.trim()
+        },
+        album: {
+          artist: document.getElementById('albumArtist').value.trim(),
+          title:  document.getElementById('albumTitle').value.trim()
+        },
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      try {
+        const snap = await docRef.get();
+        if (snap.exists) throw { code:'already-exists', message:'You have already voted today.' };
+        await docRef.set(payload);
+        localStorage.setItem(docId,'true');
+        showMessage('Vote submitted successfully!','lightgreen');
+        form.reset();
+      } catch (err) {
+        console.error('Vote error:', err.code, err.message);
+        showMessage(`Error (${err.code}): ${err.message}`, 'red');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
