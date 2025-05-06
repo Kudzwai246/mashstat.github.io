@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>MaRankings – Zimbabwe Music Charts</title>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config','G-8BMMTDWP3G');
+    window.dataLayer=window.dataLayer||[]; function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date()); gtag('config','G-8BMMTDWP3G');
   </script>
 
   <!-- Firebase & Chart.js -->
@@ -19,9 +16,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Google Fonts -->
+  <!-- Fonts & Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
-
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px}
@@ -33,41 +29,40 @@
 
     .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
 
-    .ladder-card, .stats-card{perspective:800px}
-    .card{position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s}
+    .ladder-card,.stats-card{perspective:800px}
+    .card{position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
     .card.flipped{transform:rotateY(180deg)}
 
-    .face{position:absolute;width:100%;backface-visibility:hidden;border-radius:8px;overflow:hidden;
-      box-shadow:0 4px 12px rgba(0,0,0,0.5);background:#1e1e1e;display:flex;flex-direction:column;
-      align-items:center;padding:12px}
+    .face{position:absolute;width:100%;backface-visibility:hidden;border-radius:8px;
+          overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.5);background:#1e1e1e;
+          padding:12px;display:flex;flex-direction:column;align-items:center}
     .back{transform:rotateY(180deg)}
 
     .rank{font-size:1.2rem;color:#ff0055;font-weight:600;margin-bottom:6px}
     .artist-name{font-size:1.1rem;color:#fff;margin-bottom:8px;text-align:center}
-    .thumb, .stats-thumb{width:100%;height:120px;object-fit:cover;border-radius:4px;margin-bottom:8px}
-    .meta, .meta-block{font-size:0.8rem;color:#ccc;text-align:center;margin-bottom:6px}
-    .links a{display:inline-block;padding:4px 8px;font-size:0.75rem;border-radius:4px;
-      color:#fff;text-decoration:none;background:#1DB954;margin-top:6px}
+    .thumb{width:100%;height:120px;object-fit:cover;border-radius:4px;margin-bottom:8px}
+    .meta,.meta-block{font-size:0.8rem;color:#ccc;text-align:center;margin-bottom:6px}
+    .links a{display:inline-block;padding:4px 8px;font-size:0.75rem;
+             border-radius:4px;color:#fff;text-decoration:none;background:#1DB954;margin-top:6px}
 
     .city-chart{width:100%;height:100px}
-
-    .loading{width:100%;text-align:center;color:#888;padding:20px 0}
+    .loading{text-align:center;color:#888;padding:20px 0}
+    #searchBar{width:100%;padding:12px;margin:15px 0;background:#222;border:none;border-radius:4px;color:#eee}
   </style>
 </head>
 <body>
 
   <header><a href="index.html" class="main">MashStat MaRankings</a></header>
 
-  <!-- City Popularity Ladder -->
   <section>
     <h2>City Popularity Ladder</h2>
     <div id="ladderLoading" class="loading">Loading top artists…</div>
     <div id="ladder" class="grid2"></div>
   </section>
 
-  <!-- Artist Stats -->
   <section>
     <h2>Artist Stats</h2>
+    <input id="searchBar" placeholder="Search artist and press Enter…" />
     <div id="statsLoading" class="loading">Loading artist stats…</div>
     <div id="artistContainer" class="grid2"></div>
   </section>
@@ -81,186 +76,161 @@
   });
   const db = firebase.firestore();
 
-  // Spotify creds + cache
-  const SPOT_ID     = "9fd373ec645a486d9238ce907ef6662e",
-        SPOT_SECRET = "89e25846b543443ab39fa80504d91fc5";
-  let spotifyToken;
-  const cache = {};
-  let allVotes = [];
+  // Normalize helper
+  function normalize(s){ return s.trim().toLowerCase().replace(/[^a-z0-9]/g,''); }
 
-  // 1) load & fuzzy-merge votes
-  db.collection('votes').get().then(snap=>{
-    const groups = {};
-    snap.docs.forEach(d=>{
-      const v = d.data();
-      const artist = (v.song?.artist||v.album?.artist||"").trim();
-      const key = artist.toLowerCase().replace(/[^a-z0-9]/g,'');
-      if(!groups[key]) groups[key] = { name:artist, votes:[] };
-      groups[key].votes.push(v);
-    });
-    allVotes = Object.values(groups);
-    renderLadder();
-    renderStats();
-  });
-
-  function normalize(s){
-    return s.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
-  }
-
-  async function getToken(){
-    if(spotifyToken) return spotifyToken;
-    const res = await fetch("https://accounts.spotify.com/api/token", {
-      method:"POST",
-      headers:{
-        "Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET),
-        "Content-Type":"application/x-www-form-urlencoded"
-      },
-      body:"grant_type=client_credentials"
-    });
-    spotifyToken = (await res.json()).access_token;
-    return spotifyToken;
-  }
-
-  async function fetchArtist(name){
-    const key = normalize(name);
-    if(cache[key]) return cache[key];
-
-    await getToken();
-    const r = await fetch(
-      \`https://api.spotify.com/v1/search?q=\${encodeURIComponent(name)}&type=artist&limit=1\`,
-      { headers:{ "Authorization":"Bearer "+spotifyToken } }
-    );
-    const js = await r.json();
-    const a  = js.artists.items[0]||{};
-    const det = {
-      name:      a.name||name,
-      image:     a.images?.[0]?.url||"",
-      followers: a.followers?.total||0,
-      popularity:a.popularity||0,
-      url:       a.external_urls?.spotify||"#"
-    };
-
-    // build top-3 city counts
-    const counts = {};
-    const group = allVotes.find(g=>normalize(g.name)===key);
-    (group?.votes||[]).forEach(v=>{
-      const c = v.city||"Unknown";
-      counts[c] = (counts[c]||0)+1;
-    });
-    det.topCities = Object.entries(counts)
-      .map(([city,c])=>({city,count:c}))
-      .sort((a,b)=>b.count-a.count)
-      .slice(0,3);
-
-    return cache[key] = det;
-  }
-
+  // Draw horizontal bar
   function drawBar(canvas, labels, data){
     new Chart(canvas, {
       type:'bar',
       data:{ labels, datasets:[{ data, backgroundColor:'#ff0055', barThickness:10 }] },
-      options:{ indexAxis:'y', scales:{ x:{ beginAtZero:true }}, plugins:{ legend:{display:false} }}
+      options:{ indexAxis:'y', scales:{ x:{ beginAtZero:true }}, plugins:{ legend:{display:false}}}
     });
   }
 
-  // RENDER LADDER in parallel
-  async function renderLadder(){
-    const ladderEl = document.getElementById('ladder'),
-          loadEl   = document.getElementById('ladderLoading');
-    ladderEl.innerHTML = '';
-    loadEl.style.display = 'none';
+  // Fetch Spotify token from your proxy
+  let _tok, _exp;
+  async function getSpotifyToken(){
+    if(_tok && Date.now()<_exp) return _tok;
+    const res = await fetch('http://localhost:3001/token');
+    const js  = await res.json();
+    _tok = js.token; _exp = Date.now() + (js.expires_in-30)*1000;
+    return _tok;
+  }
 
-    const list = allVotes
-      .map(g=>({ artist:g.name, total:g.votes.length }))
-      .sort((a,b)=>b.total - a.total);
+  // Fetch artist detail + cache
+  const cache = {};
+  async function fetchArtist(name){
+    const key = normalize(name);
+    if(cache[key]) return cache[key];
+    const token = await getSpotifyToken();
+    const resp  = await fetch(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,
+      { headers:{ Authorization:`Bearer ${token}` }}
+    );
+    const js = await resp.json();
+    const a  = js.artists.items[0] || {};
+    const det = {
+      name:      a.name || name,
+      image:     a.images?.[0]?.url || '',
+      followers: a.followers?.total || 0,
+      popularity:a.popularity || 0,
+      url:       a.external_urls?.spotify || '#'
+    };
+    cache[key]=det;
+    return det;
+  }
 
-    // placeholders
-    list.forEach(_=>{
-      const ph = document.createElement('div');
-      ph.className = 'ladder-card';
-      ph.innerHTML = '<div class="loading">…</div>';
-      ladderEl.appendChild(ph);
+  // 1) Load votes → group by artist
+  db.collection('votes').get().then(snap => {
+    const groups = [];
+    const map = {};
+    snap.docs.forEach(d => {
+      const v = d.data();
+      const artist = v.song?.artist || v.album?.artist || '';
+      const k = normalize(artist);
+      if(!map[k]){
+        map[k]={ name: artist, count:0, cityCounts:{} };
+        groups.push(map[k]);
+      }
+      map[k].count++;
+      const city = v.city||'Unknown';
+      map[k].cityCounts[city] = (map[k].cityCounts[city]||0)+1;
     });
+    groups.sort((a,b)=>b.count - a.count);
 
-    // fetch all at once
-    const details = await Promise.all(list.map(x=>fetchArtist(x.artist)));
-
-    // render real cards
-    ladderEl.innerHTML = '';
-    details.forEach((det,i)=>{
-      const total = list[i].total;
+    // — City Ladder
+    document.getElementById('ladderLoading').style.display='none';
+    const ladder = document.getElementById('ladder');
+    groups.forEach((art,i)=>{
+      const top3 = Object.entries(art.cityCounts)
+        .map(([c,n])=>({c,n})).sort((a,b)=>b.n-a.n).slice(0,3);
       const wrapper = document.createElement('div'); wrapper.className='ladder-card';
       const card    = document.createElement('div'); card.className='card';
       const front   = document.createElement('div'); front.className='face front';
       front.innerHTML=`
         <div class="rank">#${i+1}</div>
-        <img class="thumb" src="${det.image}" alt="${det.name}"/>
-        <div class="artist-name">${det.name}</div>
-        <div class="meta">Votes: ${total}</div>`;
-      const back = document.createElement('div'); back.className='face back';
-      back.innerHTML=`<div class="artist-name">${det.name} – Top Cities</div>`;
-      const canvas = document.createElement('canvas'); canvas.className='city-chart';
+        <div class="artist-name">${art.name}</div>
+        <div class="meta">Votes: ${art.count}</div>`;
+      const back    = document.createElement('div'); back.className='face back';
+      back.innerHTML=`<div class="artist-name">${art.name} — Top Cities</div>`;
+      const canvas  = document.createElement('canvas'); canvas.className='city-chart';
       back.appendChild(canvas);
-
-      card.append(front, back);
-      wrapper.appendChild(card);
-      ladderEl.appendChild(wrapper);
-
-      drawBar(canvas,
-        det.topCities.map(o=>o.city),
-        det.topCities.map(o=>o.count)
-      );
-
-      // flip on tap
-      wrapper.addEventListener('click', ()=> card.classList.toggle('flipped'));
-    });
-  }
-
-  // RENDER STATS in parallel
-  async function renderStats(){
-    const cont = document.getElementById('artistContainer'),
-          load = document.getElementById('statsLoading');
-    cont.innerHTML = '';
-    load.style.display = 'none';
-
-    const defaults = ["Feli Nandi","Nutty O","Holy Ten","Winky D"];
-    defaults.forEach(_=>{
-      const ph = document.createElement('div');
-      ph.className = 'stats-card';
-      ph.innerHTML = '<div class="loading">…</div>';
-      cont.appendChild(ph);
+      card.append(front,back); wrapper.appendChild(card);
+      ladder.appendChild(wrapper);
+      drawBar(canvas, top3.map(x=>x.c), top3.map(x=>x.n));
+      wrapper.onclick=()=>card.classList.toggle('flipped');
     });
 
-    const details = await Promise.all(defaults.map(fetchArtist));
+    // — Artist Stats preload 15 Zimbabwe artists
+    const defaults = [
+      "Winky D","Feli Nandi","Holy Ten","Takura","Tocky Vibes",
+      "Alick Macheso","Soul Jah Love","Jah Prayzah","Novuyo Sea Girl",
+      "ExQ","Asaph","Tamy Moyo","Shinsoman","Baba Harare","Nutty O"
+    ];
+    document.getElementById('statsLoading').style.display='block';
+    Promise.all(defaults.map(fetchArtist)).then(list=>{
+      document.getElementById('statsLoading').style.display='none';
+      const container = document.getElementById('artistContainer');
+      list.forEach(det=>{
+        const wrapper = document.createElement('div'); wrapper.className='stats-card';
+        const card    = document.createElement('div'); card.className='card';
+        const front   = document.createElement('div'); front.className='face front';
+        front.innerHTML=`
+          <img src="${det.image}" class="thumb" alt="${det.name}"/>
+          <div class="artist-name">${det.name}</div>
+          <div class="meta-block"><h4>Followers</h4><p>${det.followers.toLocaleString()}</p></div>
+          <div class="links"><a href="${det.url}" target="_blank">Open in Spotify</a></div>`;
+        const back    = document.createElement('div'); back.className='face back';
+        const cityCanvas = document.createElement('canvas'); cityCanvas.className='city-chart';
+        back.innerHTML=`<div class="artist-name">${det.name} — Top Cities</div>`; back.appendChild(cityCanvas);
 
-    cont.innerHTML = '';
-    details.forEach(det=>{
+        card.append(front,back); wrapper.appendChild(card); container.appendChild(wrapper);
+        // draw empty until searched
+        drawBar(cityCanvas,[],[]);
+        wrapper.onclick=()=>card.classList.toggle('flipped');
+      });
+    });
+
+    // — Search handler
+    const sb = document.getElementById('searchBar');
+    sb.addEventListener('keydown', async e=>{
+      if(e.key!=='Enter') return;
+      e.preventDefault();
+      const name = sb.value.trim();
+      if(!name) return;
+      document.getElementById('statsLoading').textContent='Searching…'; 
+      document.getElementById('statsLoading').style.display='block';
+      const det = await fetchArtist(name);
+      document.getElementById('statsLoading').style.display='none';
+
+      // prepend to container
+      const container = document.getElementById('artistContainer');
       const wrapper = document.createElement('div'); wrapper.className='stats-card';
       const card    = document.createElement('div'); card.className='card';
       const front   = document.createElement('div'); front.className='face front';
       front.innerHTML=`
-        <img class="stats-thumb" src="${det.image}" alt="${det.name}"/>
+        <img src="${det.image}" class="thumb" alt="${det.name}"/>
         <div class="artist-name">${det.name}</div>
         <div class="meta-block"><h4>Followers</h4><p>${det.followers.toLocaleString()}</p></div>
-        <div class="meta-block"><h4>Popularity</h4><p>${det.popularity}/100</p></div>
-        <a class="links spotify" href="${det.url}" target="_blank">Spotify</a>`;
-      const back  = document.createElement('div'); back.className='face back';
-      back.innerHTML=`<div class="artist-name">${det.name} – Top Cities</div>`;
-      const canvas = document.createElement('canvas'); canvas.className='city-chart';
-      back.appendChild(canvas);
+        <div class="links"><a href="${det.url}" target="_blank">Open in Spotify</a></div>`;
+      const back    = document.createElement('div'); back.className='face back';
+      const cityCanvas = document.createElement('canvas'); cityCanvas.className='city-chart';
+      back.innerHTML=`<div class="artist-name">${det.name} — Top Cities</div>`; back.appendChild(cityCanvas);
 
-      card.append(front, back);
-      wrapper.appendChild(card);
-      cont.appendChild(wrapper);
-
-      drawBar(canvas,
-        det.topCities.map(o=>o.city),
-        det.topCities.map(o=>o.count)
-      );
-
-      wrapper.addEventListener('click', ()=> card.classList.toggle('flipped'));
+      card.append(front,back); wrapper.appendChild(card); 
+      container.prepend(wrapper);
+      drawBar(cityCanvas,[],[]);
+      wrapper.onclick=()=>card.classList.toggle('flipped');
+      sb.value='';
     });
-  }
+
+  }).catch(e=>{
+    console.error(e);
+    document.getElementById('ladderLoading').textContent='Failed to load';
+    document.getElementById('statsLoading').textContent='Failed to load';
+  });
 </script>
+
 </body>
 </html>
