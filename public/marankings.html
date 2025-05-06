@@ -1,85 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>MaRankings – Zimbabwe Music Charts</title>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMMTDWP3G"></script>
   <script>
-    window.dataLayer=window.dataLayer||[];
+    window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config','G-8BMMTDWP3G');
+    gtag('config', 'G-8BMMTDWP3G');
   </script>
 
-  <!-- Firebase (compat) -->
+  <!-- Firebase & Chart.js -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
 
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px}
-    header{text-align:center;margin-bottom:20px;border-bottom:3px solid #ff0055;padding-bottom:10px}
-    .main{font-family:'Playfair Display',serif;font-size:3rem;color:#ff0055;text-decoration:none}
-    #searchBar{width:100%;padding:12px;margin:15px 0;background:#222;border:none;border-radius:4px;color:#eee}
-    section{margin-top:20px}
-    h3{font-family:'Playfair Display',serif;color:#ff0055;font-size:1.6rem;margin-bottom:10px;
-        border-bottom:2px solid #ff0055;display:inline-block;padding-bottom:4px}
-    #cityLoading,#artistLoading{text-align:center;color:#888;margin:10px 0}
-    #cityList{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-    .city-card{background:#1e1e1e;padding:12px;border:1px solid #333;border-radius:8px;
-               position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
-    .city-card:hover{transform:scale(1.02);border-color:#ff0055}
-    .rank{font-size:1.2rem;color:#ff0055;font-weight:600}
-    .city-card img{width:100%;height:100px;object-fit:cover;border-radius:4px;margin:8px 0}
-    .city-card canvas{width:100%!important;height:100px!important}
-    #artistContainer{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:15px}
-    .artist-card{background:#181818;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.5);
-                 overflow:hidden;transition:transform .2s}
-    .artist-card:hover{transform:scale(1.03)}
-    .artist-card img{width:100%;height:100px;object-fit:cover;background:#333}
-    .artist-details{padding:10px}
-    .artist-name{font-size:1.1rem;color:#ff0055;margin-bottom:6px}
-    .meta-block{margin-bottom:8px}
-    .meta-block h4{font-size:0.85rem;color:#ff0055;margin-bottom:4px}
-    .meta-block p{font-size:0.8rem;color:#ccc}
-    .links a{display:inline-block;margin:4px 4px 0 0;padding:4px 6px;font-size:0.75rem;
-             border-radius:4px;color:#fff;text-decoration:none}
-    .spotify{background:#1DB954}.youtube{background:#FF0000}.apple{background:#000}
-    #loadMore{display:block;margin:20px auto;padding:10px 20px;background:#ff0055;color:#fff;
-              border:none;border-radius:4px;font-size:1rem;cursor:pointer}
-    #searchPrompt{text-align:center;color:#888;margin-top:10px}
+    * { box-sizing:border-box; margin:0; padding:0 }
+    body { background:#111; color:#eee; font-family:'Montserrat',sans-serif; padding:20px }
+    header { text-align:center; margin-bottom:20px; border-bottom:3px solid #ff0055; padding-bottom:10px }
+    .main { font-family:'Playfair Display',serif; font-size:2.5rem; color:#ff0055; text-decoration:none }
+
+    section { margin-top:30px }
+    h2 { font-family:'Playfair Display',serif; color:#ff0055; font-size:1.8rem; margin-bottom:12px }
+
+    .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px }
+
+    .ladder-card, .stats-card { perspective:800px }
+    .card {
+      position:relative; width:100%; cursor:pointer;
+      transform-style:preserve-3d; transition:transform .5s;
+    }
+    .card.flipped { transform:rotateY(180deg) }
+
+    .face {
+      position:absolute; width:100%; backface-visibility:hidden;
+      border-radius:8px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.5);
+      background:#1e1e1e; display:flex; flex-direction:column; align-items:center; padding:12px;
+    }
+    .back { transform:rotateY(180deg) }
+
+    .rank { font-size:1.2rem; color:#ff0055; font-weight:600; margin-bottom:6px }
+    .artist-name { font-size:1.1rem; color:#fff; margin-bottom:8px; text-align:center }
+    .thumb, .stats-thumb { width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:8px }
+    .meta { font-size:0.8rem; color:#ccc }
+    .meta-block { margin-bottom:6px; text-align:center }
+    .links a { display:inline-block; margin-top:6px; padding:4px 8px; font-size:0.75rem; border-radius:4px; color:#fff; text-decoration:none; background:#1DB954 }
+
+    .city-chart { width:100%; height:100px }
+
+    .loading { text-align:center; color:#888; margin:20px 0 }
   </style>
 </head>
 <body>
-  <header><a href="index.html" class="main">MashStat</a></header>
-  <input id="searchBar" placeholder="Search artist and press Enter…" />
 
+  <header><a href="index.html" class="main">MashStat MaRankings</a></header>
+
+  <!-- 1) City Popularity Ladder -->
   <section>
-    <h3>City Popularity</h3>
-    <div id="cityLoading">Loading city popularity…</div>
-    <div id="cityList"></div>
+    <h2>City Popularity Ladder</h2>
+    <div id="ladderLoading" class="loading">Loading top artists…</div>
+    <div id="ladder" class="grid2"></div>
   </section>
 
+  <!-- 2) Spotify Artist Stats -->
   <section>
-    <h3>Artist Stats</h3>
-    <div id="artistLoading">Loading artist stats…</div>
-    <div id="artistContainer"></div>
-    <button id="loadMore" style="display:none;">Load more artists</button>
-    <p id="searchPrompt" style="display:none;">Search artist to see stats</p>
+    <h2>Artist Stats</h2>
+    <div id="statsLoading" class="loading">Loading artist stats…</div>
+    <div id="artistContainer" class="grid2"></div>
   </section>
-
-  <footer style="text-align:center;margin-top:30px;font-size:0.8rem;color:#777">
-    Data sources: Spotify Web API · Firestore<br>&copy; 2025 MashStat / MaRankings
-  </footer>
 
 <script>
-  // Initialize Firestore
+  // Firebase init
   firebase.initializeApp({
     apiKey:    "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
     authDomain:"mashstat-vote.firebaseapp.com",
@@ -87,21 +86,38 @@
   });
   const db = firebase.firestore();
 
-  // ─── preload all votes once ───────────────────────────────────
-  let allVotes = [];
-  db.collection('votes').get().then(snap => {
-    allVotes = snap.docs.map(d => d.data());
-  });
-
-  // Spotify credentials + cache
+  // Spotify creds + cache
   const SPOT_ID     = "9fd373ec645a486d9238ce907ef6662e",
         SPOT_SECRET = "89e25846b543443ab39fa80504d91fc5";
   let spotifyToken;
   const cache = {};
+  let allVotes = [];
+
+  // Load all votes once, with fuzzy‐merge
+  db.collection('votes').get().then(snap=>{
+    // group by normalized artist
+    const artistGroups = {};
+    snap.docs.forEach(d=>{
+      const v = d.data();
+      const artist = (v.song?.artist||v.album?.artist||"Unknown").trim();
+      const key = artist.toLowerCase().replace(/[^a-z0-9]/g,'');
+      if(!artistGroups[key]) artistGroups[key] = { name:artist, votes:[] };
+      artistGroups[key].votes.push(v);
+    });
+    // flatten
+    allVotes = Object.values(artistGroups).map(g=>({
+      artist: g.name,
+      votes:  g.votes
+    }));
+    renderLadder();
+    renderStats();
+  });
+
+  function normalize(s){ return s.trim().toLowerCase().replace(/[^a-z0-9]/g,''); }
 
   async function getToken(){
-    if (spotifyToken) return spotifyToken;
-    const res = await fetch("https://accounts.spotify.com/api/token", {
+    if(spotifyToken) return spotifyToken;
+    const r = await fetch("https://accounts.spotify.com/api/token", {
       method:"POST",
       headers:{
         "Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET),
@@ -109,150 +125,131 @@
       },
       body:"grant_type=client_credentials"
     });
-    spotifyToken = (await res.json()).access_token;
+    spotifyToken = (await r.json()).access_token;
     return spotifyToken;
   }
 
-  function normalize(n){
-    return n.trim().toLowerCase().replace(/[^a-z0-9]/g,"");
-  }
-
-  // ─── Fetch & cache artist detail + cityCounts ────────────────
-  async function fetchArtistDetail(name){
+  async function fetchArtist(name){
     const key = normalize(name);
-    if (cache[key]) return cache[key].detail;
+    if(cache[key]) return cache[key];
 
     // Spotify lookup
-    const token = await getToken();
-    const resp  = await fetch(
-      `https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,
-      { headers:{ "Authorization":"Bearer "+token } }
+    await getToken();
+    const resp = await fetch(
+      \`https://api.spotify.com/v1/search?q=\${encodeURIComponent(name)}&type=artist&limit=1\`,
+      { headers:{ "Authorization":"Bearer "+spotifyToken } }
     );
     const js = await resp.json();
-    const a  = js.artists?.items[0] || {};
+    const a  = js.artists.items[0]||{};
     const det = {
-      name:       a.name || name,
-      image:      a.images?.[0]?.url || "",
-      followers:  a.followers?.total  || 0,
-      popularity: a.popularity       || 0,
-      urls:       { spotify: a.external_urls?.spotify || "#" }
+      name:      a.name||name,
+      image:     a.images?.[0]?.url||"",
+      followers: a.followers?.total||0,
+      popularity:a.popularity||0,
+      url:       a.external_urls?.spotify||"#"
     };
 
-    // Build cityCounts from allVotes
-    const cityCounts = {};
-    allVotes.forEach(v => {
-      if (v.song?.artist === det.name || v.album?.artist === det.name) {
-        const c = v.city || "Unknown";
-        cityCounts[c] = (cityCounts[c]||0) + 1;
-      }
+    // tally this artist’s city counts
+    const counts = {};
+    const group = allVotes.find(g=> normalize(g.artist)===key );
+    (group?.votes||[]).forEach(v=>{
+      const c = v.city||"Unknown";
+      counts[c] = (counts[c]||0)+1;
     });
-    det.cityCounts = cityCounts;
+    det.topCities = Object.entries(counts)
+      .map(([city,c])=>({city,count:c}))
+      .sort((a,b)=>b.count-a.count)
+      .slice(0,3);
 
-    cache[key] = { detail: det };
+    cache[key]=det;
     return det;
   }
 
   function drawBar(canvas, labels, data){
     new Chart(canvas, {
       type:'bar',
-      data:{ labels, datasets:[{ data, backgroundColor:'#ff0055', barThickness:8 }] },
-      options:{ maintainAspectRatio:false, indexAxis:'y',
-        scales:{ x:{ beginAtZero:true } },
-        plugins:{ legend:{ display:false }}
-      }
+      data:{ labels, datasets:[{ data, backgroundColor:'#ff0055', barThickness:10 }] },
+      options:{ indexAxis:'y', scales:{ x:{ beginAtZero:true }}, plugins:{ legend:{display:false} }}
     });
   }
 
-  // ─── City Popularity (real-time) ───────────────────────────
-  const cityLoading = document.getElementById('cityLoading'),
-        cityList    = document.getElementById('cityList');
+  // render the ladder
+  async function renderLadder(){
+    const ladderEl = document.getElementById('ladder'),
+          loadEl   = document.getElementById('ladderLoading');
+    loadEl.style.display='none';
+    ladderEl.innerHTML = '';
 
-  db.collection('votes').onSnapshot(snap => {
-    cityLoading.style.display = 'block';
-    cityList.innerHTML = '';
-    // tally
-    const counts = {};
-    snap.docs.forEach(d => {
-      const v = d.data();
-      if (v.city) counts[v.city] = (counts[v.city]||0)+1;
-    });
-    const ranked = Object.entries(counts)
-      .map(([city,count])=>({ city, count }))
-      .sort((a,b)=>b.count - a.count);
+    // sort artists by vote count
+    const list = allVotes
+      .map(g=>({ artist:g.artist, total:g.votes.length }))
+      .sort((a,b)=>b.total - a.total);
 
-    ranked.forEach((e,i) => {
-      const card = document.createElement('div'); card.className='city-card';
-      card.innerHTML = `
-        <div class="rank">${i+1}.</div>
-        <div class="artist-label">${e.city}</div>
-        <div class="meta-block"><h4>Votes</h4><p>${e.count}</p></div>`;
-      const canvas = document.createElement('canvas');
-      card.appendChild(canvas);
-      drawBar(canvas, [e.city], [e.count]);
-      cityList.appendChild(card);
-    });
-    cityLoading.style.display = 'none';
-  });
+    for(let i=0; i<list.length; i++){
+      const {artist,total} = list[i];
+      const det = await fetchArtist(artist);
 
-  // ─── Artist Stats w/ Search & Cache ────────────────────────
-  const artistLoading   = document.getElementById('artistLoading'),
-        artistContainer = document.getElementById('artistContainer'),
-        loadMoreBtn     = document.getElementById('loadMore'),
-        searchPrompt    = document.getElementById('searchPrompt'),
-        searchBar       = document.getElementById('searchBar');
+      const wrapper = document.createElement('div'); wrapper.className='ladder-card';
+      const card    = document.createElement('div'); card.className='card';
+      const front   = document.createElement('div'); front.className='face front';
+      front.innerHTML=`
+        <div class="rank">#\${i+1}</div>
+        <img class="thumb" src="${det.image}" alt="${det.name}"/>
+        <div class="artist-name">\${det.name}</div>
+        <div class="meta">Votes: \${total}</div>`;
+      const back    = document.createElement('div'); back.className='face back';
+      back.innerHTML=`<div class="artist-name">\${det.name} – Top Cities</div>`;
+      const canvas  = document.createElement('canvas'); canvas.className='city-chart';
+      back.appendChild(canvas);
 
-  let statsList = [], shown = 0;
-  async function loadInitialStats(){
-    artistLoading.style.display = 'block';
-    const defaults = ["Feli Nandi","Nutty O","Holy Ten","Winky D"];
-    statsList = (await Promise.all(defaults.map(fetchArtistDetail))).map(o=>o.detail);
-    shown = statsList.length;
-    renderStats();
-    artistLoading.style.display = 'none';
-  }
-  loadInitialStats();
+      card.append(front, back);
+      wrapper.appendChild(card);
+      ladderEl.appendChild(wrapper);
 
-  function renderStats(){
-    artistContainer.innerHTML = '';
-    statsList.slice(0,shown).forEach(d=>{
-      const card = document.createElement('div'); card.className='artist-card';
-      const canvas = document.createElement('canvas');
-      card.innerHTML = `
-        <img src="${d.image}" alt="${d.name}"/>
-        <div class="artist-details">
-          <div class="artist-name">${d.name}</div>
-          <div class="meta-block"><h4>Followers</h4><p>${d.followers.toLocaleString()}</p></div>
-          <div class="meta-block"><h4>Popularity</h4><p>${d.popularity}/100</p></div>
-          <div class="links"><a class="spotify" href="${d.urls.spotify}" target="_blank">Spotify</a></div>
-          <div class="meta-block"><h4>City Votes</h4></div>
-        </div>`;
-      card.appendChild(canvas);
-      const cities = Object.keys(d.cityCounts), countsArr = cities.map(c=>d.cityCounts[c]);
-      drawBar(canvas, cities, countsArr);
-      artistContainer.appendChild(card);
-    });
-    loadMoreBtn.style.display = shown<statsList.length?'block':'none';
-    searchPrompt.style.display = shown>=statsList.length?'block':'none';
-  }
-
-  loadMoreBtn.onclick = ()=>{
-    shown += 4; renderStats();
-  };
-
-  searchBar.addEventListener('keydown', async e=>{
-    if(e.key==='Enter'){
-      e.preventDefault();
-      const name = searchBar.value.trim();
-      if(!name) return;
-      artistLoading.style.display='block';
-      const o = await fetchArtistDetail(name);
-      statsList.unshift(o.detail);
-      shown++;
-      renderStats();
-      artistLoading.style.display='none';
-      searchBar.value='';
+      drawBar(canvas,
+        det.topCities.map(o=>o.city),
+        det.topCities.map(o=>o.count)
+      );
     }
-  });
+  }
+
+  // render the stats
+  async function renderStats(){
+    const cont = document.getElementById('artistContainer'),
+          load  = document.getElementById('statsLoading');
+    load.style.display='none';
+    cont.innerHTML='';
+
+    const defaults = ["Feli Nandi","Nutty O","Holy Ten","Winky D"];
+    for(let name of defaults){
+      const det = await fetchArtist(name);
+      const wrapper = document.createElement('div'); wrapper.className='stats-card';
+      const card    = document.createElement('div'); card.className='card';
+      const front   = document.createElement('div'); front.className='face front';
+      front.innerHTML=`
+        <img class="stats-thumb" src="${det.image}" alt="${det.name}"/>
+        <div class="artist-name">${det.name}</div>
+        <div class="meta-block"><h4>Followers</h4><p>${det.followers.toLocaleString()}</p></div>
+        <div class="meta-block"><h4>Popularity</h4><p>${det.popularity}/100</p></div>
+        <a class="links spotify" href="${det.url}" target="_blank">Spotify</a>`;
+      const back    = document.createElement('div'); back.className='face back';
+      back.innerHTML=`<div class="artist-name">${det.name} – Top Cities</div>`;
+      const canvas  = document.createElement('canvas'); canvas.className='city-chart';
+      back.appendChild(canvas);
+
+      card.append(front, back);
+      wrapper.appendChild(card);
+      cont.appendChild(wrapper);
+
+      drawBar(canvas,
+        det.topCities.map(o=>o.city),
+        det.topCities.map(o=>o.count)
+      );
+
+      // flip on tap
+      wrapper.addEventListener('click', ()=> card.classList.toggle('flipped'));
+    }
+  }
 </script>
 </body>
 </html>
