@@ -10,7 +10,7 @@
     h1 { text-align:center; margin-bottom:20px; }
     .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
     .card { perspective:1000px; cursor:pointer; }
-    .inner { position:relative; width:100%; padding-top:100%; /* square */ transition:transform .6s; transform-style:preserve-3d; }
+    .inner { position:relative; width:100%; padding-top:100%; transition:transform .6s; transform-style:preserve-3d; }
     .card.flipped .inner { transform:rotateY(180deg); }
     .side { position:absolute; top:0; left:0; right:0; bottom:0; backface-visibility:hidden; border-radius:8px; overflow:hidden; }
     .front { background:#1e1e1e; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; }
@@ -28,7 +28,6 @@
   <div id="grid" class="grid"></div>
 
   <script>
-    // fallback if JSON missing
     const fallback = [
       { rank:1, name:"Artist One", votes:10, artworkUrl:"", cityVotes:[] },
       { rank:2, name:"Artist Two", votes:8, artworkUrl:"", cityVotes:[] }
@@ -43,25 +42,23 @@
       // front
       const front = document.createElement('div');
       front.className='side front';
-      front.innerHTML=`
-        <img src="${a.artworkUrl||'mashstat_logo.png'}" alt="${a.name}">
-        <div class="name">${a.rank}. ${a.name}</div>
-        <div class="votes">${a.votes} votes</div>`;
+      front.innerHTML = \`
+        <img src="\${a.artworkUrl||'mashstat_logo.png'}" alt="\${a.name}">
+        <div class="name">\${a.rank}. \${a.name}</div>
+        <div class="votes">\${a.votes} votes</div>\`;
       inner.appendChild(front);
 
       // back
       const back = document.createElement('div');
       back.className='side back';
-      if(a.cityVotes && a.cityVotes.length){
-        // take top 3
-        a.cityVotes.sort((x,y)=>y.count - x.count).slice(0,3).forEach(c=>{
+      if (a.cityVotes && a.cityVotes.length) {
+        const max = Math.max(...a.cityVotes.map(c=>c.count));
+        a.cityVotes.sort((x,y)=>y.count-x.count).slice(0,3).forEach(c=>{
           const label = document.createElement('div');
           label.className='bar-label';
-          label.textContent=\`\${c.city}: \${c.count}\`;
+          label.textContent = \`\${c.city}: \${c.count}\`;
           const bar = document.createElement('div');
           bar.className='bar';
-          // width proportional (max 100%)
-          const max = Math.max(...a.cityVotes.map(z=>z.count));
           bar.style.width = (c.count/max*100)+'%';
           back.appendChild(label);
           back.appendChild(bar);
@@ -69,7 +66,7 @@
       } else {
         const nd = document.createElement('div');
         nd.className='no-data';
-        nd.textContent=\"No data available—guess you ain't been voting!\";
+        nd.textContent = "No data available—guess you ain't been voting!";
         back.appendChild(nd);
       }
       inner.appendChild(back);
@@ -84,13 +81,13 @@
       try {
         const res = await fetch('marankings.json');
         data = await res.json();
-        if(!Array.isArray(data) || data.length<1) throw 0;
+        if (!Array.isArray(data) || data.length<1) throw 0;
       } catch {
-        data=fallback;
+        data = fallback;
       }
-      // sort by rank
-      data.sort((a,b)=>a.rank - b.rank);
-      const grid=document.getElementById('grid');
+      data.sort((a,b)=>a.rank-b.rank);
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
       data.forEach(a=>grid.appendChild(makeCard(a)));
     }
     load();
