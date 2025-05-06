@@ -11,7 +11,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-8BMMTDWP3G');
+    gtag('config','G-8BMMTDWP3G');
   </script>
 
   <!-- Firebase & Chart.js -->
@@ -23,54 +23,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
 
   <style>
-    * { box-sizing:border-box; margin:0; padding:0 }
-    body { background:#111; color:#eee; font-family:'Montserrat',sans-serif; padding:20px }
-    header { text-align:center; margin-bottom:20px; border-bottom:3px solid #ff0055; padding-bottom:10px }
-    .main { font-family:'Playfair Display',serif; font-size:2.5rem; color:#ff0055; text-decoration:none }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px}
+    header{text-align:center;margin-bottom:20px;border-bottom:3px solid #ff0055;padding-bottom:10px}
+    .main{font-family:'Playfair Display',serif;font-size:2.5rem;color:#ff0055;text-decoration:none}
 
-    section { margin-top:30px }
-    h2 { font-family:'Playfair Display',serif; color:#ff0055; font-size:1.8rem; margin-bottom:12px }
+    section{margin-top:30px}
+    h2{font-family:'Playfair Display',serif;color:#ff0055;font-size:1.8rem;margin-bottom:12px}
 
-    .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px }
+    .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
 
-    .ladder-card, .stats-card { perspective:800px }
-    .card {
-      position:relative; width:100%; cursor:pointer;
-      transform-style:preserve-3d; transition:transform .5s;
-    }
-    .card.flipped { transform:rotateY(180deg) }
+    .ladder-card, .stats-card{perspective:800px}
+    .card{position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s}
+    .card.flipped{transform:rotateY(180deg)}
 
-    .face {
-      position:absolute; width:100%; backface-visibility:hidden;
-      border-radius:8px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.5);
-      background:#1e1e1e; display:flex; flex-direction:column; align-items:center; padding:12px;
-    }
-    .back { transform:rotateY(180deg) }
+    .face{position:absolute;width:100%;backface-visibility:hidden;border-radius:8px;overflow:hidden;
+      box-shadow:0 4px 12px rgba(0,0,0,0.5);background:#1e1e1e;display:flex;flex-direction:column;
+      align-items:center;padding:12px}
+    .back{transform:rotateY(180deg)}
 
-    .rank { font-size:1.2rem; color:#ff0055; font-weight:600; margin-bottom:6px }
-    .artist-name { font-size:1.1rem; color:#fff; margin-bottom:8px; text-align:center }
-    .thumb, .stats-thumb { width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:8px }
-    .meta { font-size:0.8rem; color:#ccc }
-    .meta-block { margin-bottom:6px; text-align:center }
-    .links a { display:inline-block; margin-top:6px; padding:4px 8px; font-size:0.75rem; border-radius:4px; color:#fff; text-decoration:none; background:#1DB954 }
+    .rank{font-size:1.2rem;color:#ff0055;font-weight:600;margin-bottom:6px}
+    .artist-name{font-size:1.1rem;color:#fff;margin-bottom:8px;text-align:center}
+    .thumb, .stats-thumb{width:100%;height:120px;object-fit:cover;border-radius:4px;margin-bottom:8px}
+    .meta, .meta-block{font-size:0.8rem;color:#ccc;text-align:center;margin-bottom:6px}
+    .links a{display:inline-block;padding:4px 8px;font-size:0.75rem;border-radius:4px;
+      color:#fff;text-decoration:none;background:#1DB954;margin-top:6px}
 
-    .city-chart { width:100%; height:100px }
+    .city-chart{width:100%;height:100px}
 
-    .loading { text-align:center; color:#888; margin:20px 0 }
+    .loading{width:100%;text-align:center;color:#888;padding:20px 0}
   </style>
 </head>
 <body>
 
   <header><a href="index.html" class="main">MashStat MaRankings</a></header>
 
-  <!-- 1) City Popularity Ladder -->
+  <!-- City Popularity Ladder -->
   <section>
     <h2>City Popularity Ladder</h2>
     <div id="ladderLoading" class="loading">Loading top artists…</div>
     <div id="ladder" class="grid2"></div>
   </section>
 
-  <!-- 2) Spotify Artist Stats -->
+  <!-- Artist Stats -->
   <section>
     <h2>Artist Stats</h2>
     <div id="statsLoading" class="loading">Loading artist stats…</div>
@@ -93,31 +88,28 @@
   const cache = {};
   let allVotes = [];
 
-  // Load all votes once, with fuzzy‐merge
+  // 1) load & fuzzy-merge votes
   db.collection('votes').get().then(snap=>{
-    // group by normalized artist
-    const artistGroups = {};
+    const groups = {};
     snap.docs.forEach(d=>{
       const v = d.data();
-      const artist = (v.song?.artist||v.album?.artist||"Unknown").trim();
+      const artist = (v.song?.artist||v.album?.artist||"").trim();
       const key = artist.toLowerCase().replace(/[^a-z0-9]/g,'');
-      if(!artistGroups[key]) artistGroups[key] = { name:artist, votes:[] };
-      artistGroups[key].votes.push(v);
+      if(!groups[key]) groups[key] = { name:artist, votes:[] };
+      groups[key].votes.push(v);
     });
-    // flatten
-    allVotes = Object.values(artistGroups).map(g=>({
-      artist: g.name,
-      votes:  g.votes
-    }));
+    allVotes = Object.values(groups);
     renderLadder();
     renderStats();
   });
 
-  function normalize(s){ return s.trim().toLowerCase().replace(/[^a-z0-9]/g,''); }
+  function normalize(s){
+    return s.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
+  }
 
   async function getToken(){
     if(spotifyToken) return spotifyToken;
-    const r = await fetch("https://accounts.spotify.com/api/token", {
+    const res = await fetch("https://accounts.spotify.com/api/token", {
       method:"POST",
       headers:{
         "Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET),
@@ -125,7 +117,7 @@
       },
       body:"grant_type=client_credentials"
     });
-    spotifyToken = (await r.json()).access_token;
+    spotifyToken = (await res.json()).access_token;
     return spotifyToken;
   }
 
@@ -133,13 +125,12 @@
     const key = normalize(name);
     if(cache[key]) return cache[key];
 
-    // Spotify lookup
     await getToken();
-    const resp = await fetch(
+    const r = await fetch(
       \`https://api.spotify.com/v1/search?q=\${encodeURIComponent(name)}&type=artist&limit=1\`,
       { headers:{ "Authorization":"Bearer "+spotifyToken } }
     );
-    const js = await resp.json();
+    const js = await r.json();
     const a  = js.artists.items[0]||{};
     const det = {
       name:      a.name||name,
@@ -149,9 +140,9 @@
       url:       a.external_urls?.spotify||"#"
     };
 
-    // tally this artist’s city counts
+    // build top-3 city counts
     const counts = {};
-    const group = allVotes.find(g=> normalize(g.artist)===key );
+    const group = allVotes.find(g=>normalize(g.name)===key);
     (group?.votes||[]).forEach(v=>{
       const c = v.city||"Unknown";
       counts[c] = (counts[c]||0)+1;
@@ -161,8 +152,7 @@
       .sort((a,b)=>b.count-a.count)
       .slice(0,3);
 
-    cache[key]=det;
-    return det;
+    return cache[key] = det;
   }
 
   function drawBar(canvas, labels, data){
@@ -173,33 +163,43 @@
     });
   }
 
-  // render the ladder
+  // RENDER LADDER in parallel
   async function renderLadder(){
     const ladderEl = document.getElementById('ladder'),
           loadEl   = document.getElementById('ladderLoading');
-    loadEl.style.display='none';
     ladderEl.innerHTML = '';
+    loadEl.style.display = 'none';
 
-    // sort artists by vote count
     const list = allVotes
-      .map(g=>({ artist:g.artist, total:g.votes.length }))
+      .map(g=>({ artist:g.name, total:g.votes.length }))
       .sort((a,b)=>b.total - a.total);
 
-    for(let i=0; i<list.length; i++){
-      const {artist,total} = list[i];
-      const det = await fetchArtist(artist);
+    // placeholders
+    list.forEach(_=>{
+      const ph = document.createElement('div');
+      ph.className = 'ladder-card';
+      ph.innerHTML = '<div class="loading">…</div>';
+      ladderEl.appendChild(ph);
+    });
 
+    // fetch all at once
+    const details = await Promise.all(list.map(x=>fetchArtist(x.artist)));
+
+    // render real cards
+    ladderEl.innerHTML = '';
+    details.forEach((det,i)=>{
+      const total = list[i].total;
       const wrapper = document.createElement('div'); wrapper.className='ladder-card';
       const card    = document.createElement('div'); card.className='card';
       const front   = document.createElement('div'); front.className='face front';
       front.innerHTML=`
-        <div class="rank">#\${i+1}</div>
+        <div class="rank">#${i+1}</div>
         <img class="thumb" src="${det.image}" alt="${det.name}"/>
-        <div class="artist-name">\${det.name}</div>
-        <div class="meta">Votes: \${total}</div>`;
-      const back    = document.createElement('div'); back.className='face back';
-      back.innerHTML=`<div class="artist-name">\${det.name} – Top Cities</div>`;
-      const canvas  = document.createElement('canvas'); canvas.className='city-chart';
+        <div class="artist-name">${det.name}</div>
+        <div class="meta">Votes: ${total}</div>`;
+      const back = document.createElement('div'); back.className='face back';
+      back.innerHTML=`<div class="artist-name">${det.name} – Top Cities</div>`;
+      const canvas = document.createElement('canvas'); canvas.className='city-chart';
       back.appendChild(canvas);
 
       card.append(front, back);
@@ -210,19 +210,31 @@
         det.topCities.map(o=>o.city),
         det.topCities.map(o=>o.count)
       );
-    }
+
+      // flip on tap
+      wrapper.addEventListener('click', ()=> card.classList.toggle('flipped'));
+    });
   }
 
-  // render the stats
+  // RENDER STATS in parallel
   async function renderStats(){
     const cont = document.getElementById('artistContainer'),
-          load  = document.getElementById('statsLoading');
-    load.style.display='none';
-    cont.innerHTML='';
+          load = document.getElementById('statsLoading');
+    cont.innerHTML = '';
+    load.style.display = 'none';
 
     const defaults = ["Feli Nandi","Nutty O","Holy Ten","Winky D"];
-    for(let name of defaults){
-      const det = await fetchArtist(name);
+    defaults.forEach(_=>{
+      const ph = document.createElement('div');
+      ph.className = 'stats-card';
+      ph.innerHTML = '<div class="loading">…</div>';
+      cont.appendChild(ph);
+    });
+
+    const details = await Promise.all(defaults.map(fetchArtist));
+
+    cont.innerHTML = '';
+    details.forEach(det=>{
       const wrapper = document.createElement('div'); wrapper.className='stats-card';
       const card    = document.createElement('div'); card.className='card';
       const front   = document.createElement('div'); front.className='face front';
@@ -232,9 +244,9 @@
         <div class="meta-block"><h4>Followers</h4><p>${det.followers.toLocaleString()}</p></div>
         <div class="meta-block"><h4>Popularity</h4><p>${det.popularity}/100</p></div>
         <a class="links spotify" href="${det.url}" target="_blank">Spotify</a>`;
-      const back    = document.createElement('div'); back.className='face back';
+      const back  = document.createElement('div'); back.className='face back';
       back.innerHTML=`<div class="artist-name">${det.name} – Top Cities</div>`;
-      const canvas  = document.createElement('canvas'); canvas.className='city-chart';
+      const canvas = document.createElement('canvas'); canvas.className='city-chart';
       back.appendChild(canvas);
 
       card.append(front, back);
@@ -246,9 +258,8 @@
         det.topCities.map(o=>o.count)
       );
 
-      // flip on tap
       wrapper.addEventListener('click', ()=> card.classList.toggle('flipped'));
-    }
+    });
   }
 </script>
 </body>
