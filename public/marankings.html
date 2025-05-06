@@ -13,7 +13,7 @@
     gtag('config','G-8BMMTDWP3G');
   </script>
 
-  <!-- Firebase -->
+  <!-- Firebase (compat) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <!-- Chart.js -->
@@ -22,16 +22,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
   <style>
+    /* your existing CSS unchanged… */
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:#111;color:#eee;font-family:'Montserrat',sans-serif;padding:20px}
     header{text-align:center;margin-bottom:20px;border-bottom:3px solid #ff0055;padding-bottom:10px}
     .main{font-family:'Playfair Display',serif;font-size:3rem;color:#ff0055;text-decoration:none}
     #searchBar{width:100%;padding:12px;margin:15px 0;background:#222;border:none;border-radius:4px;color:#eee}
-
     section{margin-top:20px}
     h3{font-family:'Playfair Display',serif;color:#ff0055;font-size:1.6rem;margin-bottom:10px;
         border-bottom:2px solid #ff0055;display:inline-block;padding-bottom:4px}
-
     #cityLoading,#artistLoading{text-align:center;color:#888;margin:10px 0}
     #cityList{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .city-card{background:#1e1e1e;padding:12px;border:1px solid #333;border-radius:8px;
@@ -39,11 +38,9 @@
     .city-card:hover{transform:scale(1.02);border-color:#ff0055}
     .rank{font-size:1.2rem;color:#ff0055;font-weight:600}
     .city-card img{width:100%;height:100px;object-fit:cover;border-radius:4px;margin:8px 0}
-    .artist-label{font-size:1rem;color:#fff;margin-bottom:6px}
     .city-card canvas{width:100%!important;height:100px!important}
     .toggle-stats{position:absolute;top:8px;right:8px;background:#ff0055;color:#fff;
                   padding:4px 6px;font-size:0.8rem;cursor:pointer}
-
     #artistContainer{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:15px}
     .artist-card{background:#181818;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.5);
                  overflow:hidden;transition:transform .2s}
@@ -57,14 +54,12 @@
     .links a{display:inline-block;margin:4px 4px 0 0;padding:4px 6px;font-size:0.75rem;
              border-radius:4px;color:#fff;text-decoration:none}
     .spotify{background:#1DB954}.youtube{background:#FF0000}.apple{background:#000}
-
     #loadMore{display:block;margin:20px auto;padding:10px 20px;background:#ff0055;color:#fff;
               border:none;border-radius:4px;font-size:1rem;cursor:pointer}
     #searchPrompt{text-align:center;color:#888;margin-top:10px}
   </style>
 </head>
 <body>
-
   <header><a href="index.html" class="main">MashStat</a></header>
   <input id="searchBar" placeholder="Search artist and press Enter…" />
 
@@ -87,29 +82,35 @@
   </footer>
 
 <script>
-  // Firebase init
+  // Initialize Firebase Firestore
   firebase.initializeApp({
-    apiKey: "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
+    apiKey:  "AIzaSyDyJg5BfmGhoi5ESsfhF6ZRFDG0Xfdoy10",
     authDomain: "mashstat-vote.firebaseapp.com",
-    projectId: "mashstat-vote"
+    projectId:  "mashstat-vote"
   });
   const db = firebase.firestore();
 
+  // ─── Global vote cache ───
+  let allVotes = [];
+  db.collection('votes').get().then(snap => {
+    allVotes = snap.docs.map(d => d.data());
+  });
+
   // Spotify credentials + in-memory cache
-  const SPOT_ID="9fd373ec645a486d9238ce907ef6662e",
-        SPOT_SECRET="89e25846b543443ab39fa80504d91fc5";
+  const SPOT_ID     = "9fd373ec645a486d9238ce907ef6662e",
+        SPOT_SECRET = "89e25846b543443ab39fa80504d91fc5";
   let spotifyToken;
   const cache = {};
 
   async function getToken(){
-    if(spotifyToken) return spotifyToken;
+    if (spotifyToken) return spotifyToken;
     const res = await fetch("https://accounts.spotify.com/api/token", {
-      method:"POST",
-      headers:{
+      method: "POST",
+      headers: {
         "Authorization":"Basic "+btoa(SPOT_ID+":"+SPOT_SECRET),
         "Content-Type":"application/x-www-form-urlencoded"
       },
-      body:"grant_type=client_credentials"
+      body: "grant_type=client_credentials"
     });
     spotifyToken = (await res.json()).access_token;
     return spotifyToken;
@@ -119,115 +120,108 @@
     return n.trim().toLowerCase().replace(/[^a-z0-9]/g,"");
   }
 
+  // ─── Fetch artist detail and their cityCounts ───
   async function fetchArtistDetail(name){
     const key = normalize(name);
-    if(cache[key]?.detail) return cache[key].detail;
+    if (cache[key]?.detail) return cache[key];
+
+    // 1) Spotify lookup
     const token = await getToken();
-    const resp = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`, {
-      headers: { "Authorization":"Bearer "+token }
-    });
+    const resp  = await fetch(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,
+      { headers: { "Authorization":"Bearer "+token } }
+    );
     const js = await resp.json();
-    const a = js.artists.items[0];
+    const a  = js.artists?.items[0] || {};
     const det = {
-      name: a.name,
-      image: a.images[0]?.url||"",
-      followers: a.followers.total,
-      popularity: a.popularity,
-      urls: { spotify: a.external_urls.spotify }
+      name:       a.name || name,
+      image:      a.images?.[0]?.url || "",
+      followers:  a.followers?.total  || 0,
+      popularity: a.popularity       ?? 0,
+      urls:       { spotify: a.external_urls?.spotify || "#" }
     };
+
+    // 2) Build cityCounts from allVotes
+    const cityCounts = {};
+    allVotes.forEach(v => {
+      if ((v.song?.artist === name) || (v.album?.artist === name)) {
+        const c = v.city || "Unknown";
+        cityCounts[c] = (cityCounts[c] || 0) + 1;
+      }
+    });
+    det.cityCounts = cityCounts;
+
     cache[key] = { detail: det };
-    return det;
+    return cache[key];
   }
 
   function drawBar(canvas, labels, data){
     new Chart(canvas, {
       type:'bar',
       data:{ labels, datasets:[{ data, backgroundColor:'#ff0055', barThickness:8 }] },
-      options:{ maintainAspectRatio:false, indexAxis:'y', scales:{ x:{ beginAtZero:true }}, plugins:{ legend:{ display:false }}}
+      options:{ maintainAspectRatio:false, indexAxis:'y',
+        scales:{ x:{ beginAtZero:true } },
+        plugins:{ legend:{ display:false }}
+      }
     });
   }
 
-  function mergeVotes(votes){
-    const m = {};
-    votes.forEach(v=>{
-      [v.song.artist, v.album.artist].forEach(artist=>{
-        const k = normalize(artist);
-        if(!m[k]) m[k] = { artist, cityCounts:{}, count:0 };
-        m[k].count++;
-        m[k].cityCounts[v.city] = (m[k].cityCounts[v.city]||0) + 1;
-      });
-    });
-    return Object.values(m);
-  }
-
-  // — City Popularity
+  // ─── City Popularity: real-time listener ───
   const cityLoading = document.getElementById('cityLoading'),
         cityList    = document.getElementById('cityList');
-
-  db.collection('votes').onSnapshot(async snap => {
+  db.collection('votes').onSnapshot(snap => {
     cityLoading.style.display = 'block';
     cityList.innerHTML = '';
 
-    // 1) merge & sort
-    const merged = mergeVotes(snap.docs.map(d=>d.data()));
-    merged.sort((a,b)=>b.count - a.count);
-
-    // 2) assign ranks
-    let lastCount = null, lastRank = 0;
-    const ranked = merged.map((v,i)=>{
-      if(v.count !== lastCount){
-        lastCount = v.count;
-        lastRank = i+1;
-      }
-      return { ...v, rank: lastRank };
+    // Merge & rank
+    const counts = {};
+    snap.docs.forEach(d => {
+      const v = d.data();
+      if (v.city) counts[v.city] = (counts[v.city]||0)+1;
     });
+    const ranked = Object.entries(counts)
+      .map(([city,count])=>({ city, count }))
+      .sort((a,b)=> b.count - a.count);
 
-    // 3) fetch all details in parallel
-    const details = await Promise.all(ranked.map(e => fetchArtistDetail(e.artist)));
-
-    // 4) render cards in order
-    for(let i=0; i<ranked.length; i++){
-      const e = ranked[i], d = details[i];
-      if(!d.image) continue;  // hide missing thumbnails
-      const card = document.createElement('div'); card.className = 'city-card';
-      const canvas = document.createElement('canvas'); card.appendChild(canvas);
-      card.innerHTML = `
-        <div class="rank">(${e.rank})</div>
-        <img src="${d.image}" alt="${d.name}"/>
-        <div class="artist-label">${d.name}</div>
-        <div class="meta-block"><h4>Votes</h4><p>${e.count}</p></div>
-      `;
+    // Render
+    ranked.forEach((e,i) => {
+      const card = document.createElement('div'); card.className='city-card';
+      card.innerHTML = `<div class="rank">${i+1}.</div><div class="artist-label">${e.city}</div>
+        <div class="meta-block"><h4>Votes</h4><p>${e.count}</p></div>`;
+      const canvas = document.createElement('canvas');
       card.appendChild(canvas);
-      drawBar(canvas, Object.keys(e.cityCounts), Object.values(e.cityCounts));
+      drawBar(canvas, [e.city], [e.count]);
       cityList.appendChild(card);
-    }
+    });
 
     cityLoading.style.display = 'none';
   });
 
-  // — Artist Stats
-  const artistLoading = document.getElementById('artistLoading'),
+  // ─── Artist Stats with Search & Cache ───
+  const artistLoading   = document.getElementById('artistLoading'),
         artistContainer = document.getElementById('artistContainer'),
         loadMoreBtn     = document.getElementById('loadMore'),
         searchPrompt    = document.getElementById('searchPrompt'),
         searchBar       = document.getElementById('searchBar');
 
-  let statsList = [], shown = 0;
-
+  let statsList = [], shown=0;
   async function loadInitialStats(){
     artistLoading.style.display = 'block';
     const defaults = ["Feli Nandi","Nutty O","Holy Ten","Winky D"];
-    statsList = await Promise.all(defaults.map(fetchArtistDetail));
-    shown = statsList.length;
+    const arr = await Promise.all(defaults.map(fetchArtistDetail));
+    statsList = arr;
+    shown = arr.length;
     renderStats();
     artistLoading.style.display = 'none';
   }
   loadInitialStats();
 
   function renderStats(){
-    artistContainer.innerHTML = '';
-    statsList.slice(0, shown).forEach(d=>{
-      const card = document.createElement('div'); card.className = 'artist-card';
+    artistContainer.innerHTML='';
+    statsList.slice(0,shown).forEach(cached => {
+      const d = cached.detail;
+      const card = document.createElement('div'); card.className='artist-card';
+      const canvas = document.createElement('canvas');
       card.innerHTML = `
         <img src="${d.image}" alt="${d.name}"/>
         <div class="artist-details">
@@ -237,31 +231,36 @@
           <div class="links">
             <a class="spotify" href="${d.urls.spotify}" target="_blank">Spotify</a>
           </div>
-        </div>
-      `;
+          <div class="meta-block">
+            <h4>City Votes</h4>
+          </div>
+        </div>`;
+      card.appendChild(canvas);
+      const cities = Object.keys(d.cityCounts), countsArr = cities.map(c=>d.cityCounts[c]);
+      drawBar(canvas, cities, countsArr);
       artistContainer.appendChild(card);
     });
-    loadMoreBtn.style.display = (shown < statsList.length) ? 'block' : 'none';
-    searchPrompt.style.display = (shown >= statsList.length) ? 'block' : 'none';
+    loadMoreBtn.style.display = shown < statsList.length ? 'block':'none';
+    searchPrompt.style.display = shown >= statsList.length ? 'block':'none';
   }
 
-  loadMoreBtn.onclick = () => {
+  loadMoreBtn.onclick = ()=>{
     shown += 4;
     renderStats();
   };
 
-  searchBar.addEventListener('keydown', async e => {
-    if(e.key === 'Enter'){
+  searchBar.addEventListener('keydown', async e=>{
+    if(e.key==='Enter'){
       e.preventDefault();
       const name = searchBar.value.trim();
       if(!name) return;
-      artistLoading.style.display = 'block';
-      const d = await fetchArtistDetail(name);
-      statsList.unshift(d);
+      artistLoading.style.display='block';
+      const cached = await fetchArtistDetail(name);
+      statsList.unshift(cached);
       shown++;
       renderStats();
-      artistLoading.style.display = 'none';
-      searchBar.value = '';
+      artistLoading.style.display='none';
+      searchBar.value='';
     }
   });
 </script>
