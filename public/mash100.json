@@ -1,27 +1,15 @@
 [
   {
-    "artist": "Olivia Dean",
-    "title": "Man I Need",
-    "votes": 0,
-    "streams": 97000,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273e3d69e17dde129037a1f09e2",
-    "rank": 1,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 1,
-    "trend": "new"
-  },
-  {
     "artist": "Dave & Tems",
     "title": "Raindance",
     "votes": 0,
     "streams": 86000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273fecaa7826bb0cbe139a8cb83",
-    "rank": 2,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 2,
-    "trend": "new"
+    "rank": 1,
+    "prevRank": 2,
+    "weeks": 2,
+    "peak": 1,
+    "trend": "up"
   },
   {
     "artist": "Gunna",
@@ -29,11 +17,11 @@
     "votes": 0,
     "streams": 80000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2737fd9dc3a93bd4fa2be8ed715",
-    "rank": 3,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 3,
-    "trend": "new"
+    "rank": 2,
+    "prevRank": 3,
+    "weeks": 2,
+    "peak": 2,
+    "trend": "up"
   },
   {
     "artist": "Ayra Starr & Rema",
@@ -41,11 +29,11 @@
     "votes": 0,
     "streams": 78000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2730b2ac553094996786771b49c",
-    "rank": 4,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 4,
-    "trend": "new"
+    "rank": 3,
+    "prevRank": 4,
+    "weeks": 2,
+    "peak": 3,
+    "trend": "up"
   },
   {
     "artist": "Offset & Gunna",
@@ -53,11 +41,11 @@
     "votes": 0,
     "streams": 77000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273722bdc5a6faf3af8cb7618ee",
-    "rank": 5,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 5,
-    "trend": "new"
+    "rank": 4,
+    "prevRank": 5,
+    "weeks": 2,
+    "peak": 4,
+    "trend": "up"
   },
   {
     "artist": "Davido",
@@ -65,11 +53,11 @@
     "votes": 0,
     "streams": 76000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2731dee1b62d81e4b9249af483c",
-    "rank": 6,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 6,
-    "trend": "new"
+    "rank": 5,
+    "prevRank": 6,
+    "weeks": 2,
+    "peak": 5,
+    "trend": "up"
   },
   {
     "artist": "Mariah the Scientist & Kali Uchis",
@@ -77,23 +65,23 @@
     "votes": 0,
     "streams": 74000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27300f16c94b1996a6da42dede8",
-    "rank": 7,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 7,
-    "trend": "new"
+    "rank": 6,
+    "prevRank": 7,
+    "weeks": 2,
+    "peak": 6,
+    "trend": "up"
   },
   {
     "artist": "Ciza, Jazzworx & Thukuthela",
     "title": "Isaka (6am)",
     "votes": 0,
-    "streams": 73000,
+    "streams": 74000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273ac22e367a3bb9308d2a2beb5",
-    "rank": 8,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 8,
-    "trend": "new"
+    "rank": 7,
+    "prevRank": 8,
+    "weeks": 2,
+    "peak": 7,
+    "trend": "up"
   },
   {
     "artist": "Davido",
@@ -101,35 +89,23 @@
     "votes": 0,
     "streams": 73000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273adfc1ac5836f96adac580271",
-    "rank": 9,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 9,
-    "trend": "new"
-  },
-  {
-    "artist": "MaWhoo, GL_Ceejay & Thukuthela",
-    "title": "Bengicela (feat. Jazzworx)",
-    "votes": 0,
-    "streams": 71000,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273859307c21a28b6fa9249b1e1",
-    "rank": 10,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 10,
-    "trend": "new"
+    "rank": 8,
+    "prevRank": 9,
+    "weeks": 2,
+    "peak": 8,
+    "trend": "up"
   },
   {
     "artist": "Summer Walker",
     "title": "Finally Over It",
     "votes": 0,
-    "streams": 71000,
+    "streams": 72000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273868c0ad9578da22988849c77",
-    "rank": 11,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 11,
-    "trend": "new"
+    "rank": 9,
+    "prevRank": 11,
+    "weeks": 2,
+    "peak": 9,
+    "trend": "up"
   },
   {
     "artist": "DJ Maphorisa, Xduppy & Kabza De Small",
@@ -137,11 +113,11 @@
     "votes": 0,
     "streams": 69000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2737fcb9128344b2424f8f8e5db",
-    "rank": 12,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 12,
-    "trend": "new"
+    "rank": 10,
+    "prevRank": 12,
+    "weeks": 2,
+    "peak": 10,
+    "trend": "up"
   },
   {
     "artist": "JAZZWRLD, Thukuthela & Babalwa M",
@@ -149,11 +125,11 @@
     "votes": 0,
     "streams": 69000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273f23e746cdaa20d668149417a",
-    "rank": 13,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 13,
-    "trend": "new"
+    "rank": 11,
+    "prevRank": 13,
+    "weeks": 2,
+    "peak": 11,
+    "trend": "up"
   },
   {
     "artist": "Thukuthela, GL_Ceejay, JAZZWRLD & Makhadzi Entertainment",
@@ -161,23 +137,23 @@
     "votes": 0,
     "streams": 69000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27337201e1a4f5ef4f2d46186d0",
-    "rank": 14,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 14,
-    "trend": "new"
+    "rank": 12,
+    "prevRank": 14,
+    "weeks": 2,
+    "peak": 12,
+    "trend": "up"
   },
   {
     "artist": "Oscar Mbo & JAZZWRLD",
     "title": "Vuka (feat. Thukuthela)",
     "votes": 0,
-    "streams": 67000,
+    "streams": 68000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2738553b60ab6b1689cd41ccb8a",
-    "rank": 15,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 15,
-    "trend": "new"
+    "rank": 13,
+    "prevRank": 15,
+    "weeks": 2,
+    "peak": 13,
+    "trend": "up"
   },
   {
     "artist": "JAZZWRLD, MaWhoo, Thukuthela & GL_Ceejay",
@@ -185,11 +161,11 @@
     "votes": 0,
     "streams": 66000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273266755329b121e6a739e5ddb",
-    "rank": 16,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 16,
-    "trend": "new"
+    "rank": 14,
+    "prevRank": 16,
+    "weeks": 2,
+    "peak": 14,
+    "trend": "up"
   },
   {
     "artist": "Kabza De Small & Dlala Thukzin",
@@ -197,11 +173,11 @@
     "votes": 0,
     "streams": 66000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273d59184c30ec51d7e82c903be",
-    "rank": 17,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 17,
-    "trend": "new"
+    "rank": 15,
+    "prevRank": 17,
+    "weeks": 2,
+    "peak": 15,
+    "trend": "up"
   },
   {
     "artist": "JAZZWRLD, GL_Ceejay & Thukuthela",
@@ -209,11 +185,11 @@
     "votes": 0,
     "streams": 65000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273f1cff0af57fdaaed307b1dd2",
-    "rank": 18,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 18,
-    "trend": "new"
+    "rank": 16,
+    "prevRank": 18,
+    "weeks": 2,
+    "peak": 16,
+    "trend": "up"
   },
   {
     "artist": "JayJayy & Mordecai",
@@ -221,23 +197,23 @@
     "votes": 0,
     "streams": 65000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2731ffbed2dd2b5c93eda227e30",
-    "rank": 19,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 19,
-    "trend": "new"
+    "rank": 17,
+    "prevRank": 19,
+    "weeks": 2,
+    "peak": 17,
+    "trend": "up"
   },
   {
     "artist": "Dj Jaivane, Smaki 08 & Wesley Keys",
     "title": "Lutho (feat. De Rose)",
     "votes": 0,
-    "streams": 65000,
+    "streams": 66000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273aa18b42ce998e826e9a0f2a9",
-    "rank": 20,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 20,
-    "trend": "new"
+    "rank": 18,
+    "prevRank": 20,
+    "weeks": 2,
+    "peak": 18,
+    "trend": "up"
   },
   {
     "artist": "lordkez & Cassper Nyovest",
@@ -245,23 +221,23 @@
     "votes": 0,
     "streams": 65000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273862ea9a1da40cc42c156b498",
-    "rank": 21,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 21,
-    "trend": "new"
+    "rank": 19,
+    "prevRank": 21,
+    "weeks": 2,
+    "peak": 19,
+    "trend": "up"
   },
   {
     "artist": "Myztro & Leehleza",
     "title": "Tobetsa 3.0 (feat. ShaunMusiq & Ftears)",
     "votes": 0,
-    "streams": 64000,
+    "streams": 67000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27377f1b683f44e9bfec915afc9",
-    "rank": 22,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 22,
-    "trend": "new"
+    "rank": 20,
+    "prevRank": 22,
+    "weeks": 2,
+    "peak": 20,
+    "trend": "up"
   },
   {
     "artist": "Kabza De Small & Kelvin Momo",
@@ -269,11 +245,11 @@
     "votes": 0,
     "streams": 64000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273d59184c30ec51d7e82c903be",
-    "rank": 23,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 23,
-    "trend": "new"
+    "rank": 21,
+    "prevRank": 23,
+    "weeks": 2,
+    "peak": 21,
+    "trend": "up"
   },
   {
     "artist": "Thukuthela, JAZZWRLD, Sykes & Major League DJz",
@@ -281,11 +257,11 @@
     "votes": 0,
     "streams": 63000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273f5c3d357ce9705481ae0b676",
-    "rank": 24,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 24,
-    "trend": "new"
+    "rank": 22,
+    "prevRank": 24,
+    "weeks": 2,
+    "peak": 22,
+    "trend": "up"
   },
   {
     "artist": "Zee Nxumalo, Skillz & Sykes",
@@ -293,11 +269,11 @@
     "votes": 0,
     "streams": 62000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273dd1c55624371310e882b9b33",
-    "rank": 25,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 25,
-    "trend": "new"
+    "rank": 23,
+    "prevRank": 25,
+    "weeks": 2,
+    "peak": 23,
+    "trend": "up"
   },
   {
     "artist": "Kabza De Small & Mthunzi",
@@ -305,11 +281,11 @@
     "votes": 0,
     "streams": 61000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2734ddaf6f637212db3d7ceafac",
-    "rank": 26,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 26,
-    "trend": "new"
+    "rank": 24,
+    "prevRank": 26,
+    "weeks": 2,
+    "peak": 24,
+    "trend": "up"
   },
   {
     "artist": "Thukuthela, JAZZWRLD, GL_Ceejay & Zee_nhle",
@@ -317,11 +293,11 @@
     "votes": 0,
     "streams": 61000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27337201e1a4f5ef4f2d46186d0",
-    "rank": 27,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 27,
-    "trend": "new"
+    "rank": 25,
+    "prevRank": 27,
+    "weeks": 2,
+    "peak": 25,
+    "trend": "up"
   },
   {
     "artist": "Yumbs & Simmy",
@@ -329,11 +305,11 @@
     "votes": 0,
     "streams": 61000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273e42f9655f8bf706579a60d5b",
-    "rank": 28,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 28,
-    "trend": "new"
+    "rank": 26,
+    "prevRank": 28,
+    "weeks": 2,
+    "peak": 26,
+    "trend": "up"
   },
   {
     "artist": "Kabza De Small, DJ Maphorisa & Ami Faku",
@@ -341,23 +317,23 @@
     "votes": 0,
     "streams": 61000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273e9704dc8d474b6318a12cab9",
-    "rank": 29,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 29,
-    "trend": "new"
+    "rank": 27,
+    "prevRank": 29,
+    "weeks": 2,
+    "peak": 27,
+    "trend": "up"
   },
   {
     "artist": "Skyla Tylaa, JAZZWRLD, Thukuthela & Elaine",
     "title": "Vele Uyena (Risk It All) [feat. Solaariss]",
     "votes": 0,
-    "streams": 60000,
+    "streams": 62000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273e6ac326d5370a7cc2f674ff7",
-    "rank": 30,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 30,
-    "trend": "new"
+    "rank": 28,
+    "prevRank": 30,
+    "weeks": 2,
+    "peak": 28,
+    "trend": "up"
   },
   {
     "artist": "Kabza De Small, DJ Maphorisa & Ami Faku",
@@ -365,23 +341,23 @@
     "votes": 0,
     "streams": 60000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27349cd91802b66f5873d99593f",
-    "rank": 31,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 31,
-    "trend": "new"
+    "rank": 29,
+    "prevRank": 31,
+    "weeks": 2,
+    "peak": 29,
+    "trend": "up"
   },
   {
     "artist": "JAZZWRLD, Thukuthela & GL_Ceejay",
     "title": "Abasekho",
     "votes": 0,
-    "streams": 59000,
+    "streams": 60000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27337201e1a4f5ef4f2d46186d0",
-    "rank": 32,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 32,
-    "trend": "new"
+    "rank": 30,
+    "prevRank": 32,
+    "weeks": 2,
+    "peak": 30,
+    "trend": "up"
   },
   {
     "artist": "Scotts Maphuma",
@@ -389,23 +365,23 @@
     "votes": 0,
     "streams": 59000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27350a538c90937434e1d9ccaa5",
-    "rank": 33,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 33,
-    "trend": "new"
+    "rank": 31,
+    "prevRank": 33,
+    "weeks": 2,
+    "peak": 31,
+    "trend": "up"
   },
   {
     "artist": "CowBoii, Fada Figa & Papiki",
     "title": "Mdantso Nyana (feat. Leemckrazy & Macdeedozer)",
     "votes": 0,
-    "streams": 58000,
+    "streams": 59000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273d3bfb1e885c646cab8e57abd",
-    "rank": 34,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 34,
-    "trend": "new"
+    "rank": 32,
+    "prevRank": 34,
+    "weeks": 2,
+    "peak": 32,
+    "trend": "up"
   },
   {
     "artist": "Kabza De Small",
@@ -413,83 +389,71 @@
     "votes": 0,
     "streams": 56000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273d59184c30ec51d7e82c903be",
-    "rank": 35,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 35,
-    "trend": "new"
-  },
-  {
-    "artist": "Stogie T, Nasty C, Maggz & A-Reece",
-    "title": "Four Horsemen",
-    "votes": 0,
-    "streams": 56000,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273b0ed29ba4dac2d81104d037f",
-    "rank": 36,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 36,
-    "trend": "new"
+    "rank": 33,
+    "prevRank": 35,
+    "weeks": 2,
+    "peak": 33,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Ruzhowa",
     "votes": 0,
-    "streams": 53000,
+    "streams": 54000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 37,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 37,
-    "trend": "new"
+    "rank": 34,
+    "prevRank": 37,
+    "weeks": 2,
+    "peak": 34,
+    "trend": "up"
   },
   {
     "artist": "Al Xapo, Benzoo & EeQue",
     "title": "SNOKONOKO",
     "votes": 0,
-    "streams": 52000,
+    "streams": 64000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2732ed23aa19b4ba07ecc398d67",
-    "rank": 38,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 38,
-    "trend": "new"
+    "rank": 35,
+    "prevRank": 38,
+    "weeks": 2,
+    "peak": 35,
+    "trend": "up"
   },
   {
     "artist": "Nutty O",
     "title": "Too Much",
     "votes": 0,
-    "streams": 51000,
+    "streams": 52000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273dbab6e74c804f7fed03e5228",
-    "rank": 39,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 39,
-    "trend": "new"
+    "rank": 36,
+    "prevRank": 39,
+    "weeks": 2,
+    "peak": 36,
+    "trend": "up"
   },
   {
     "artist": "Babalwa M, JAZZWRLD, Thukuthela & Gl_Ceejay",
     "title": "Amaphutha",
     "votes": 0,
-    "streams": 51000,
+    "streams": 59000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2732bf81ee9e274ab051e85635d",
-    "rank": 40,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 40,
-    "trend": "new"
+    "rank": 37,
+    "prevRank": 40,
+    "weeks": 2,
+    "peak": 37,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Necessary",
     "votes": 0,
-    "streams": 49000,
+    "streams": 50000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 41,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 41,
-    "trend": "new"
+    "rank": 38,
+    "prevRank": 41,
+    "weeks": 2,
+    "peak": 38,
+    "trend": "up"
   },
   {
     "artist": "Saintfloew",
@@ -497,11 +461,11 @@
     "votes": 0,
     "streams": 49000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273af9fd65992a58f4a55edf123",
-    "rank": 42,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 42,
-    "trend": "new"
+    "rank": 39,
+    "prevRank": 42,
+    "weeks": 2,
+    "peak": 39,
+    "trend": "up"
   },
   {
     "artist": "Oriyano",
@@ -509,47 +473,47 @@
     "votes": 0,
     "streams": 49000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2734bcefc8e8118937e3ada2824",
-    "rank": 43,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 43,
-    "trend": "new"
+    "rank": 40,
+    "prevRank": 43,
+    "weeks": 2,
+    "peak": 40,
+    "trend": "up"
   },
   {
     "artist": "Mr Attention SkylevelDon",
     "title": "Handinyore",
     "votes": 0,
-    "streams": 48000,
+    "streams": 50000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273ad292b19c65cb9b4e96e40cf",
-    "rank": 44,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 44,
-    "trend": "new"
+    "rank": 41,
+    "prevRank": 44,
+    "weeks": 2,
+    "peak": 41,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Ndini Mukudzeyi",
     "votes": 0,
-    "streams": 48000,
+    "streams": 49000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 45,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 45,
-    "trend": "new"
+    "rank": 42,
+    "prevRank": 45,
+    "weeks": 2,
+    "peak": 42,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Sori",
     "votes": 0,
-    "streams": 48000,
+    "streams": 49000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 46,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 46,
-    "trend": "new"
+    "rank": 43,
+    "prevRank": 46,
+    "weeks": 2,
+    "peak": 43,
+    "trend": "up"
   },
   {
     "artist": "Jnr Spragga",
@@ -557,11 +521,11 @@
     "votes": 0,
     "streams": 48000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273cc4566af58958a2cab9051ec",
-    "rank": 47,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 47,
-    "trend": "new"
+    "rank": 44,
+    "prevRank": 47,
+    "weeks": 2,
+    "peak": 44,
+    "trend": "up"
   },
   {
     "artist": "Chillmaster Music",
@@ -569,35 +533,35 @@
     "votes": 0,
     "streams": 48000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273134d36924943de8ddbd0e539",
-    "rank": 48,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 48,
-    "trend": "new"
+    "rank": 45,
+    "prevRank": 48,
+    "weeks": 2,
+    "peak": 45,
+    "trend": "up"
   },
   {
     "artist": "Killer T",
     "title": "Bhiya (feat. XIBA)",
     "votes": 0,
-    "streams": 47000,
+    "streams": 48000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2738c008d70de57274ed172bc89",
-    "rank": 49,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 49,
-    "trend": "new"
+    "rank": 46,
+    "prevRank": 49,
+    "weeks": 2,
+    "peak": 46,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Kwaunobva",
     "votes": 0,
-    "streams": 46000,
+    "streams": 47000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 50,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 50,
-    "trend": "new"
+    "rank": 47,
+    "prevRank": 50,
+    "weeks": 2,
+    "peak": 47,
+    "trend": "up"
   },
   {
     "artist": "imvi & Hulengende",
@@ -605,35 +569,23 @@
     "votes": 0,
     "streams": 46000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2736ce7fd7c6f81629a6304e264",
-    "rank": 51,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 51,
-    "trend": "new"
+    "rank": 48,
+    "prevRank": 51,
+    "weeks": 2,
+    "peak": 48,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Ibvo",
     "votes": 0,
-    "streams": 46000,
+    "streams": 47000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 52,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 52,
-    "trend": "new"
-  },
-  {
-    "artist": "Nashie Zim",
-    "title": "APA",
-    "votes": 0,
-    "streams": 45000,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2738abd93bfb69a5bbcb06a9a1c",
-    "rank": 53,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 53,
-    "trend": "new"
+    "rank": 49,
+    "prevRank": 52,
+    "weeks": 2,
+    "peak": 49,
+    "trend": "up"
   },
   {
     "artist": "Jnr Spragga",
@@ -641,11 +593,11 @@
     "votes": 0,
     "streams": 44000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2734902eae1ee19f85ef26d2476",
-    "rank": 54,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 54,
-    "trend": "new"
+    "rank": 50,
+    "prevRank": 54,
+    "weeks": 2,
+    "peak": 50,
+    "trend": "up"
   },
   {
     "artist": "ExQ",
@@ -653,179 +605,155 @@
     "votes": 0,
     "streams": 44000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27369b5d1cbcd27ac750309c74a",
-    "rank": 55,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 55,
-    "trend": "new"
+    "rank": 51,
+    "prevRank": 55,
+    "weeks": 2,
+    "peak": 51,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Shuga",
     "votes": 0,
-    "streams": 44000,
+    "streams": 45000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 56,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 56,
-    "trend": "new"
-  },
-  {
-    "artist": "Freeman HKD",
-    "title": "Tagwadama",
-    "votes": 0,
-    "streams": 44000,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2733870ba489664984b38f1871a",
-    "rank": 57,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 57,
-    "trend": "new"
+    "rank": 52,
+    "prevRank": 56,
+    "weeks": 2,
+    "peak": 52,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Kuno",
     "votes": 0,
-    "streams": 43000,
+    "streams": 44000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 58,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 58,
-    "trend": "new"
+    "rank": 53,
+    "prevRank": 58,
+    "weeks": 2,
+    "peak": 53,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Chiremerera",
     "votes": 0,
-    "streams": 43000,
+    "streams": 44000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273782b0f5c4c161ae374d0d4e8",
-    "rank": 59,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 59,
-    "trend": "new"
+    "rank": 54,
+    "prevRank": 59,
+    "weeks": 2,
+    "peak": 54,
+    "trend": "up"
   },
   {
     "artist": "Bling4",
     "title": "PaHarare",
     "votes": 0,
-    "streams": 42000,
+    "streams": 43000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273e8d7d2d75dcb4e6424665e2f",
-    "rank": 60,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 60,
-    "trend": "new"
+    "rank": 55,
+    "prevRank": 60,
+    "weeks": 2,
+    "peak": 55,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Manja",
     "votes": 0,
-    "streams": 42000,
+    "streams": 43000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 61,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 61,
-    "trend": "new"
+    "rank": 56,
+    "prevRank": 61,
+    "weeks": 2,
+    "peak": 56,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Hubaba",
     "votes": 0,
-    "streams": 41000,
+    "streams": 42000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 62,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 62,
-    "trend": "new"
+    "rank": 57,
+    "prevRank": 62,
+    "weeks": 2,
+    "peak": 57,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Moto",
     "votes": 0,
-    "streams": 41000,
+    "streams": 42000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 63,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 63,
-    "trend": "new"
+    "rank": 58,
+    "prevRank": 63,
+    "weeks": 2,
+    "peak": 58,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
     "title": "Mibvunzo",
     "votes": 0,
-    "streams": 41000,
+    "streams": 42000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
-    "rank": 64,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 64,
-    "trend": "new"
+    "rank": 59,
+    "prevRank": 64,
+    "weeks": 2,
+    "peak": 59,
+    "trend": "up"
   },
   {
     "artist": "Holy Ten",
     "title": "Delilah",
     "votes": 0,
-    "streams": 41000,
+    "streams": 42000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2732f28aac50e80fb4cf610dbe7",
-    "rank": 65,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 65,
-    "trend": "new"
+    "rank": 60,
+    "prevRank": 65,
+    "weeks": 2,
+    "peak": 60,
+    "trend": "up"
   },
   {
     "artist": "Minister Ellard & Sharon Cherayi",
     "title": "Huya (Live)",
     "votes": 0,
-    "streams": 40000,
+    "streams": 41000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273a7ac8465efd250b0fc1b78c5",
-    "rank": 66,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 66,
-    "trend": "new"
+    "rank": 61,
+    "prevRank": 66,
+    "weeks": 2,
+    "peak": 61,
+    "trend": "up"
   },
   {
     "artist": "Runna Rulez",
     "title": "Dumb Sh!t",
     "votes": 0,
-    "streams": 40000,
+    "streams": 41000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27354faa969c569153e09977cff",
-    "rank": 67,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 67,
-    "trend": "new"
+    "rank": 62,
+    "prevRank": 67,
+    "weeks": 2,
+    "peak": 62,
+    "trend": "up"
   },
   {
     "artist": "Hulengende",
     "title": "Ibvai",
     "votes": 0,
-    "streams": 35000,
+    "streams": 36000,
     "artworkUrl": "https://i.scdn.co/image/ab67616d0000b27372fcbce7ca71322186dfb0b8",
-    "rank": 68,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 68,
-    "trend": "new"
-  },
-  {
-    "artist": "Shone_zw",
-    "title": "Tambisa",
-    "votes": 0,
-    "streams": 34000,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2730feb867831a58e683308c2a2",
-    "rank": 69,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 69,
-    "trend": "new"
+    "rank": 63,
+    "prevRank": 68,
+    "weeks": 2,
+    "peak": 63,
+    "trend": "up"
   },
   {
     "artist": "Sam Deep, Nia Pearl & Boohle",
@@ -833,11 +761,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/17/90/79/179079af-5ceb-8c45-123e-86aa62a39e29/25UM1IM14214.rgb.jpg/300x300bb.jpg",
-    "rank": 70,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 70,
-    "trend": "new"
+    "rank": 64,
+    "prevRank": 70,
+    "weeks": 2,
+    "peak": 64,
+    "trend": "up"
   },
   {
     "artist": "imvi",
@@ -845,11 +773,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0c/26/20/0c262095-4874-814a-6cea-89f5141e733d/artwork.jpg/300x300bb.jpg",
-    "rank": 71,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 71,
-    "trend": "new"
+    "rank": 65,
+    "prevRank": 71,
+    "weeks": 2,
+    "peak": 65,
+    "trend": "up"
   },
   {
     "artist": "Learn Zimbabwe",
@@ -857,11 +785,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f3/0f/0b/f30f0bb7-2568-efc4-c63b-0d736eaea989/artwork.jpg/300x300bb.jpg",
-    "rank": 72,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 72,
-    "trend": "new"
+    "rank": 66,
+    "prevRank": 72,
+    "weeks": 2,
+    "peak": 66,
+    "trend": "up"
   },
   {
     "artist": "Freeman HKD",
@@ -869,11 +797,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/04/63/35/046335a1-35c2-4fd9-941f-35cb64518170/6009553464998_Cover.jpg/300x300bb.jpg",
-    "rank": 73,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 73,
-    "trend": "new"
+    "rank": 67,
+    "prevRank": 73,
+    "weeks": 2,
+    "peak": 67,
+    "trend": "up"
   },
   {
     "artist": "Micky Black",
@@ -881,11 +809,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f1/e5/87/f1e5872c-632e-4d99-d64f-a8320da88e17/bhema_bhema-copy-d9eab98e.png/300x300bb.jpg",
-    "rank": 74,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 74,
-    "trend": "new"
+    "rank": 68,
+    "prevRank": 74,
+    "weeks": 2,
+    "peak": 68,
+    "trend": "up"
   },
   {
     "artist": "Learn Zimbabwe",
@@ -893,11 +821,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ea/6a/6e/ea6a6e23-02d8-3969-a1a9-65c79b6ece35/artwork.jpg/300x300bb.jpg",
-    "rank": 75,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 75,
-    "trend": "new"
+    "rank": 69,
+    "prevRank": 75,
+    "weeks": 2,
+    "peak": 69,
+    "trend": "up"
   },
   {
     "artist": "Shone_zw",
@@ -905,11 +833,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f6/62/06/f6620609-dc8b-4404-fcd0-c31b775e17cb/artwork.jpg/300x300bb.jpg",
-    "rank": 76,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 76,
-    "trend": "new"
+    "rank": 70,
+    "prevRank": 76,
+    "weeks": 2,
+    "peak": 70,
+    "trend": "up"
   },
   {
     "artist": "DJ Maphorisa, Xduppy & Scotts Maphuma",
@@ -917,11 +845,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e2/4a/83/e24a8363-052f-146f-0662-3645dfc29994/196872851069.jpg/300x300bb.jpg",
-    "rank": 77,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 77,
-    "trend": "new"
+    "rank": 71,
+    "prevRank": 77,
+    "weeks": 2,
+    "peak": 71,
+    "trend": "up"
   },
   {
     "artist": "Nashie Zim",
@@ -929,11 +857,23 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/1f/e6/f6/1fe6f6a4-edaf-84c0-66c4-f5514e0923af/artwork.jpg/300x300bb.jpg",
-    "rank": 78,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 78,
-    "trend": "new"
+    "rank": 72,
+    "prevRank": 78,
+    "weeks": 2,
+    "peak": 72,
+    "trend": "up"
+  },
+  {
+    "artist": "Saintfloew",
+    "title": "Still Gunda",
+    "votes": 0,
+    "streams": 30000,
+    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2736d92b5985252c41c65f8169e",
+    "rank": 73,
+    "prevRank": 80,
+    "weeks": 2,
+    "peak": 73,
+    "trend": "up"
   },
   {
     "artist": "Saintfloew",
@@ -941,23 +881,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a2/f2/5a/a2f25a1a-f6e2-9556-9493-4a44dae4c5dd/6009553466855_Cover.jpg/300x300bb.jpg",
-    "rank": 79,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 79,
-    "trend": "new"
-  },
-  {
-    "artist": "Saintfloew",
-    "title": "Still Gunda",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2736d92b5985252c41c65f8169e",
-    "rank": 80,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 80,
-    "trend": "new"
+    "rank": 74,
+    "prevRank": 79,
+    "weeks": 2,
+    "peak": 74,
+    "trend": "up"
   },
   {
     "artist": "Officixl RSA, Benzoo & Sizwe Alakine",
@@ -965,11 +893,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1a/c4/2f/1ac42f0c-b6db-59f7-5719-26c8fb5662fc/199806322000.jpg/300x300bb.jpg",
-    "rank": 81,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 81,
-    "trend": "new"
+    "rank": 75,
+    "prevRank": 81,
+    "weeks": 2,
+    "peak": 75,
+    "trend": "up"
   },
   {
     "artist": "Freeman HKD",
@@ -977,11 +905,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/04/63/35/046335a1-35c2-4fd9-941f-35cb64518170/6009553464998_Cover.jpg/300x300bb.jpg",
-    "rank": 82,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 82,
-    "trend": "new"
+    "rank": 76,
+    "prevRank": 82,
+    "weeks": 2,
+    "peak": 76,
+    "trend": "up"
   },
   {
     "artist": "Saintfloew",
@@ -989,11 +917,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a2/f2/5a/a2f25a1a-f6e2-9556-9493-4a44dae4c5dd/6009553466855_Cover.jpg/300x300bb.jpg",
-    "rank": 83,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 83,
-    "trend": "new"
+    "rank": 77,
+    "prevRank": 83,
+    "weeks": 2,
+    "peak": 77,
+    "trend": "up"
   },
   {
     "artist": "Saintfloew",
@@ -1001,11 +929,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a2/f2/5a/a2f25a1a-f6e2-9556-9493-4a44dae4c5dd/6009553466855_Cover.jpg/300x300bb.jpg",
-    "rank": 84,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 84,
-    "trend": "new"
+    "rank": 78,
+    "prevRank": 84,
+    "weeks": 2,
+    "peak": 78,
+    "trend": "up"
   },
   {
     "artist": "DJ Tira, Pcee & CampMasters",
@@ -1013,11 +941,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d1/3c/5e/d13c5e27-e565-f378-0954-8a8340ef5034/198704774843_Cover.jpg/300x300bb.jpg",
-    "rank": 85,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 85,
-    "trend": "new"
+    "rank": 79,
+    "prevRank": 85,
+    "weeks": 2,
+    "peak": 79,
+    "trend": "up"
   },
   {
     "artist": "Dlala Thukzin & Zee Nxumalo",
@@ -1025,11 +953,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/24/32/cd/2432cda8-5c09-c7f8-2af4-cc1106ccf1c3/6009553456870_Cover.jpg/300x300bb.jpg",
-    "rank": 86,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 86,
-    "trend": "new"
+    "rank": 80,
+    "prevRank": 86,
+    "weeks": 2,
+    "peak": 80,
+    "trend": "up"
   },
   {
     "artist": "Oriyano",
@@ -1037,11 +965,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fd/e6/3a/fde63a11-d5dd-3058-30bd-c8e229c0b0ae/artwork.jpg/300x300bb.jpg",
-    "rank": 87,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 87,
-    "trend": "new"
+    "rank": 81,
+    "prevRank": 87,
+    "weeks": 2,
+    "peak": 81,
+    "trend": "up"
   },
   {
     "artist": "ExQ",
@@ -1049,23 +977,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a4/ba/91/a4ba91d1-a50d-ef86-ff99-f85023a70960/artwork.jpg/300x300bb.jpg",
-    "rank": 88,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 88,
-    "trend": "new"
-  },
-  {
-    "artist": "Saintfloew",
-    "title": "Believe (feat. Gemma Griffiths)",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a2/f2/5a/a2f25a1a-f6e2-9556-9493-4a44dae4c5dd/6009553466855_Cover.jpg/300x300bb.jpg",
-    "rank": 89,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 89,
-    "trend": "new"
+    "rank": 82,
+    "prevRank": 88,
+    "weeks": 2,
+    "peak": 82,
+    "trend": "up"
   },
   {
     "artist": "Shone",
@@ -1073,11 +989,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d4/5c/47/d45c47ad-8f2a-7393-2a57-16404c1b68ec/artwork.jpg/300x300bb.jpg",
-    "rank": 90,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 90,
-    "trend": "new"
+    "rank": 83,
+    "prevRank": 90,
+    "weeks": 2,
+    "peak": 83,
+    "trend": "up"
   },
   {
     "artist": "Saintfloew",
@@ -1085,11 +1001,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a2/f2/5a/a2f25a1a-f6e2-9556-9493-4a44dae4c5dd/6009553466855_Cover.jpg/300x300bb.jpg",
-    "rank": 91,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 91,
-    "trend": "new"
+    "rank": 84,
+    "prevRank": 91,
+    "weeks": 2,
+    "peak": 84,
+    "trend": "up"
   },
   {
     "artist": "Zee Nxumalo, TBO & PYY Log Drum King",
@@ -1097,11 +1013,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/29/eb/a4/29eba49e-252f-2cb6-7479-4b54fee841af/5059449187914.png/300x300bb.jpg",
-    "rank": 92,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 92,
-    "trend": "new"
+    "rank": 85,
+    "prevRank": 92,
+    "weeks": 2,
+    "peak": 85,
+    "trend": "up"
   },
   {
     "artist": "Holy Ten",
@@ -1109,11 +1025,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/37/e1/06/37e10617-1697-9a72-27d5-c00f93888048/199479153987.png/300x300bb.jpg",
-    "rank": 93,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 93,
-    "trend": "new"
+    "rank": 86,
+    "prevRank": 93,
+    "weeks": 2,
+    "peak": 86,
+    "trend": "up"
   },
   {
     "artist": "Shona Prince",
@@ -1121,23 +1037,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/50/ad/a8/50ada8bb-0823-2f61-3962-d9053b0bf37e/artwork.jpg/300x300bb.jpg",
-    "rank": 94,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 94,
-    "trend": "new"
-  },
-  {
-    "artist": "Saintfloew",
-    "title": "Sirivhiya",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b2736d92b5985252c41c65f8169e",
-    "rank": 95,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 95,
-    "trend": "new"
+    "rank": 87,
+    "prevRank": 94,
+    "weeks": 2,
+    "peak": 87,
+    "trend": "up"
   },
   {
     "artist": "Winky D",
@@ -1145,23 +1049,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/de/dd/bd/deddbd7f-91ce-f30e-c2ca-9fd5cf081ad3/artwork.jpg/300x300bb.jpg",
-    "rank": 96,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 96,
-    "trend": "new"
-  },
-  {
-    "artist": "Mr. Nyamz & Hulengende",
-    "title": "Macoolayo",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/13/6a/9f/136a9f90-11d0-3c37-4c0a-6749a181e8f0/a0641f56-64a2-41a6-ae57-25ebc360ca80.jpg/300x300bb.jpg",
-    "rank": 97,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 97,
-    "trend": "new"
+    "rank": 88,
+    "prevRank": 96,
+    "weeks": 2,
+    "peak": 88,
+    "trend": "up"
   },
   {
     "artist": "Runna Rulez",
@@ -1169,10 +1061,34 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c7/6f/da/c76fda16-104b-5e18-d589-37ae4d39bd77/artwork.jpg/300x300bb.jpg",
-    "rank": 98,
+    "rank": 89,
+    "prevRank": 98,
+    "weeks": 2,
+    "peak": 89,
+    "trend": "up"
+  },
+  {
+    "artist": "MaWhoo, GL_Ceejay & Thukuthela",
+    "title": "Bengicela (feat. JAZZWRLD)",
+    "votes": 0,
+    "streams": 71000,
+    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273859307c21a28b6fa9249b1e1",
+    "rank": 90,
     "prevRank": null,
     "weeks": 1,
-    "peak": 98,
+    "peak": 90,
+    "trend": "new"
+  },
+  {
+    "artist": "DJ Maphorisa, Xduppy & Enny Man Da Guitar",
+    "title": "Dlala Ka Yona (feat. Focalistic, Ricky Lenyora, Uncool MC & Mellow & Sleazy)",
+    "votes": 0,
+    "streams": 62000,
+    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273f3c8b05e56c57491fef3a313",
+    "rank": 91,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 91,
     "trend": "new"
   },
   {
@@ -1181,6 +1097,90 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a2/f2/5a/a2f25a1a-f6e2-9556-9493-4a44dae4c5dd/6009553466855_Cover.jpg/300x300bb.jpg",
+    "rank": 92,
+    "prevRank": 99,
+    "weeks": 2,
+    "peak": 92,
+    "trend": "up"
+  },
+  {
+    "artist": "DJ Smallz, ZinedinexSguche & 031choppa",
+    "title": "ZEP (feat. Uncool MC)",
+    "votes": 0,
+    "streams": 48000,
+    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273ed4569acc3344daaff05edfb",
+    "rank": 93,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 93,
+    "trend": "new"
+  },
+  {
+    "artist": "Bagga",
+    "title": "Mvura",
+    "votes": 0,
+    "streams": 41000,
+    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273b658e31ae76a7466d7a0a429",
+    "rank": 94,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 94,
+    "trend": "new"
+  },
+  {
+    "artist": "Jah Prayzah",
+    "title": "Chiramu",
+    "votes": 0,
+    "streams": 41000,
+    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273902038f63e3fef0a8c382f65",
+    "rank": 95,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 95,
+    "trend": "new"
+  },
+  {
+    "artist": "Master H",
+    "title": "WAKALUZA",
+    "votes": 0,
+    "streams": 25000,
+    "artworkUrl": "https://i.scdn.co/image/ab67616d0000b273be488bbc52f184dd5b72a21a",
+    "rank": 96,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 96,
+    "trend": "new"
+  },
+  {
+    "artist": "Enzo Ishall",
+    "title": "Chibatamabvi (feat. Oskid)",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3a/9b/c6/3a9bc6bf-7faa-bed6-66ee-d1ba2a3f6136/artwork.jpg/300x300bb.jpg",
+    "rank": 97,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 97,
+    "trend": "new"
+  },
+  {
+    "artist": "Master H",
+    "title": "Fyah boom shelelele (feat. Silent Killer, Kadjah & Jnr Spragga)",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7e/88/0b/7e880bcf-7cb7-6b0d-428c-96eb048d39f9/artwork.jpg/300x300bb.jpg",
+    "rank": 98,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 98,
+    "trend": "new"
+  },
+  {
+    "artist": "Learn Zimbabwe",
+    "title": "HMU (feat. Shona Prince, Sane.wav & Takura)",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/94/23/ea/9423eae9-42ee-bee0-c65d-7ec3b5497b91/artwork.jpg/300x300bb.jpg",
     "rank": 99,
     "prevRank": null,
     "weeks": 1,
@@ -1188,11 +1188,11 @@
     "trend": "new"
   },
   {
-    "artist": "Saintfloew",
-    "title": "Mandikurumidza (feat. Attention)",
+    "artist": "Officixl RSA",
+    "title": "Jab Jab (feat. Scotts Maphuma, Benzoo, Bob Mabena, Mid9t & de-papzo)",
     "votes": 0,
     "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a2/f2/5a/a2f25a1a-f6e2-9556-9493-4a44dae4c5dd/6009553466855_Cover.jpg/300x300bb.jpg",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1d/5e/6f/1d5e6f07-af37-31a5-1716-1fff55692f0e/199806631867.jpg/300x300bb.jpg",
     "rank": 100,
     "prevRank": null,
     "weeks": 1,
