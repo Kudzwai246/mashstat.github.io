@@ -7,7 +7,7 @@
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a2/f2/5a/a2f25a1a-f6e2-9556-9493-4a44dae4c5dd/6009553466855_Cover.jpg/300x300bb.jpg",
     "rank": 1,
     "prevRank": 1,
-    "weeks": 10,
+    "weeks": 11,
     "peak": 1,
     "trend": "—"
   },
@@ -19,7 +19,7 @@
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a0/57/d7/a057d756-2797-eab6-5037-7d55960fde18/artwork.jpg/300x300bb.jpg",
     "rank": 2,
     "prevRank": 2,
-    "weeks": 10,
+    "weeks": 11,
     "peak": 2,
     "trend": "—"
   },
@@ -31,20 +31,8 @@
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/b0/29/88/b0298856-8e42-06ef-fdec-4ef28a83d962/199316342963_cover.jpg/300x300bb.jpg",
     "rank": 3,
     "prevRank": 3,
-    "weeks": 10,
+    "weeks": 11,
     "peak": 3,
-    "trend": "—"
-  },
-  {
-    "artist": "Dlala Thukzin",
-    "title": "MAYVIS",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3f/c8/18/3fc8187a-6a42-f9a8-6a26-a7d13ef5cebd/6009553466381_Cover.jpg/300x300bb.jpg",
-    "rank": 4,
-    "prevRank": 4,
-    "weeks": 10,
-    "peak": 4,
     "trend": "—"
   },
   {
@@ -53,11 +41,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e2/35/89/e2358990-c1ea-f7da-22db-02534884fae6/199316267587_cover.jpg/300x300bb.jpg",
-    "rank": 5,
+    "rank": 4,
     "prevRank": 5,
-    "weeks": 10,
-    "peak": 5,
-    "trend": "—"
+    "weeks": 11,
+    "peak": 4,
+    "trend": "up"
   },
   {
     "artist": "Freeman HKD",
@@ -65,11 +53,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/04/63/35/046335a1-35c2-4fd9-941f-35cb64518170/6009553464998_Cover.jpg/300x300bb.jpg",
-    "rank": 6,
+    "rank": 5,
     "prevRank": 6,
-    "weeks": 10,
-    "peak": 6,
-    "trend": "—"
+    "weeks": 11,
+    "peak": 5,
+    "trend": "up"
   },
   {
     "artist": "Dave",
@@ -77,11 +65,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/99/49/24/9949241c-e52c-3018-eae8-c686013a7474/25UM1IM68216.rgb.jpg/300x300bb.jpg",
-    "rank": 7,
+    "rank": 6,
     "prevRank": 7,
-    "weeks": 10,
-    "peak": 7,
-    "trend": "—"
+    "weeks": 11,
+    "peak": 6,
+    "trend": "up"
   },
   {
     "artist": "Kabza De Small",
@@ -89,11 +77,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/56/68/86/56688681-7586-f2f7-7420-4e50e6f279a5/196873366234.jpg/300x300bb.jpg",
-    "rank": 8,
+    "rank": 7,
     "prevRank": 8,
-    "weeks": 10,
-    "peak": 8,
-    "trend": "—"
+    "weeks": 11,
+    "peak": 7,
+    "trend": "up"
   },
   {
     "artist": "Gunna",
@@ -101,11 +89,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/39/1e/0c/391e0c06-1536-a90f-7c49-06b9289c37e1/075679606358.jpg/300x300bb.jpg",
-    "rank": 9,
+    "rank": 8,
     "prevRank": 9,
-    "weeks": 10,
-    "peak": 9,
-    "trend": "—"
+    "weeks": 11,
+    "peak": 8,
+    "trend": "up"
   },
   {
     "artist": "ExQ",
@@ -113,11 +101,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a4/ba/91/a4ba91d1-a50d-ef86-ff99-f85023a70960/artwork.jpg/300x300bb.jpg",
-    "rank": 10,
+    "rank": 9,
     "prevRank": 10,
-    "weeks": 10,
-    "peak": 10,
-    "trend": "—"
+    "weeks": 11,
+    "peak": 9,
+    "trend": "up"
   },
   {
     "artist": "Jah Prayzah",
@@ -125,23 +113,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/cd/03/90/cd039013-0025-56f5-0581-608c99c6ae7b/artwork.jpg/300x300bb.jpg",
-    "rank": 11,
+    "rank": 10,
     "prevRank": 11,
-    "weeks": 10,
-    "peak": 11,
-    "trend": "—"
-  },
-  {
-    "artist": "NF",
-    "title": "FEAR - EP",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ae/31/77/ae317733-57e3-cd62-6bfe-0b1223d7e401/25UM1IM68345.rgb.jpg/300x300bb.jpg",
-    "rank": 12,
-    "prevRank": 12,
-    "weeks": 10,
-    "peak": 12,
-    "trend": "—"
+    "weeks": 11,
+    "peak": 10,
+    "trend": "up"
   },
   {
     "artist": "Olivia Dean",
@@ -149,10 +125,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/08/e2/21/08e22164-7c0b-1522-818f-e0e74f62dc49/25UMGIM69703.rgb.jpg/300x300bb.jpg",
-    "rank": 13,
-    "prevRank": 14,
-    "weeks": 10,
-    "peak": 13,
+    "rank": 11,
+    "prevRank": 13,
+    "weeks": 11,
+    "peak": 11,
     "trend": "up"
   },
   {
@@ -161,10 +137,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b7/b6/35/b7b635b4-8145-10e9-22bc-1a15c54d2a7b/artwork.jpg/300x300bb.jpg",
-    "rank": 14,
-    "prevRank": 15,
-    "weeks": 10,
-    "peak": 14,
+    "rank": 12,
+    "prevRank": 14,
+    "weeks": 11,
+    "peak": 12,
     "trend": "up"
   },
   {
@@ -173,10 +149,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/50/ad/a8/50ada8bb-0823-2f61-3962-d9053b0bf37e/artwork.jpg/300x300bb.jpg",
-    "rank": 15,
-    "prevRank": 16,
-    "weeks": 10,
-    "peak": 15,
+    "rank": 13,
+    "prevRank": 15,
+    "weeks": 11,
+    "peak": 13,
     "trend": "up"
   },
   {
@@ -185,10 +161,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/97/79/e2/9779e2c5-9448-cca6-4d0e-6880bace5a83/ticket.zsvwgrzc.png/300x300bb.jpg",
-    "rank": 16,
-    "prevRank": 17,
-    "weeks": 10,
-    "peak": 16,
+    "rank": 14,
+    "prevRank": 16,
+    "weeks": 11,
+    "peak": 14,
     "trend": "up"
   },
   {
@@ -197,10 +173,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/6f/33/f9/6f33f930-8d4e-f68e-0fad-986086ac0417/artwork.jpg/300x300bb.jpg",
-    "rank": 17,
-    "prevRank": 18,
-    "weeks": 10,
-    "peak": 17,
+    "rank": 15,
+    "prevRank": 17,
+    "weeks": 11,
+    "peak": 15,
     "trend": "up"
   },
   {
@@ -209,10 +185,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/42/4e/45/424e4521-37b7-6f49-293a-98a1285ed7c5/075679660336.jpg/300x300bb.jpg",
-    "rank": 18,
-    "prevRank": 19,
-    "weeks": 10,
-    "peak": 18,
+    "rank": 16,
+    "prevRank": 18,
+    "weeks": 11,
+    "peak": 16,
     "trend": "up"
   },
   {
@@ -221,10 +197,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music62/v4/f0/28/68/f02868c8-bbec-ebd0-7ee2-9af8cafe94aa/859725210979_cover.jpg/300x300bb.jpg",
-    "rank": 19,
-    "prevRank": 20,
-    "weeks": 10,
-    "peak": 19,
+    "rank": 17,
+    "prevRank": 19,
+    "weeks": 11,
+    "peak": 17,
     "trend": "up"
   },
   {
@@ -233,10 +209,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/5e/0d/b1/5e0db1b0-9582-40f0-c9fc-c399a81a3d6a/artwork.jpg/300x300bb.jpg",
-    "rank": 20,
-    "prevRank": 21,
-    "weeks": 10,
-    "peak": 20,
+    "rank": 18,
+    "prevRank": 20,
+    "weeks": 11,
+    "peak": 18,
     "trend": "up"
   },
   {
@@ -245,10 +221,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/74/fb/d3/74fbd365-bd52-23b4-604b-7f164407b0a9/00602527899107.rgb.jpg/300x300bb.jpg",
-    "rank": 21,
-    "prevRank": 22,
-    "weeks": 10,
-    "peak": 21,
+    "rank": 19,
+    "prevRank": 21,
+    "weeks": 11,
+    "peak": 19,
     "trend": "up"
   },
   {
@@ -257,10 +233,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/57/01/aa/5701aa61-e255-9093-2b2a-53ae949812aa/artwork.jpg/300x300bb.jpg",
-    "rank": 22,
-    "prevRank": 23,
-    "weeks": 10,
-    "peak": 22,
+    "rank": 20,
+    "prevRank": 22,
+    "weeks": 11,
+    "peak": 20,
     "trend": "up"
   },
   {
@@ -269,10 +245,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/11/36/38/1136384a-eebc-697a-c005-d890e41c0854/21UM1IM07518.rgb.jpg/300x300bb.jpg",
-    "rank": 23,
-    "prevRank": 24,
-    "weeks": 10,
-    "peak": 23,
+    "rank": 21,
+    "prevRank": 23,
+    "weeks": 11,
+    "peak": 21,
     "trend": "up"
   },
   {
@@ -281,10 +257,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/a8/96/19/a8961935-c117-18a0-3fed-1763adc2a8de/195448136654.jpg/300x300bb.jpg",
-    "rank": 24,
-    "prevRank": 25,
-    "weeks": 10,
-    "peak": 24,
+    "rank": 22,
+    "prevRank": 24,
+    "weeks": 11,
+    "peak": 22,
     "trend": "up"
   },
   {
@@ -293,10 +269,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c7/6f/da/c76fda16-104b-5e18-d589-37ae4d39bd77/artwork.jpg/300x300bb.jpg",
-    "rank": 25,
-    "prevRank": 26,
-    "weeks": 10,
-    "peak": 25,
+    "rank": 23,
+    "prevRank": 25,
+    "weeks": 11,
+    "peak": 23,
     "trend": "up"
   },
   {
@@ -305,10 +281,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/53/ab/0f/53ab0f8f-ee02-3d9e-b7b6-7e27417e2271/198748915998-copy-704c7951.png/300x300bb.jpg",
-    "rank": 26,
-    "prevRank": 27,
-    "weeks": 10,
-    "peak": 26,
+    "rank": 24,
+    "prevRank": 26,
+    "weeks": 11,
+    "peak": 24,
     "trend": "up"
   },
   {
@@ -317,10 +293,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/64/5b/c4/645bc49d-504c-8c1f-fa0a-6799643b946a/196871550000.jpg/300x300bb.jpg",
-    "rank": 27,
-    "prevRank": 28,
-    "weeks": 10,
-    "peak": 27,
+    "rank": 25,
+    "prevRank": 27,
+    "weeks": 11,
+    "peak": 25,
     "trend": "up"
   },
   {
@@ -329,10 +305,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/31/d3/e8/31d3e8ce-333f-a169-d6c0-95521e50ac95/696177616351_cover.jpg/300x300bb.jpg",
-    "rank": 28,
-    "prevRank": 29,
-    "weeks": 10,
-    "peak": 28,
+    "rank": 26,
+    "prevRank": 28,
+    "weeks": 11,
+    "peak": 26,
     "trend": "up"
   },
   {
@@ -341,10 +317,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/2d/5c/c1/2d5cc1a6-86ce-ee16-5985-807f2fffa3cb/196871957267.jpg/300x300bb.jpg",
-    "rank": 29,
-    "prevRank": 30,
-    "weeks": 10,
-    "peak": 29,
+    "rank": 27,
+    "prevRank": 29,
+    "weeks": 11,
+    "peak": 27,
     "trend": "up"
   },
   {
@@ -353,10 +329,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/2c/06/86/2c068675-4814-c770-8da6-aaf1cc3fbdd0/196873376462.jpg/300x300bb.jpg",
-    "rank": 30,
-    "prevRank": 31,
-    "weeks": 10,
-    "peak": 30,
+    "rank": 28,
+    "prevRank": 30,
+    "weeks": 11,
+    "peak": 28,
     "trend": "up"
   },
   {
@@ -365,10 +341,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/97/1a/a3/971aa332-2c7d-947c-33ed-4635d41115a4/23UM1IM56239.rgb.jpg/300x300bb.jpg",
-    "rank": 31,
-    "prevRank": 32,
-    "weeks": 10,
-    "peak": 31,
+    "rank": 29,
+    "prevRank": 31,
+    "weeks": 11,
+    "peak": 29,
     "trend": "up"
   },
   {
@@ -377,10 +353,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/f2/0d/8b/f20d8bff-a927-ae98-6784-20a1f51cb23e/16UMGIM27642.rgb.jpg/300x300bb.jpg",
-    "rank": 32,
-    "prevRank": 33,
-    "weeks": 10,
-    "peak": 32,
+    "rank": 30,
+    "prevRank": 32,
+    "weeks": 11,
+    "peak": 30,
     "trend": "up"
   },
   {
@@ -389,10 +365,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/34/10/1e/34101e1f-f4b9-907a-ce47-3fba5b3ee5e8/50222.jpg/300x300bb.jpg",
-    "rank": 33,
-    "prevRank": 34,
-    "weeks": 10,
-    "peak": 33,
+    "rank": 31,
+    "prevRank": 33,
+    "weeks": 11,
+    "peak": 31,
     "trend": "up"
   },
   {
@@ -401,10 +377,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/16/7c/97/167c975e-7d67-fa90-f48b-3c10ac030815/25UM1IM19008.rgb.jpg/300x300bb.jpg",
-    "rank": 34,
-    "prevRank": 35,
-    "weeks": 9,
-    "peak": 34,
+    "rank": 32,
+    "prevRank": 34,
+    "weeks": 10,
+    "peak": 32,
     "trend": "up"
   },
   {
@@ -413,10 +389,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/04/cf/73/04cf7356-aec2-2569-da3e-0d7ad9a3d40d/196873915708.jpg/300x300bb.jpg",
-    "rank": 35,
-    "prevRank": 37,
-    "weeks": 8,
-    "peak": 35,
+    "rank": 33,
+    "prevRank": 35,
+    "weeks": 9,
+    "peak": 33,
     "trend": "up"
   },
   {
@@ -425,10 +401,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/37/03/c8/3703c826-3db2-bee9-69fb-e841d771650d/5063858772265_cover.jpg/300x300bb.jpg",
-    "rank": 36,
-    "prevRank": 38,
-    "weeks": 8,
-    "peak": 36,
+    "rank": 34,
+    "prevRank": 36,
+    "weeks": 9,
+    "peak": 34,
     "trend": "up"
   },
   {
@@ -437,10 +413,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/5a/0b/9f/5a0b9f51-ad23-7c88-d048-93024b7556da/766214691495.jpg/300x300bb.jpg",
-    "rank": 37,
-    "prevRank": 39,
-    "weeks": 8,
-    "peak": 37,
+    "rank": 35,
+    "prevRank": 37,
+    "weeks": 9,
+    "peak": 35,
     "trend": "up"
   },
   {
@@ -449,10 +425,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c5/95/52/c5955225-7508-1b6a-f04f-177269fb5bc2/199976076895-copy-5e1cdb60.png/300x300bb.jpg",
-    "rank": 38,
-    "prevRank": 40,
-    "weeks": 6,
-    "peak": 38,
+    "rank": 36,
+    "prevRank": 38,
+    "weeks": 7,
+    "peak": 36,
     "trend": "up"
   },
   {
@@ -461,34 +437,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1d/2b/88/1d2b88b4-c064-9d01-cb0e-22d5928621f9/6009553466565_Cover.jpg/300x300bb.jpg",
-    "rank": 39,
-    "prevRank": 41,
-    "weeks": 5,
-    "peak": 39,
-    "trend": "up"
-  },
-  {
-    "artist": "Nathaniel Bassey",
-    "title": "The Glory of His Presence",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/3b/3f/f9/3b3ff923-de37-d7a0-2de2-581def003605/0.jpg/300x300bb.jpg",
-    "rank": 40,
-    "prevRank": 42,
-    "weeks": 5,
-    "peak": 40,
-    "trend": "up"
-  },
-  {
-    "artist": "Meek Mill",
-    "title": "Indie Pack (Vol. 01) - EP",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/23/27/24/232724e1-ec06-d473-73b3-ae602cc711fb/193436448840_MMINDYMain.jpg/300x300bb.jpg",
-    "rank": 41,
-    "prevRank": 43,
-    "weeks": 4,
-    "peak": 41,
+    "rank": 37,
+    "prevRank": 39,
+    "weeks": 6,
+    "peak": 37,
     "trend": "up"
   },
   {
@@ -497,34 +449,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/e7/bf/08/e7bf08f4-7135-aaac-1a9a-34f5d0ce96aa/859752074407_cover.jpg/300x300bb.jpg",
-    "rank": 42,
-    "prevRank": 44,
-    "weeks": 4,
-    "peak": 42,
-    "trend": "up"
-  },
-  {
-    "artist": "Usimamane",
-    "title": "G - Wagon Music : Baby Tai - EP",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/3b/16/7f/3b167f3c-1ce9-11a6-f363-7508e34592f3/656465455918_cover.jpg/300x300bb.jpg",
-    "rank": 43,
-    "prevRank": 45,
-    "weeks": 3,
-    "peak": 43,
-    "trend": "up"
-  },
-  {
-    "artist": "Nitefreak",
-    "title": "Isgubhu January 2026 (DJ Mix)",
-    "votes": 0,
-    "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/35/4c/aa/354caa39-191b-bc59-f4f9-70bba59346ee/755abf3f-c0c7-49d4-8510-68b1ae623e0f.png/300x300bb.jpg",
-    "rank": 44,
-    "prevRank": 46,
-    "weeks": 3,
-    "peak": 44,
+    "rank": 38,
+    "prevRank": 42,
+    "weeks": 5,
+    "peak": 38,
     "trend": "up"
   },
   {
@@ -532,11 +460,11 @@
     "title": "Don't Be Dumb",
     "votes": 0,
     "streams": 0,
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/57/bc/b1/57bcb101-d03a-f94d-16f2-b3b0a8f12728/196874042922.jpg/300x300bb.jpg",
-    "rank": 45,
-    "prevRank": 47,
-    "weeks": 2,
-    "peak": 45,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/58/99/f1/5899f1b4-674b-3033-9e12-14348a9de396/196873986029.jpg/300x300bb.jpg",
+    "rank": 39,
+    "prevRank": 45,
+    "weeks": 3,
+    "peak": 39,
     "trend": "up"
   },
   {
@@ -545,10 +473,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c7/3e/bb/c73ebb27-88f6-f5bd-a351-aa3adffc1ef3/25UM1IM66731.rgb.jpg/300x300bb.jpg",
-    "rank": 46,
-    "prevRank": 48,
-    "weeks": 2,
-    "peak": 46,
+    "rank": 40,
+    "prevRank": 46,
+    "weeks": 3,
+    "peak": 40,
     "trend": "up"
   },
   {
@@ -557,10 +485,10 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/27/df/ba/27dfbaba-55ec-29c4-3e0f-4db73110bf37/24UM1IM40941.rgb.jpg/300x300bb.jpg",
-    "rank": 47,
-    "prevRank": 49,
-    "weeks": 2,
-    "peak": 47,
+    "rank": 41,
+    "prevRank": 47,
+    "weeks": 3,
+    "peak": 41,
     "trend": "up"
   },
   {
@@ -569,11 +497,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f0/d9/fb/f0d9fbd9-4fb2-0b9f-4178-97c2b865f22d/199316437584_cover.jpg/300x300bb.jpg",
-    "rank": 48,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 48,
-    "trend": "new"
+    "rank": 42,
+    "prevRank": 48,
+    "weeks": 2,
+    "peak": 42,
+    "trend": "up"
   },
   {
     "artist": "Danya Devs",
@@ -581,11 +509,11 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d4/45/ff/d445ff81-7841-dd3e-5a49-56f466ce0250/cover.jpg/300x300bb.jpg",
-    "rank": 49,
-    "prevRank": null,
-    "weeks": 1,
-    "peak": 49,
-    "trend": "new"
+    "rank": 43,
+    "prevRank": 49,
+    "weeks": 2,
+    "peak": 43,
+    "trend": "up"
   },
   {
     "artist": "Oliver Mtukudzi",
@@ -593,6 +521,78 @@
     "votes": 0,
     "streams": 0,
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/88/3a/66/883a6657-3f9e-bea0-b48f-57d4d28c546d/0878068001662_Cover.jpg/300x300bb.jpg",
+    "rank": 44,
+    "prevRank": 50,
+    "weeks": 2,
+    "peak": 44,
+    "trend": "up"
+  },
+  {
+    "artist": "Don Toliver",
+    "title": "OCTANE",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e8/e5/c6/e8e5c690-a958-622e-eb62-0dce6059300e/075679599360.jpg/300x300bb.jpg",
+    "rank": 45,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 45,
+    "trend": "new"
+  },
+  {
+    "artist": "Sun-El Musician",
+    "title": "Under The Sun",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/18/da/2b/18da2b16-e0f9-c1b7-d2db-89fb055e36e6/5059449359632.png/300x300bb.jpg",
+    "rank": 46,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 46,
+    "trend": "new"
+  },
+  {
+    "artist": "Sjava",
+    "title": "iNkanyezi NeZinkanyezi",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d7/9c/97/d79c978a-4682-d668-54ba-84a54ef06cea/766214692935.jpg/300x300bb.jpg",
+    "rank": 47,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 47,
+    "trend": "new"
+  },
+  {
+    "artist": "Kendrick Lamar",
+    "title": "GNX",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/50/c2/cc/50c2cc95-3658-9417-0d4b-831abde44ba1/24UM1IM28978.rgb.jpg/300x300bb.jpg",
+    "rank": 48,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 48,
+    "trend": "new"
+  },
+  {
+    "artist": "DaBaby",
+    "title": "BE MORE GRATEFUL",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/19/7d/fd/197dfd1a-7ca0-9070-96b2-f7c34528efe7/25UM2IM05347.rgb.jpg/300x300bb.jpg",
+    "rank": 49,
+    "prevRank": null,
+    "weeks": 1,
+    "peak": 49,
+    "trend": "new"
+  },
+  {
+    "artist": "Yanaya West",
+    "title": "Huya Tinamate - EP",
+    "votes": 0,
+    "streams": 0,
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/38/ed/67/38ed6757-3e5c-2a6d-45f8-8c3c397caeb9/artwork.jpg/300x300bb.jpg",
     "rank": 50,
     "prevRank": null,
     "weeks": 1,
